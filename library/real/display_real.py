@@ -9,10 +9,18 @@ File Name: display_real.py
 File Description: Contains the Display module of the racecar_core library
 """
 import cv2 as cv
+import numpy as np
 import os
 from nptyping import NDArray
 
 from display import Display
+
+from luma.led_matrix.device import max7219
+from luma.core.interface.serial import spi, noop
+from luma.core.render import canvas
+from luma.core.virtual import viewport
+from luma.core.legacy import text, show_message
+from luma.core.legacy.font import proportional, CP437_FONT, TINY_FONT, SINCLAIR_FONT, LCD_FONT
 
 
 class DisplayReal(Display):
@@ -31,6 +39,16 @@ class DisplayReal(Display):
             os.environ["DISPLAY"] = self.__DISPLAY
         else:
             print(f"Display {self.__DISPLAY} not found.")
+        
+        # Create matrix device
+        try:
+            serial = spi(port=0, device=0, gpio=noop())
+            self.device = max7219(serial, cascaded=3, block_orientation=-90, rotate=0, blocks_arranged_in_reverse_order=False)
+            print("matrix display successfully initialized")
+        except Exception as e:
+            print(f"matrix display initialization failed. Reason: {e}")
+
+        self.__matrix = np.zeros((8,24), dtype=np.uint8) # Create starting dot matrix design of all zeroes
 
     def create_window(self) -> None:
         if not self._Display__isHeadless and self.__display_found:
@@ -40,3 +58,19 @@ class DisplayReal(Display):
         if not self._Display__isHeadless and self.__display_found:
             cv.imshow(self.__WINDOW_NAME, image)
             cv.waitKey(1)
+    
+    def set_matrix(self, matrix: NDArray[(8, 24), np.uint8]):
+        self.__matrix = matrix
+        with canvas(self.device) as draw:
+            for x in range(0, self.device.width):
+                for y in range(0, self.device.height):
+                    if matrix[y][x]:
+                        draw.point((x,y), fill="white")
+    
+    def get_matrix(self) -> NDArray[(8, 24), np.uint8]:
+        return self.__matrix
+    
+    def new_matrix(self):
+        arr = np.empty(shape = (8, 24))
+        arr.fill(0) # Init numpy array of size 8 (rows) x 24 (columns) with all zeros
+        return arr
