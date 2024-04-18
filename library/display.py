@@ -17,7 +17,6 @@ from nptyping import NDArray
 
 import racecar_utils as rc_utils
 
-
 class Display(abc.ABC):
     """
     Allows the user to print images to the screen.
@@ -203,3 +202,58 @@ class Display(abc.ABC):
                 image[r][c][2] = 0
 
         self.show_color_image(image)
+    
+    def set_matrix(self, matrix: NDArray[(8, 24), np.uint8]) -> None:
+        """
+        Sets the dot matrix display module to the pattern in the argument (2D matrix).
+        
+        Args:
+            matrix: The 8x24 NumPy array with the pattern to be displayed on the dot
+                matrix display module.
+        
+        Note:
+            A 1 in the matrix indicates an LED that is on, while a 0 in the
+            matrix indicates an LED that is off.
+        
+        Example::
+
+            dot_matrix = np.ones((8,24), dtype=np.uint8)
+        
+            # Turn all the LEDs on the dot matrix module on
+            rc.display.set_matrix(dot_matrix)
+
+        """
+        pass
+
+    def get_matrix(self) -> NDArray[(8, 24), np.uint8]:
+        """
+        Returns the current configuration of the dot matrix display module.
+
+        Returns:
+            An 8x24 NumPy array (data type: np.uint8) representing the current
+            configuration of the dot matrix display module.
+        
+        Note:
+            A 1 in the matrix indicates an LED that is on, while a 0 in the
+            matrix indicates an LED that is off.
+        
+        Example::
+
+            # Gets current configuration values of the dot matrix module
+            dot_matrix = rc.display.get_matrix()
+        """
+        pass
+
+    def new_matrix(self):
+        """
+        Returns a new matrix of all zeroes for the dot matrix display module.
+        
+        Returns:
+            An 8x24 NumPy array (data type: np.uint8) of all zeroes.
+        
+        Example::
+
+            # Create a new matrix of all zeroes.
+            my_matrix = rc.display.new_matrix()
+        """
+        pass
