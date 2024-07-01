@@ -43,7 +43,7 @@ class LidarReal(Lidar):
     # LIDAR Scan returns value in meters, multiplying by 100 to be processed in cm
     # LIDAR Scan reversed, flipping order of data entry to correct for CW spin
     def __scan_callback(self, data):
-        self.__samples_new = np.flip(np.multiply(np.array(data.ranges), 100))
+        self.__samples_new = np.roll(np.flip(np.multiply(np.array(data.ranges), 100)), 252)
         
     def __update(self):
         self.__samples = self.__samples_new
