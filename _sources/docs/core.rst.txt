@@ -1,6 +1,5 @@
-Controller
+Core
 ===============================================
 
-.. automodule:: controller
+.. automodule:: racecar_core
    :members:
-   :undoc-members:
