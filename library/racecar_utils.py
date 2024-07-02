@@ -12,7 +12,7 @@ File Description: Contains helper functions to support common operations.
 import cv2 as cv
 import numpy as np
 from typing import *
-from nptyping import NDArray, Shape, UInt8
+from nptyping import NDArray, Shape, UInt8, Int32, Float32
 from enum import Enum, IntEnum
 
 
@@ -600,9 +600,9 @@ def get_contour_area(contour: NDArray) -> float:
 
 
 def pixelate_image(
-    img: NDArray[UInt8],
+    img: NDArray[Shape['*, *'], UInt8],
     size: tuple[int, int] = (24, 8)
-) -> NDArray[UInt8]:
+) -> NDArray[Shape['*, *'], UInt8]:
     """
     "Pixelates" and resizes a grayscale image to a smaller size, useful for
     displaying pictures on the dot matrix.
@@ -635,7 +635,8 @@ def pixelate_image(
 
 
 def get_depth_image_center_distance(
-    depth_image: NDArray[(Any, Any), np.float32], kernel_size: int = 5
+    depth_image: NDArray[Shape['*, *'], Float32],
+    kernel_size: int = 5
 ) -> float:
     """
     Finds the distance of the center object in a depth image.
@@ -674,7 +675,7 @@ def get_depth_image_center_distance(
 
 
 def get_pixel_average_distance(
-    depth_image: NDArray[(Any, Any), np.float32],
+    depth_image: NDArray[Shape['*, *'], Float32],
     pix_coord: tuple[int, int],
     kernel_size: int = 5,
 ) -> float:
@@ -746,7 +747,8 @@ def get_pixel_average_distance(
 
 
 def get_closest_pixel(
-    depth_image: NDArray[(Any, Any), np.float32], kernel_size: int = 5
+    depth_image: NDArray[Shape['*, *'], Float32],
+    kernel_size: int = 5
 ) -> tuple[int, int]:
     """
     Finds the closest pixel in a depth image.
@@ -799,9 +801,9 @@ def get_closest_pixel(
 
 
 def colormap_depth_image(
-    depth_image: NDArray[(Any, Any), np.float32],
+    depth_image: NDArray[Shape['*, *'], Float32],
     max_depth: int = 1000,
-) -> NDArray[(Any, Any, 3), np.uint8]:
+) -> NDArray[Shape['*, *, 3'], UInt8]:
     """
     Converts a depth image to a colored image representing depth.
 
@@ -842,7 +844,7 @@ def colormap_depth_image(
 
 
 def get_lidar_closest_point(
-    scan: NDArray[Any, np.float32],
+    scan: NDArray[Any, Float32],
     window: tuple[float, float] = (0, 360)
 ) -> tuple[float, float]:
     """
@@ -923,7 +925,7 @@ def get_lidar_closest_point(
 
 
 def get_lidar_average_distance(
-    scan: NDArray[Any, np.float32],
+    scan: NDArray[Any, Float32],
     angle: float,
     window_angle: float = 4
 ) -> float:
@@ -1008,7 +1010,7 @@ class ARMarker:
     def __init__(
         self,
         marker_id: int,
-        marker_corners: NDArray[(4, 2), np.int32]
+        marker_corners: NDArray[Shape['4, 2'], Int32]
     ) -> None:
         """
         Creates an object representing an AR marker.
@@ -1030,7 +1032,7 @@ class ARMarker:
         ), f"corners must contain 4 points, but had [{marker_corners.shape[0]}] points."
 
         self.__id: int = marker_id
-        self.__corners: NDArray[(4, 2), np.int32] = marker_corners
+        self.__corners: NDArray[Shape['4, 2'], Int32] = marker_corners
         self.__color: str = "not detected"
         self.__color_area: int = 0
 
@@ -1048,7 +1050,7 @@ class ARMarker:
 
     def detect_colors(
         self,
-        color_image: NDArray[(Any, Any), np.float32],
+        color_image: NDArray[Shape['*, *'], Float32],
         potential_colors: List[tuple[tuple[int, int, int], tuple[int, int, int], str]],
     ) -> None:
         """
@@ -1109,7 +1111,7 @@ class ARMarker:
         """
         return self.__id
 
-    def get_corners(self) -> NDArray[(4, 2), np.int32]:
+    def get_corners(self) -> NDArray[Shape['4, 2'], Int32]:
         """
         Returns the (row, col) coordinates of the four corners of the marker.
 
@@ -1119,7 +1121,7 @@ class ARMarker:
         """
         return self.__corners
 
-    def get_corners_aruco_format(self) -> NDArray[(1, 4, 2), np.float32]:
+    def get_corners_aruco_format(self) -> NDArray[Shape['1, 4, 2'], Float32]:
         """
         Returns the corners of the AR marker formatted as needed by the ArUco library.
         """
@@ -1154,7 +1156,7 @@ class ARMarker:
 
 
 def get_ar_markers(
-    color_image: NDArray[(Any, Any, 3), np.uint8],
+    color_image: NDArray[Shape['*, *, 3'], UInt8],
     potential_colors: List[
         tuple[tuple[int, int, int], tuple[int, int, int], str]
     ] = None,
@@ -1208,10 +1210,10 @@ def get_ar_markers(
 
 
 def draw_ar_markers(
-    color_image: NDArray[(Any, Any, 3), np.uint8],
+    color_image: NDArray[Shape['*, *, 3'], UInt8],
     markers: List[ARMarker],
     color: tuple[int, int, int] = ColorBGR.green.value,
-) -> NDArray[(Any, Any, 3), np.uint8]:
+) -> NDArray[Shape['*, *, 3'], UInt8]:
     """
     Draws annotations on the AR markers in a image.
 
@@ -1240,4 +1242,4 @@ def draw_ar_markers(
     for i in range(len(markers)):
         ids[i][0] = markers[i].get_id()
         corners.append(markers[i].get_corners_aruco_format())
-    cv.aruco.drawDetectedMarkers(color_image, corners, ids, color)
+    return cv.aruco.drawDetectedMarkers(color_image, corners, ids, color)

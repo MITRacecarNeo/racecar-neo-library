@@ -1,7 +1,6 @@
-import sys
 import numpy as np
 import cv2 as cv
-from nptyping import NDArray
+from nptyping import NDArray, Shape, UInt8, Float32
 
 from camera import Camera
 
@@ -9,40 +8,40 @@ from camera import Camera
 class CameraSim(Camera):
     def __init__(self, racecar) -> None:
         self.__racecar = racecar
-        self.__color_image: NDArray[(480, 640, 3), np.uint8] = None
+        self.__color_image: NDArray[Shape['480, 640, 3'], UInt8] = None
         self.__is_color_image_current: bool = False
-        self.__depth_image: NDArray[(480, 640), np.float32] = None
+        self.__depth_image: NDArray[Shape['480, 640'], Float32] = None
         self.__is_depth_image_current: bool = False
 
         self._MAX_DEPTH_WIDTH: int = self._WIDTH // 8
         self._MAX_DEPTH_HEIGHT: int = self._HEIGHT // 8
 
-    def get_color_image_no_copy(self) -> NDArray[(480, 640, 3), np.uint8]:
+    def get_color_image_no_copy(self) -> NDArray[Shape['480, 640, 3'], UInt8]:
         if not self.__is_color_image_current:
             self.__color_image = self.__request_color_image(False)
             self.__is_color_image_current = True
 
         return self.__color_image
 
-    def get_color_image_async(self) -> NDArray[(480, 640, 3), np.uint8]:
+    def get_color_image_async(self) -> NDArray[Shape['480, 640, 3'], UInt8]:
         return self.__request_color_image(True)
 
-    def get_depth_image(self) -> NDArray[(480, 640), np.float32]:
+    def get_depth_image(self) -> NDArray[Shape['480, 640'], Float32]:
         if not self.__is_depth_image_current:
             self.__depth_image = self.__request_depth_image(False)
             self.__is_depth_image_current = False
 
         return self.__depth_image
 
-    def get_depth_image_async(self) -> NDArray[(480, 640), np.float32]:
+    def get_depth_image_async(self) -> NDArray[Shape['480, 640'], Float32]:
         return self.__request_depth_image(True)
 
     def __update(self) -> None:
         self.__is_color_image_current = False
         self.__is_depth_image_current = False
 
-    def __request_color_image(self, isAsync: bool) -> NDArray[(480, 640), np.uint8]:
-        # Ask for a the current color image
+    def __request_color_image(self, isAsync: bool) -> NDArray[Shape['480, 640'], UInt8]:
+        # Ask for the current color image
         self.__racecar._RacecarSim__send_header(
             self.__racecar.Header.camera_get_color_image, isAsync
         )
@@ -57,7 +56,7 @@ class CameraSim(Camera):
         color_image = cv.cvtColor(color_image, cv.COLOR_RGB2BGR)
         return color_image
 
-    def __request_depth_image(self, isAsync: bool) -> NDArray[(480, 640), np.float32]:
+    def __request_depth_image(self, isAsync: bool) -> NDArray[Shape['480, 640'], Float32]:
         self.__racecar._RacecarSim__send_header(
             self.__racecar.Header.camera_get_depth_image, isAsync
         )

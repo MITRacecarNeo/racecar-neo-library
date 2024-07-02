@@ -1,7 +1,5 @@
-import sys
-import struct
 import numpy as np
-from nptyping import NDArray
+from nptyping import NDArray, Shape, Float32
 
 from lidar import Lidar
 
@@ -9,10 +7,10 @@ from lidar import Lidar
 class LidarSim(Lidar):
     def __init__(self, racecar) -> None:
         self.__racecar = racecar
-        self.__ranges: NDArray[720, np.float32]
+        self.__ranges: NDArray[Shape['720'], Float32]
         self.__is_current: bool = False
 
-    def get_samples(self) -> NDArray[720, np.float32]:
+    def get_samples(self) -> NDArray[Shape['720'], Float32]:
         if not self.__is_current:
             self.__racecar._RacecarSim__send_header(
                 self.__racecar.Header.lidar_get_samples
@@ -24,7 +22,7 @@ class LidarSim(Lidar):
             self.__is_current = True
         return self.__ranges
 
-    def get_samples_async(self) -> NDArray[720, np.float32]:
+    def get_samples_async(self) -> NDArray[Shape['720'], Float32]:
         self.__racecar._RacecarSim__send_header(
             self.__racecar.Header.lidar_get_samples, True
         )

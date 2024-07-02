@@ -13,14 +13,12 @@ from lidar import Lidar
 
 # General
 import numpy as np
-from nptyping import NDArray
+from nptyping import NDArray, Shape, Float32
 
 # ROS2
 import rclpy as ros2
 from rclpy.qos import qos_profile_sensor_data
 from sensor_msgs.msg import LaserScan
-from cv_bridge import CvBridge, CvBridgeError
-import threading
 
 
 class LidarReal(Lidar):
@@ -49,8 +47,8 @@ class LidarReal(Lidar):
     def __update(self):
         self.__samples = self.__samples_new
 
-    def get_samples(self) -> NDArray[720, np.float32]:
+    def get_samples(self) -> NDArray[Shape['720'], Float32]:
         return self.__samples
 
-    def get_samples_async(self) -> NDArray[720, np.float32]:
+    def get_samples_async(self) -> NDArray[Shape['720'], Float32]:
         return self.__samples_new

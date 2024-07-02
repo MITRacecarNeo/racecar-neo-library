@@ -11,7 +11,7 @@ File Description: Contains the Display module of the racecar_core library
 import cv2 as cv
 import numpy as np
 import os
-from nptyping import NDArray
+from nptyping import NDArray, Shape, UInt8
 
 from display import Display
 
@@ -62,7 +62,7 @@ class DisplayReal(Display):
             cv.imshow(self.__WINDOW_NAME, image)
             cv.waitKey(1)
 
-    def set_matrix(self, matrix: NDArray[(8, 24), np.uint8]):
+    def set_matrix(self, matrix: NDArray[Shape['8, 24'], UInt8]):
         self.__matrix = matrix
         with canvas(self.device) as draw:
             for x in range(0, self.device.width):
@@ -70,7 +70,7 @@ class DisplayReal(Display):
                     if matrix[y][x]:
                         draw.point((x, y), fill="white")
 
-    def get_matrix(self) -> NDArray[(8, 24), np.uint8]:
+    def get_matrix(self) -> NDArray[Shape['8, 24'], UInt8]:
         return self.__matrix
 
     def new_matrix(self):
