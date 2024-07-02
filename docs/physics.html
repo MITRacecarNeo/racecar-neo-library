@@ -99,10 +99,85 @@
 <div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Physics</span>
 </nav>
 <div id="content" role="main">
-<section id="physics">
-<h1>Physics<a class="headerlink" href="#physics" title="Link to this heading"><span>#</span></a></h1>
+<section id="module-physics">
+<span id="physics"></span><h1>Physics<a class="headerlink" href="#module-physics" title="Link to this heading"><span>#</span></a></h1>
+<p>Copyright MIT
+MIT License</p>
+<p>BWSI Autonomous RACECAR Course
+Racecar Neo LTS</p>
+<p>File Name: physics.py
+File Description: Defines the interface of the Physics module of the racecar_core library</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="physics.Physics">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">physics.</span></span><span class="sig-name descname"><span class="pre">Physics</span></span><a class="headerlink" href="#physics.Physics" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#physics.Physics'"><span>#</span></a></dt>
+<dd><p>Returns the linear acceleration and angular velocity measured by the IMU.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="physics.Physics.get_angular_velocity">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_angular_velocity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">Shape</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">3</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float32</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#physics.Physics.get_angular_velocity" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#physics.Physics.get_angular_velocity'"><span>#</span></a></dt>
+<dd><p>Returns a 3D vector containing the car’s angular velocity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The average angular velocity of the car along the (x, y, z) axes during the
+last frame in rad/s.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The x-axis (pitch) points out of the right of the car.
+The y-axis (yaw) points directly up (perpendicular to the ground).
+The z-axis (roll) points out of the front of the car.
+Rotation sign uses the right hand rule. For example, when the car turns to
+the left, it has a positive angular velocity along the y axis.</p>
+</div>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># ang_vel stores the average angular velocity over the previous frame</span>
+</span><span id="line-2"><span class="n">ang_vel</span> <span class="o">=</span> <span class="n">rc</span><span class="o">.</span><span class="n">physics</span><span class="o">.</span><span class="n">get_angular_velocity</span><span class="p">()</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="c1"># yaw stores the yaw of the car, which is positive when it turns to the left</span>
+</span><span id="line-5"><span class="c1"># and negative when it turns to the right.</span>
+</span><span id="line-6"><span class="n">yaw</span> <span class="o">=</span> <span class="n">ang_vel</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span></code></pre></div>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="physics.Physics.get_linear_acceleration">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_linear_acceleration</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">Shape</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">3</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float32</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#physics.Physics.get_linear_acceleration" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#physics.Physics.get_linear_acceleration'"><span>#</span></a></dt>
+<dd><p>Returns a 3D vector containing the car’s linear acceleration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The average linear acceleration of the car along the (x, y, z) axes during
+the last frame in m/s^2.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The x-axis points out of the right of the car.
+The y-axis points directly up (perpendicular to the ground).
+The z-axis points out of the front of the car.</p>
+</div>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># accel stores the average acceleration over the previous frame</span>
+</span><span id="line-2"><span class="n">accel</span> <span class="o">=</span> <span class="n">rc</span><span class="o">.</span><span class="n">physics</span><span class="o">.</span><span class="n">get_linear_acceleration</span><span class="p">()</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="c1"># forward accel stores acceleration in the forward direction.  This will be</span>
+</span><span id="line-5"><span class="c1"># positive when the car accelerates, and negative when it decelerates.</span>
+</span><span id="line-6"><span class="n">forward_accel</span> <span class="o">=</span> <span class="n">accel</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+</span></code></pre></div>
+</div>
+</dd></dl>
+</dd></dl>
 </section>
-</div></div>
+</div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
+<div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
+<ul>
+<li><a :data-current="activeSection === '#physics.Physics'" class="reference internal" href="#physics.Physics"><code class="docutils literal notranslate"><span class="pre">Physics</span></code></a><ul>
+<li><a :data-current="activeSection === '#physics.Physics.get_angular_velocity'" class="reference internal" href="#physics.Physics.get_angular_velocity"><code class="docutils literal notranslate"><span class="pre">Physics.get_angular_velocity()</span></code></a></li>
+<li><a :data-current="activeSection === '#physics.Physics.get_linear_acceleration'" class="reference internal" href="#physics.Physics.get_linear_acceleration"><code class="docutils literal notranslate"><span class="pre">Physics.get_linear_acceleration()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</aside>
 </main>
 </div>
 </div><footer class="py-6 border-t border-border md:py-0">

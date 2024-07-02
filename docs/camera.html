@@ -99,10 +99,243 @@
 <div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Camera</span>
 </nav>
 <div id="content" role="main">
-<section id="camera">
-<h1>Camera<a class="headerlink" href="#camera" title="Link to this heading"><span>#</span></a></h1>
+<section id="module-camera">
+<span id="camera"></span><h1>Camera<a class="headerlink" href="#module-camera" title="Link to this heading"><span>#</span></a></h1>
+<p>Copyright MIT
+MIT License</p>
+<p>BWSI Autonomous RACECAR Course
+Racecar Neo LTS</p>
+<p>File Name: camera.py
+File Description: Defines the interface of the Camera module of the racecar_core library.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="camera.Camera">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">camera.</span></span><span class="sig-name descname"><span class="pre">Camera</span></span><a class="headerlink" href="#camera.Camera" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#camera.Camera'"><span>#</span></a></dt>
+<dd><p>Returns the color images and depth images captured by the camera.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="camera.Camera.get_color_image">
+<span class="sig-name descname"><span class="pre">get_color_image</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">Shape</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">480</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">640</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">3</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">uint8</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#camera.Camera.get_color_image" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#camera.Camera.get_color_image'"><span>#</span></a></dt>
+<dd><p>Returns a deep copy of the current color image captured by the camera.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>An array representing the pixels in the image, organized as follows</dt><dd><p>0th dimension: pixel rows, indexed from top to bottom.
+1st dimension: pixel columns, indexed from left to right.
+2nd dimension: pixel color channels, in the blue-green-red format.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Each color value ranges from 0 to 255.</p>
+<p>This function returns a deep copy of the captured image. This means that
+we can modify the returned image and it will not change the image returned
+by future calls to get_color_image().</p>
+</div>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># Initialize image with a deep copy of the most recent color image captured</span>
+</span><span id="line-2"><span class="c1"># by the camera</span>
+</span><span id="line-3"><span class="n">image</span> <span class="o">=</span> <span class="n">rc</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">get_color_image</span><span class="p">()</span>
+</span><span id="line-4">
+</span><span id="line-5"><span class="c1"># Store the amount of blue in the pixel on row 3, column 5</span>
+</span><span id="line-6"><span class="n">blue</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">5</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</span></code></pre></div>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="camera.Camera.get_color_image_async">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_color_image_async</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">Shape</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">480</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">640</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">3</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">uint8</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#camera.Camera.get_color_image_async" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#camera.Camera.get_color_image_async'"><span>#</span></a></dt>
+<dd><p>Returns the current color image without the car in “go” mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>An array representing the pixels in the image, organized as follows</dt><dd><p>0th dimension: pixel rows, indexed from top to bottom.
+1st dimension: pixel columns, indexed from left to right.
+2nd dimension: pixel color channels, in the blue-green-red format.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Each color value ranges from 0 to 255.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This function breaks the start-update paradigm and should only be used in
+Jupyter Notebook.</p>
+</div>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># Initialize image with the most recent color image captured by the camera</span>
+</span><span id="line-2"><span class="n">image</span> <span class="o">=</span> <span class="n">rc</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">get_color_image_async</span><span class="p">()</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="c1"># Store the amount of blue in the pixel on row 3, column 5</span>
+</span><span id="line-5"><span class="n">blue</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">5</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</span></code></pre></div>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="camera.Camera.get_color_image_no_copy">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_color_image_no_copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">Shape</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">480</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">640</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">3</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">uint8</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#camera.Camera.get_color_image_no_copy" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#camera.Camera.get_color_image_no_copy'"><span>#</span></a></dt>
+<dd><p>Returns a direct reference to the color image captured by the camera.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><dl class="simple">
+<dt>An array representing the pixels in the image, organized as follows</dt><dd><p>0th dimension: pixel rows, indexed from top to bottom.
+1st dimension: pixel columns, indexed from left to right.
+2nd dimension: pixel color channels, in the blue-green-red format.</p>
+</dd>
+</dl>
+</p>
+</dd>
+</dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Do not modify the returned image. The returned image is a reference to the
+captured image, so any changes will also affect the images returned by any
+future calls to get_color_image() or get_color_image_no_copy().</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Each color value ranges from 0 to 255.</p>
+<p>Unlike get_color_image(), this function does not create a deep copy of the
+captured image, and is therefore more efficient.</p>
+</div>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># Initialize image with a direct reference to the recent color image</span>
+</span><span id="line-2"><span class="c1"># captured by the camera</span>
+</span><span id="line-3"><span class="n">image</span> <span class="o">=</span> <span class="n">rc</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">get_color_image</span><span class="p">()</span>
+</span><span id="line-4">
+</span><span id="line-5"><span class="c1"># Store the amount of blue in the pixel on row 3, column 5</span>
+</span><span id="line-6"><span class="n">blue</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">5</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="line-7">
+</span><span id="line-8"><span class="c1"># We can safely call crop because it does not modify the source image</span>
+</span><span id="line-9"><span class="n">cropped_image</span> <span class="o">=</span> <span class="n">rc_utils</span><span class="o">.</span><span class="n">crop</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+</span><span id="line-10">
+</span><span id="line-11"><span class="c1"># However, if we wish to draw on the image, we must first create a manual</span>
+</span><span id="line-12"><span class="c1"># copy with copy.deepcopy()</span>
+</span><span id="line-13"><span class="n">image_copy</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+</span><span id="line-14"><span class="n">modified_image</span> <span class="o">=</span> <span class="n">rc_utils</span><span class="o">.</span><span class="n">draw_circle</span><span class="p">(</span><span class="n">image_copy</span><span class="p">,</span> <span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+</span></code></pre></div>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="camera.Camera.get_depth_image">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_depth_image</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">Shape</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">480</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">640</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float32</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#camera.Camera.get_depth_image" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#camera.Camera.get_depth_image'"><span>#</span></a></dt>
+<dd><p>Returns the current depth image captured by the camera.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A two-dimensional array indexed from top left to the bottom right storing
+the distance of each pixel from the car in cm.</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># Initialize image with the most recent depth image captured by the camera</span>
+</span><span id="line-2"><span class="n">image</span> <span class="o">=</span> <span class="n">rc</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">get_depth_image</span><span class="p">()</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="c1"># Store the distance of the object at pixel row 3, column 5</span>
+</span><span id="line-5"><span class="n">distance</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">5</span><span class="p">]</span>
+</span></code></pre></div>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="camera.Camera.get_depth_image_async">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_depth_image_async</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">Shape</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">480</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">640</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float32</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#camera.Camera.get_depth_image_async" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#camera.Camera.get_depth_image_async'"><span>#</span></a></dt>
+<dd><p>Returns the current depth image without the car in “go” mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A two-dimensional array indexed from top left to the bottom right storing
+the distance of each pixel from the car in cm.</p>
+</dd>
+</dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This function breaks the start-update paradigm and should only be used in
+Jupyter Notebook.</p>
+</div>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># Initialize image with the most recent depth image captured by the camera</span>
+</span><span id="line-2"><span class="n">image</span> <span class="o">=</span> <span class="n">rc</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">get_depth_image_async</span><span class="p">()</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="c1"># Store the distance of the object at pixel row 3, column 5</span>
+</span><span id="line-5"><span class="n">distance</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">5</span><span class="p">]</span>
+</span></code></pre></div>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="camera.Camera.get_height">
+<span class="sig-name descname"><span class="pre">get_height</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#camera.Camera.get_height" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#camera.Camera.get_height'"><span>#</span></a></dt>
+<dd><p>Returns the pixel height of the color and depth images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The height (number of pixel rows) in the color and depth images.</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">image</span> <span class="o">=</span> <span class="n">rc</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">get_color_image</span><span class="p">()</span>
+</span><span id="line-2">
+</span><span id="line-3"><span class="c1"># Access the top bottom left pixel of the image</span>
+</span><span id="line-4"><span class="n">bottom_left_pixel</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="n">rc</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</span></code></pre></div>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="camera.Camera.get_max_range">
+<span class="sig-name descname"><span class="pre">get_max_range</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#camera.Camera.get_max_range" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#camera.Camera.get_max_range'"><span>#</span></a></dt>
+<dd><p>Returns the maximum distance in cm which can be detected by the depth camera.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The maximum range of the depth camera.</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">depth_image</span> <span class="o">=</span> <span class="n">rc</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">get_depth_image</span><span class="p">()</span>
+</span><span id="line-2"><span class="n">center_distance</span> <span class="o">=</span> <span class="n">rc_utils</span><span class="o">.</span><span class="n">get_depth_image_center_distance</span><span class="p">(</span><span class="n">depth_image</span><span class="p">)</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="c1"># If center_distance is 0.0 (no data), set it to max_range</span>
+</span><span id="line-5"><span class="k">if</span> <span class="n">center_distance</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span>
+</span><span id="line-6">    <span class="n">center_distance</span> <span class="o">=</span> <span class="n">rc</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">get_max_range</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="camera.Camera.get_width">
+<span class="sig-name descname"><span class="pre">get_width</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#camera.Camera.get_width" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#camera.Camera.get_width'"><span>#</span></a></dt>
+<dd><p>Returns the pixel width of the color and depth images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The width (number of pixel columns) in the color and depth images.</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">image</span> <span class="o">=</span> <span class="n">rc</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">get_color_image</span><span class="p">()</span>
+</span><span id="line-2">
+</span><span id="line-3"><span class="c1"># Access the top right pixel of the image</span>
+</span><span id="line-4"><span class="n">top_right_pixel</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">rc</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+</span></code></pre></div>
+</div>
+</dd></dl>
+</dd></dl>
 </section>
-</div></div>
+</div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
+<div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
+<ul>
+<li><a :data-current="activeSection === '#camera.Camera'" class="reference internal" href="#camera.Camera"><code class="docutils literal notranslate"><span class="pre">Camera</span></code></a><ul>
+<li><a :data-current="activeSection === '#camera.Camera.get_color_image'" class="reference internal" href="#camera.Camera.get_color_image"><code class="docutils literal notranslate"><span class="pre">Camera.get_color_image()</span></code></a></li>
+<li><a :data-current="activeSection === '#camera.Camera.get_color_image_async'" class="reference internal" href="#camera.Camera.get_color_image_async"><code class="docutils literal notranslate"><span class="pre">Camera.get_color_image_async()</span></code></a></li>
+<li><a :data-current="activeSection === '#camera.Camera.get_color_image_no_copy'" class="reference internal" href="#camera.Camera.get_color_image_no_copy"><code class="docutils literal notranslate"><span class="pre">Camera.get_color_image_no_copy()</span></code></a></li>
+<li><a :data-current="activeSection === '#camera.Camera.get_depth_image'" class="reference internal" href="#camera.Camera.get_depth_image"><code class="docutils literal notranslate"><span class="pre">Camera.get_depth_image()</span></code></a></li>
+<li><a :data-current="activeSection === '#camera.Camera.get_depth_image_async'" class="reference internal" href="#camera.Camera.get_depth_image_async"><code class="docutils literal notranslate"><span class="pre">Camera.get_depth_image_async()</span></code></a></li>
+<li><a :data-current="activeSection === '#camera.Camera.get_height'" class="reference internal" href="#camera.Camera.get_height"><code class="docutils literal notranslate"><span class="pre">Camera.get_height()</span></code></a></li>
+<li><a :data-current="activeSection === '#camera.Camera.get_max_range'" class="reference internal" href="#camera.Camera.get_max_range"><code class="docutils literal notranslate"><span class="pre">Camera.get_max_range()</span></code></a></li>
+<li><a :data-current="activeSection === '#camera.Camera.get_width'" class="reference internal" href="#camera.Camera.get_width"><code class="docutils literal notranslate"><span class="pre">Camera.get_width()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</aside>
 </main>
 </div>
 </div><footer class="py-6 border-t border-border md:py-0">
