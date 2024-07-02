@@ -11,7 +11,6 @@ File Description: Defines the interface of the Controller module of the racecar_
 
 import abc
 from enum import IntEnum
-from typing import Tuple
 
 
 class Controller(abc.ABC):
@@ -149,7 +148,7 @@ class Controller(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def get_joystick(self, joystick: Joystick) -> Tuple[float, float]:
+    def get_joystick(self, joystick: Joystick) -> tuple[float, float]:
         """
         Returns the position of a certain joystick as an (x, y) tuple.
 

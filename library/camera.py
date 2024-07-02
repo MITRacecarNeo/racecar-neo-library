@@ -12,7 +12,7 @@ File Description: Defines the interface of the Camera module of the racecar_core
 import abc
 import copy
 import numpy as np
-from nptyping import NDArray
+from nptyping import NDArray, Shape, UInt8, Float32
 
 
 class Camera(abc.ABC):
@@ -27,7 +27,7 @@ class Camera(abc.ABC):
     # Maximum range of the depth camera (in cm)
     _MAX_RANGE = 1200
 
-    def get_color_image(self) -> NDArray[(480, 640, 3), np.uint8]:
+    def get_color_image(self) -> NDArray[Shape['480, 640, 3'], UInt8]:
         """
         Returns a deep copy of the current color image captured by the camera.
 
@@ -56,7 +56,7 @@ class Camera(abc.ABC):
         return copy.deepcopy(self.get_color_image_no_copy())
 
     @abc.abstractmethod
-    def get_color_image_no_copy(self) -> NDArray[(480, 640, 3), np.uint8]:
+    def get_color_image_no_copy(self) -> NDArray[Shape['480, 640, 3'], UInt8]:
         """
         Returns a direct reference to the color image captured by the camera.
 
@@ -97,7 +97,7 @@ class Camera(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def get_color_image_async(self) -> NDArray[(480, 640, 3), np.uint8]:
+    def get_color_image_async(self) -> NDArray[Shape['480, 640, 3'], UInt8]:
         """
         Returns the current color image without the car in "go" mode.
 
@@ -125,7 +125,7 @@ class Camera(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def get_depth_image(self) -> NDArray[(480, 640), np.float32]:
+    def get_depth_image(self) -> NDArray[Shape['480, 640'], Float32]:
         """
         Returns the current depth image captured by the camera.
 
@@ -144,7 +144,7 @@ class Camera(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def get_depth_image_async(self) -> NDArray[(480, 640), np.float32]:
+    def get_depth_image_async(self) -> NDArray[Shape['480, 640'], Float32]:
         """
         Returns the current depth image without the car in "go" mode.
 

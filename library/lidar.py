@@ -11,7 +11,7 @@ File Description: Defines the interface for the Lidar module of the racecar_core
 
 import abc
 import numpy as np
-from nptyping import NDArray
+from nptyping import NDArray, Shape
 
 
 class Lidar(abc.ABC):
@@ -23,7 +23,7 @@ class Lidar(abc.ABC):
     _NUM_SAMPLES: int = 720
 
     @abc.abstractmethod
-    def get_samples(self) -> NDArray[720, np.float32]:
+    def get_samples(self) -> NDArray[Shape['720'], np.float32]:
         """
         Returns the current LIDAR scan as an array of distance measurements.
 
@@ -45,7 +45,7 @@ class Lidar(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def get_samples_async(self) -> NDArray[720, np.float32]:
+    def get_samples_async(self) -> NDArray[Shape['720'], np.float32]:
         """
         Returns the current LIDAR scan without the car in "go" mode.
 

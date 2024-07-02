@@ -12,8 +12,8 @@ File Description: Defines the interface of the Display module of the racecar_cor
 import abc
 import numpy as np
 import math
-from typing import List, Tuple, Any
-from nptyping import NDArray
+from typing import Any
+from nptyping import NDArray, Shape, UInt8, Float32
 
 import racecar_utils as rc_utils
 
@@ -71,9 +71,9 @@ class Display(abc.ABC):
 
     def show_depth_image(
         self,
-        image: NDArray[(Any, Any), np.float32],
+        image: NDArray[Shape['*, *'], Float32],
         max_depth: int = 1000,
-        points: List[Tuple[int, int]] = [],
+        points: list[tuple[int, int]] = [],
     ) -> None:
         """
         Displays a depth image in grayscale in a window.
@@ -126,10 +126,10 @@ class Display(abc.ABC):
 
     def show_lidar(
         self,
-        samples: NDArray[Any, np.float32],
+        samples: NDArray[Any, Float32],
         radius: int = 128,
         max_range: int = 1000,
-        highlighted_samples: List[Tuple[float, float]] = [],
+        highlighted_samples: list[tuple[float, float]] = [],
     ) -> None:
         """
         Displays a set of LIDAR samples.
@@ -179,8 +179,8 @@ class Display(abc.ABC):
             if 0 < samples[i] < max_range:
                 angle: float = 2 * math.pi * i / num_samples
                 length: float = radius * samples[i] / max_range
-                r: int = int(radius - length * math.cos(angle))
-                c: int = int(radius + length * math.sin(angle))
+                r = int(radius - length * math.cos(angle))
+                c = int(radius + length * math.sin(angle))
                 image[r][c][2] = 255
 
         # Draw a green dot to denote the car
@@ -196,15 +196,15 @@ class Display(abc.ABC):
             if 0 < distance < max_range:
                 angle_rad = angle * math.pi / 180
                 length: float = radius * distance / max_range
-                r: int = int(radius - length * math.cos(angle_rad))
-                c: int = int(radius + length * math.sin(angle_rad))
+                r = int(radius - length * math.cos(angle_rad))
+                c = int(radius + length * math.sin(angle_rad))
                 image[r][c][0] = 255
                 image[r][c][1] = 255
                 image[r][c][2] = 0
 
         self.show_color_image(image)
 
-    def set_matrix(self, matrix: NDArray[(8, 24), np.uint8]) -> None:
+    def set_matrix(self, matrix: NDArray[Shape['8, 24'], UInt8]) -> None:
         """
         Sets the dot matrix display module to the pattern in the argument (2D matrix).
         
@@ -226,7 +226,7 @@ class Display(abc.ABC):
         """
         pass
 
-    def get_matrix(self) -> NDArray[(8, 24), np.uint8]:
+    def get_matrix(self) -> NDArray[Shape['8, 24'], UInt8]:
         """
         Returns the current configuration of the dot matrix display module.
 
