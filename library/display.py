@@ -17,6 +17,7 @@ from nptyping import NDArray
 
 import racecar_utils as rc_utils
 
+
 class Display(abc.ABC):
     """
     Allows the user to print images to the screen.
@@ -57,7 +58,7 @@ class Display(abc.ABC):
         Displays a color image in a window.
 
         Args:
-            image: The color image to display to the the screen.
+            image: The color image to display to the screen.
 
         Example::
 
@@ -149,7 +150,7 @@ class Display(abc.ABC):
 
         Warning:
             samples must be a complete LIDAR scan.  This function assumes that each
-            sample is equal angle appart, and that samples spans the entire 360 degrees.
+            sample is equal angle apart, and that samples spans the entire 360 degrees.
             If this is not the case, the visualization will be inaccurate.
 
         Example::
@@ -202,7 +203,7 @@ class Display(abc.ABC):
                 image[r][c][2] = 0
 
         self.show_color_image(image)
-    
+
     def set_matrix(self, matrix: NDArray[(8, 24), np.uint8]) -> None:
         """
         Sets the dot matrix display module to the pattern in the argument (2D matrix).

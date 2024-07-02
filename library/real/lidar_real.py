@@ -45,7 +45,7 @@ class LidarReal(Lidar):
     # LIDAR Scan array roll 252 elements to the right (180) to match sim reference plane (0 deg - forward)
     def __scan_callback(self, data):
         self.__samples_new = np.roll(np.flip(np.multiply(np.array(data.ranges), 100)), 252)
-        
+
     def __update(self):
         self.__samples = self.__samples_new
 

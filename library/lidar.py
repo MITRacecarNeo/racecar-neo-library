@@ -32,7 +32,7 @@ class Lidar(abc.ABC):
 
         Note:
             Samples are in clockwise order, with the 0th sample directly in front of the
-            car.  Each sample is an equal angle appart.
+            car.  Each sample is an equal angle apart.
 
         Example::
 
@@ -54,7 +54,7 @@ class Lidar(abc.ABC):
 
         Note:
             Samples are in clockwise order, with the 0th sample directly in front of the
-            car.  Each sample is an equal angle appart.
+            car.  Each sample is an equal angle apart.
 
         Warning:
             This function breaks the start-update paradigm and should only be used in
