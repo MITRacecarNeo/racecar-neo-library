@@ -12,6 +12,7 @@ jobs:
       - uses: ammaraskar/sphinx-action@master
         with:
           docs-folder: "."
+          pre-build-command: "pip install sphinxawesome-theme"
       - uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: '${{ secrets.GITHUB_TOKEN }}'
