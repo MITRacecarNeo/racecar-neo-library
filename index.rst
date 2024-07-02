@@ -10,34 +10,13 @@ Welcome to racecar-neo-library's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   camera
-   controller
-   display
-   drive
-   lidar
-   physics
-   racecar_utils
-
-.. automodule:: camera
-   :members:
-
-.. automodule:: controller
-   :members:
-
-.. automodule:: display
-   :members:
-
-.. automodule:: drive
-   :members:
-
-.. automodule:: lidar
-   :members:
-
-.. automodule:: physics
-   :members:
-
-.. automodule:: racecar_utils
-   :members:
+   docs/camera
+   docs/controller
+   docs/display
+   docs/drive
+   docs/lidar
+   docs/physics
+   docs/utils
 
 
 Indices and tables
