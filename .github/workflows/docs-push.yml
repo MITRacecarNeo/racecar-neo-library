@@ -9,10 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: ammaraskar/sphinx-action@master
-        with:
-          docs-folder: "."
-          pre-build-command: "pip install sphinxawesome-theme"
+        run: "sudo apt install -y python3-sphinx && pip install sphinxawesome-theme && make html"
       - uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: '${{ secrets.GITHUB_TOKEN }}'
