@@ -10,7 +10,7 @@ jobs:
     permissions: write-all
     steps:
       - uses: actions/checkout@v2
-      - run: "sudo apt install -y python3-sphinx && pip install sphinxawesome-theme && make html"
+      - run: "sudo apt install -y python3-sphinx && pip install sphinxawesome-theme numpy opencv-python && make html"
       - uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: '${{ secrets.GITHUB_TOKEN }}'
