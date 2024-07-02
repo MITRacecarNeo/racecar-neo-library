@@ -8,7 +8,7 @@ sys.path.insert(0, os.path.relpath('library'))
 # -- Project information -----------------------------------------------------
 
 project = 'racecar-neo-library'
-copyright = '2024, BWSI Autonomous RACECAR'
+copyright = '2024, MIT.'
 author = 'BWSI Autonomous RACECAR'
 
 
@@ -22,6 +22,8 @@ extensions = [
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
+pygments_style = 'default'
+pygments_style_dark = 'lightbulb'
 
 # -- Options for HTML output -------------------------------------------------
 
