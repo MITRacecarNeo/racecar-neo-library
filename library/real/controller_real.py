@@ -171,8 +171,8 @@ class ControllerReal(Controller):
         Converts a received joystick axis value into the desired range.
 
         Args:
-            x: The value of the joystick x axis provided in the ROS message.
-            y: The value of the joystick y axis provided in the ROS message.
+            x: The value of the joystick x-axis provided in the ROS message.
+            y: The value of the joystick y-axis provided in the ROS message.
         """
         x = -x
 
@@ -181,4 +181,4 @@ class ControllerReal(Controller):
         if abs(y) < self.__JOYSTICK_DEAD_ZONE:
             y = 0
 
-        return (x, y)
+        return x, y

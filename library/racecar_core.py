@@ -143,8 +143,8 @@ def create_racecar(isSimulation: Optional[bool] = None) -> Racecar:
         which disables the display module.
     """
     library_path: str = __file__.replace("racecar_core.py", "")
-    isHeadless: bool = "-h" in sys.argv
-    initializeDisplay: bool = "-d" in sys.argv
+    is_headless: bool = "-h" in sys.argv
+    initialize_display: bool = "-d" in sys.argv
 
     # If isSimulation was not specified, set it to True if the user ran the program with
     # the -s flag and false otherwise
@@ -156,21 +156,21 @@ def create_racecar(isSimulation: Optional[bool] = None) -> Racecar:
         sys.path.insert(1, library_path + "simulation")
         from racecar_core_sim import RacecarSim
 
-        racecar = RacecarSim(isHeadless)
+        racecar = RacecarSim(is_headless)
     else:
         sys.path.insert(1, library_path + "real")
         from racecar_core_real import RacecarReal
 
-        racecar = RacecarReal(isHeadless)
+        racecar = RacecarReal(is_headless)
 
-    if initializeDisplay:
+    if initialize_display:
         racecar.display.create_window()
 
     rc_utils.print_colored(
         ">> Racecar created with the following options:"
         + f"\n    Simulation (-s): [{isSimulation}]"
-        + f"\n    Headless (-h): [{isHeadless}]"
-        + f"\n    Initialize with display (-d): [{initializeDisplay}]",
+        + f"\n    Headless (-h): [{is_headless}]"
+        + f"\n    Initialize with display (-d): [{initialize_display}]",
         rc_utils.TerminalColor.pink,
     )
 

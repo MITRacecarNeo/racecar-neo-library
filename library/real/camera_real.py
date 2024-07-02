@@ -62,7 +62,7 @@ class CameraReal(Camera):
 
     def __color_callback(self, data):
         try:
-            np_arr = np.frombuffer(data.data, np.uint8) # decode jpeg image type
+            np_arr = np.frombuffer(data.data, np.uint8)  # decode jpeg image type
             cv_color_image = cv.imdecode(np_arr, cv.IMREAD_COLOR)
         except CvBridgeError as e:
             print(e)

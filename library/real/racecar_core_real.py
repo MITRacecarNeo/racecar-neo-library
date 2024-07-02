@@ -204,12 +204,12 @@ class RacecarReal(Racecar):
         MAX_SPEED = 0.15  # The speed when the trigger is fully pressed
         MAX_ANGLE = 0.25  # The angle when the joystick is fully moved
 
-        forwardSpeed = self.controller.get_trigger(self.controller.Trigger.RIGHT)
-        backSpeed = self.controller.get_trigger(self.controller.Trigger.LEFT)
-        speed = (forwardSpeed - backSpeed) * MAX_SPEED
+        forward_speed = self.controller.get_trigger(self.controller.Trigger.RIGHT)
+        back_speed = self.controller.get_trigger(self.controller.Trigger.LEFT)
+        speed = (forward_speed - back_speed) * MAX_SPEED
 
         # If both triggers are pressed, stop for safety
-        if forwardSpeed > 0 and backSpeed > 0:
+        if forward_speed > 0 and back_speed > 0:
             speed = 0
 
         angle = (

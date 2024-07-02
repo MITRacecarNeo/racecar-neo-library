@@ -130,7 +130,7 @@ class Camera(abc.ABC):
         Returns the current depth image captured by the camera.
 
         Returns:
-            A two dimensional array indexed from top left to the bottom right storing
+            A two-dimensional array indexed from top left to the bottom right storing
             the distance of each pixel from the car in cm.
 
         Example::
@@ -149,7 +149,7 @@ class Camera(abc.ABC):
         Returns the current depth image without the car in "go" mode.
 
         Returns:
-            A two dimensional array indexed from top left to the bottom right storing
+            A two-dimensional array indexed from top left to the bottom right storing
             the distance of each pixel from the car in cm.
 
         Warning:

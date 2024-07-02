@@ -5,6 +5,7 @@ from nptyping import NDArray
 
 from physics import Physics
 
+
 class PhysicsSim(Physics):
     def __init__(self, racecar) -> None:
         self.__racecar = racecar
