@@ -1,0 +1,5 @@
+Display
+===============================================
+
+.. automodule:: display
+   :members:
