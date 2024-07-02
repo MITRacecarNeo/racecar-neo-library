@@ -3,13 +3,16 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to racecar-neo-library's documentation!
+RACECAR Neo library documentation
 ===============================================
+
+This is the documentation for the RACECAR Neo python library used in the BWSI RACECAR course.
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
+   docs/core
    docs/camera
    docs/controller
    docs/display
@@ -18,6 +21,7 @@ Welcome to racecar-neo-library's documentation!
    docs/physics
    docs/utils
 
+|
 
 Indices and tables
 ==================
