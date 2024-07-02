@@ -599,6 +599,36 @@ def get_contour_area(contour: NDArray) -> float:
     return cv.contourArea(contour)
 
 
+def pixelate_image(
+    img: NDArray[np.uint8],
+    size: [int, int] = (24, 8)
+) -> NDArray[np.uint8]:
+    """
+    "Pixelates" and resizes a grayscale image to a smaller size, useful for
+    displaying pictures on the dot matrix.
+
+    Args:
+        img: The grayscale image to pixelate.
+        size: The smaller width and height to pixelate the image to.
+            By default, this resizes the image to the correct size for the
+            dot matrix display.
+
+    Returns:
+        The pixelated image.
+
+    Example::
+
+        # Load and pixelate a black-and-white image
+        img = cv.imread('./frames/bad_apple_080.png', cv.IMREAD_GRAYSCALE)
+        pixelated = rc_utils.pixelate_image(img)
+
+        # Display the image on the dot matrix
+        rc.display.set_matrix(pixelated)
+    """
+    w, h = size
+    return cv.resize(img, (w, h), interpolation=cv.INTER_LINEAR)
+
+
 ########################################################################################
 # Depth Images
 ########################################################################################
