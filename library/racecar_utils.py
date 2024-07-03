@@ -125,10 +125,10 @@ def clamp(value: float, min: float, max: float) -> float:
         a = rc_utils.clamp(3, 0, 10)
 
         # b will be set to 0
-        b = rc_utils.remap_range(-2, 0, 10)
+        b = rc_utils.clamp(-2, 0, 10)
 
         # c will be set to 10
-        c = rc_utils.remap_range(11, 0, 10)
+        c = rc_utils.clamp(11, 0, 10)
     """
     return min if value < min else max if value > max else value
 
