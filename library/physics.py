@@ -11,7 +11,7 @@ File Description: Defines the interface of the Physics module of the racecar_cor
 
 import abc
 import numpy as np
-from nptyping import NDArray, Shape, Float32
+from nptyping import NDArray
 
 
 class Physics(abc.ABC):
@@ -20,7 +20,7 @@ class Physics(abc.ABC):
     """
 
     @abc.abstractmethod
-    def get_linear_acceleration(self) -> NDArray[Shape['3'], Float32]:
+    def get_linear_acceleration(self) -> NDArray[3, np.float32]:
         """
         Returns a 3D vector containing the car's linear acceleration.
 
@@ -29,9 +29,9 @@ class Physics(abc.ABC):
             the last frame in m/s^2.
 
         Note:
-            The x-axis points out of the right of the car.
-            The y-axis points directly up (perpendicular to the ground).
-            The z-axis points out of the front of the car.
+            The x axis points out of the right of the car.
+            The y axis points directly up (perpendicular to the ground).
+            The z axis points out of the front of the car.
 
         Example::
 
@@ -45,7 +45,7 @@ class Physics(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def get_angular_velocity(self) -> NDArray[Shape['3'], Float32]:
+    def get_angular_velocity(self) -> NDArray[3, np.float32]:
         """
         Returns a 3D vector containing the car's angular velocity.
 
@@ -54,9 +54,9 @@ class Physics(abc.ABC):
             last frame in rad/s.
 
         Note:
-            The x-axis (pitch) points out of the right of the car.
-            The y-axis (yaw) points directly up (perpendicular to the ground).
-            The z-axis (roll) points out of the front of the car.
+            The x axis (pitch) points out of the right of the car.
+            The y axis (yaw) points directly up (perpendicular to the ground).
+            The z axis (roll) points out of the front of the car.
             Rotation sign uses the right hand rule. For example, when the car turns to
             the left, it has a positive angular velocity along the y axis.
 

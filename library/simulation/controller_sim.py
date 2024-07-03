@@ -1,6 +1,7 @@
 import sys
 import struct
 from enum import IntEnum
+from typing import Tuple, Dict
 
 from controller import Controller
 
@@ -8,11 +9,11 @@ from controller import Controller
 class ControllerSim(Controller):
     def __init__(self, racecar) -> None:
         self.__racecar = racecar
-        self.__is_down_cache: dict[Controller.Button, bool] = {}
-        self.__was_pressed_cache: dict[Controller.Button, bool] = {}
-        self.__was_released_cache: dict[Controller.Button, bool] = {}
-        self.__get_trigger_cache: dict[Controller.Trigger, float] = {}
-        self.__get_joystick_cache: dict[Controller.Joystick, tuple[float, float]] = {}
+        self.__is_down_cache: Dict[Controller.Button, bool] = {}
+        self.__was_pressed_cache: Dict[Controller.Button, bool] = {}
+        self.__was_released_cache: Dict[Controller.Button, bool] = {}
+        self.__get_trigger_cache: Dict[Controller.Trigger, float] = {}
+        self.__get_joystick_cache: Dict[Controller.Joystick, Tuple[float, float]] = {}
 
     def is_down(self, button: Controller.Button) -> bool:
         if button.value not in self.__is_down_cache:
@@ -73,7 +74,7 @@ class ControllerSim(Controller):
             self.__get_trigger_cache[trigger.value] = value
         return self.__get_trigger_cache[trigger.value]
 
-    def get_joystick(self, joystick: Controller.Joystick) -> tuple[float, float]:
+    def get_joystick(self, joystick: Controller.Joystick) -> Tuple[float, float]:
         if joystick.value not in self.__get_joystick_cache:
             self.__racecar._RacecarSim__send_data(
                 struct.pack(
