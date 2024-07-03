@@ -29,9 +29,9 @@ class Physics(abc.ABC):
             the last frame in m/s^2.
 
         Note:
-            The x axis points out of the right of the car.
-            The y axis points directly up (perpendicular to the ground).
-            The z axis points out of the front of the car.
+            The x-axis points out of the right of the car.
+            The y-axis points directly up (perpendicular to the ground).
+            The z-axis points out of the front of the car.
 
         Example::
 
@@ -54,9 +54,9 @@ class Physics(abc.ABC):
             last frame in rad/s.
 
         Note:
-            The x axis (pitch) points out of the right of the car.
-            The y axis (yaw) points directly up (perpendicular to the ground).
-            The z axis (roll) points out of the front of the car.
+            The x-axis (pitch) points out of the right of the car.
+            The y-axis (yaw) points directly up (perpendicular to the ground).
+            The z-axis (roll) points out of the front of the car.
             Rotation sign uses the right hand rule. For example, when the car turns to
             the left, it has a positive angular velocity along the y axis.
 

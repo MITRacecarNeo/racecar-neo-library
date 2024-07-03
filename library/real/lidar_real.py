@@ -19,8 +19,6 @@ from nptyping import NDArray
 import rclpy as ros2
 from rclpy.qos import qos_profile_sensor_data
 from sensor_msgs.msg import LaserScan
-from cv_bridge import CvBridge, CvBridgeError
-import threading
 
 
 class LidarReal(Lidar):

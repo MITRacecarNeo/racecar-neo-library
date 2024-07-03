@@ -14,7 +14,7 @@ import abc
 
 class Drive(abc.ABC):
     @abc.abstractmethod
-    def set_speed_angle(self, speed: float, angle:float) -> None:
+    def set_speed_angle(self, speed: float, angle: float) -> None:
         """
         Sets the throttle applied to the back wheels and the angle of the front wheels.
 

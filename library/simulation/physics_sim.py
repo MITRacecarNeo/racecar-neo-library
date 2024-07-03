@@ -1,4 +1,3 @@
-import sys
 import struct
 import numpy as np
 from nptyping import NDArray

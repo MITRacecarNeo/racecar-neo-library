@@ -191,8 +191,8 @@ def remap_range(
 
 def crop(
     image: NDArray[(Any, ...), Any],
-    top_left_inclusive: Tuple[float, float],
-    bottom_right_exclusive: Tuple[float, float],
+    top_left_inclusive: tuple[float, float],
+    bottom_right_exclusive: tuple[float, float],
 ) -> NDArray[(Any, ...), Any]:
     """
     Crops an image to a rectangle based on the specified pixel points.
@@ -289,7 +289,7 @@ def stack_images_vertical(
         image_1: The image to place on the bottom.
 
     Returns:
-        An image with the original two images on top of eachother.
+        An image with the original two images on top of each other.
 
     Note:
         The images must have the same width.
@@ -341,8 +341,8 @@ class ColorBGR(Enum):
 
 def find_contours(
     color_image: NDArray[(Any, Any, 3), np.uint8],
-    hsv_lower: Tuple[int, int, int],
-    hsv_upper: Tuple[int, int, int],
+    hsv_lower: tuple[int, int, int],
+    hsv_upper: tuple[int, int, int],
 ) -> List[NDArray]:
     """
     Finds all contours of the specified color range in the provided image.
@@ -454,7 +454,7 @@ def get_largest_contour(
 def draw_contour(
     color_image: NDArray[(Any, Any, 3), np.uint8],
     contour: NDArray,
-    color: Tuple[int, int, int] = ColorBGR.green.value,
+    color: tuple[int, int, int] = ColorBGR.green.value,
 ) -> None:
     """
     Draws a contour on the provided image.
@@ -489,8 +489,8 @@ def draw_contour(
 
 def draw_circle(
     color_image: NDArray[(Any, Any, 3), np.uint8],
-    center: Tuple[int, int],
-    color: Tuple[int, int, int] = ColorBGR.yellow.value,
+    center: tuple[int, int],
+    color: tuple[int, int, int] = ColorBGR.yellow.value,
     radius: int = 6,
 ) -> None:
     """
@@ -535,7 +535,7 @@ def draw_circle(
     cv.circle(color_image, (center[1], center[0]), radius, color, -1)
 
 
-def get_contour_center(contour: NDArray) -> Optional[Tuple[int, int]]:
+def get_contour_center(contour: NDArray) -> Optional[tuple[int, int]]:
     """
     Finds the center of a contour from an image.
 
@@ -635,7 +635,8 @@ def pixelate_image(
 
 
 def get_depth_image_center_distance(
-    depth_image: NDArray[(Any, Any), np.float32], kernel_size: int = 5
+    depth_image: NDArray[(Any, Any), np.float32],
+    kernel_size: int = 5
 ) -> float:
     """
     Finds the distance of the center object in a depth image.
@@ -675,7 +676,7 @@ def get_depth_image_center_distance(
 
 def get_pixel_average_distance(
     depth_image: NDArray[(Any, Any), np.float32],
-    pix_coord: Tuple[int, int],
+    pix_coord: tuple[int, int],
     kernel_size: int = 5,
 ) -> float:
     """
@@ -746,8 +747,9 @@ def get_pixel_average_distance(
 
 
 def get_closest_pixel(
-    depth_image: NDArray[(Any, Any), np.float32], kernel_size: int = 5
-) -> Tuple[int, int]:
+    depth_image: NDArray[(Any, Any), np.float32],
+    kernel_size: int = 5
+) -> tuple[int, int]:
     """
     Finds the closest pixel in a depth image.
 
@@ -843,8 +845,8 @@ def colormap_depth_image(
 
 def get_lidar_closest_point(
     scan: NDArray[Any, np.float32],
-    window: Tuple[float, float] = (0, 360)
-) -> Tuple[float, float]:
+    window: tuple[float, float] = (0, 360)
+) -> tuple[float, float]:
     """
     Finds the closest point from a LIDAR scan.
 
@@ -1049,7 +1051,7 @@ class ARMarker:
     def detect_colors(
         self,
         color_image: NDArray[(Any, Any), np.float32],
-        potential_colors: List[Tuple[Tuple[int, int, int], Tuple[int, int, int], str]],
+        potential_colors: List[tuple[tuple[int, int, int], tuple[int, int, int], str]],
     ) -> None:
         """
         Attempts to detect the provided colors in the border around the AR marker.
@@ -1156,7 +1158,7 @@ class ARMarker:
 def get_ar_markers(
     color_image: NDArray[(Any, Any, 3), np.uint8],
     potential_colors: List[
-        Tuple[Tuple[int, int, int], Tuple[int, int, int], str]
+        tuple[tuple[int, int, int], tuple[int, int, int], str]
     ] = None,
 ) -> List[ARMarker]:
     """
@@ -1210,10 +1212,10 @@ def get_ar_markers(
 def draw_ar_markers(
     color_image: NDArray[(Any, Any, 3), np.uint8],
     markers: List[ARMarker],
-    color: Tuple[int, int, int] = ColorBGR.green.value,
+    color: tuple[int, int, int] = ColorBGR.green.value,
 ) -> NDArray[(Any, Any, 3), np.uint8]:
     """
-    Draws annotations on the AR markers in a image.
+    Draws annotations on the AR markers in an image.
 
     Args:
         color_image: The color image in which the AR markers were detected.
@@ -1240,4 +1242,4 @@ def draw_ar_markers(
     for i in range(len(markers)):
         ids[i][0] = markers[i].get_id()
         corners.append(markers[i].get_corners_aruco_format())
-    cv.aruco.drawDetectedMarkers(color_image, corners, ids, color)
+    return cv.aruco.drawDetectedMarkers(color_image, corners, ids, color)

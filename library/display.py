@@ -12,7 +12,7 @@ File Description: Defines the interface of the Display module of the racecar_cor
 import abc
 import numpy as np
 import math
-from typing import List, Tuple, Any
+from typing import Any
 from nptyping import NDArray
 
 import racecar_utils as rc_utils
@@ -73,7 +73,7 @@ class Display(abc.ABC):
         self,
         image: NDArray[(Any, Any), np.float32],
         max_depth: int = 1000,
-        points: List[Tuple[int, int]] = [],
+        points: list[tuple[int, int]] = [],
     ) -> None:
         """
         Displays a depth image in grayscale in a window.
@@ -129,7 +129,7 @@ class Display(abc.ABC):
         samples: NDArray[Any, np.float32],
         radius: int = 128,
         max_range: int = 1000,
-        highlighted_samples: List[Tuple[float, float]] = [],
+        highlighted_samples: list[tuple[float, float]] = [],
     ) -> None:
         """
         Displays a set of LIDAR samples.
