@@ -20,6 +20,7 @@ import display_sim
 import drive_sim
 import lidar_sim
 import physics_sim
+import telemetry_sim
 
 from racecar_core import Racecar
 import racecar_utils as rc_utils
@@ -112,6 +113,7 @@ class RacecarSim(Racecar):
         self.drive = drive_sim.DriveSim(self)
         self.physics = physics_sim.PhysicsSim(self)
         self.lidar = lidar_sim.LidarSim(self)
+        self.telemetry = telemetry_sim.Telemetry()
 
         self.__start: Callable[[], None]
         self.__update: Callable[[], None]
@@ -196,6 +198,8 @@ class RacecarSim(Racecar):
                 break
 
             self.__send_header(self.Header.python_finished)
+        
+        self.telemetry.visualize()
 
     def set_start_update(
         self,

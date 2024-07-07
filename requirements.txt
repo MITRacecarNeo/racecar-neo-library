@@ -2,4 +2,5 @@ numpy == 1.21.2
 mypy
 nptyping == 1.4.4
 opencv-contrib-python == 4.5.4.58
+pandas == 2.0.3
 sphinxawesome-theme
