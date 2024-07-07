@@ -119,7 +119,7 @@ class Controller(abc.ABC):
             # This update function will print a single message each time the A
             # button is released on the controller
             def update():
-                if rc.controller.was_pressed(rc.controller.Button.A):
+                if rc.controller.was_released(rc.controller.Button.A):
                     print("The A button was released")
         """
         pass

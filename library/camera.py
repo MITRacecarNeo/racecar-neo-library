@@ -81,7 +81,7 @@ class Camera(abc.ABC):
 
             # Initialize image with a direct reference to the recent color image
             # captured by the camera
-            image = rc.camera.get_color_image()
+            image = rc.camera.get_color_image_no_copy()
 
             # Store the amount of blue in the pixel on row 3, column 5
             blue = image[3][5][0]

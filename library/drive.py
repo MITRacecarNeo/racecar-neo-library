@@ -67,7 +67,7 @@ class Drive(abc.ABC):
 
         Warning:
             The RACECAR contains expensive and fragile equipment.  Please only increase
-            The max speed if you are in a safe environment without the potential for
+            the max speed if you are in a safe environment without the potential for
             hard collisions.
 
         Example::
