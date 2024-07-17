@@ -11,7 +11,7 @@ File Description: Contains helper functions to support common operations.
 
 import cv2 as cv
 import numpy as np
-from typing import *
+from typing import Any, Optional
 from nptyping import NDArray
 from enum import Enum, IntEnum
 
@@ -343,7 +343,7 @@ def find_contours(
     color_image: NDArray[(Any, Any, 3), np.uint8],
     hsv_lower: tuple[int, int, int],
     hsv_upper: tuple[int, int, int],
-) -> List[NDArray]:
+) -> list[NDArray]:
     """
     Finds all contours of the specified color range in the provided image.
 
@@ -414,7 +414,8 @@ def find_contours(
 
 
 def get_largest_contour(
-    contours: List[NDArray], min_area: int = 30
+    contours: list[NDArray],
+    min_area: int = 30
 ) -> Optional[NDArray]:
     """
     Finds the largest contour with size greater than min_area.
@@ -601,7 +602,7 @@ def get_contour_area(contour: NDArray) -> float:
 
 def pixelate_image(
     img: NDArray[np.uint8],
-    size: [int, int] = (24, 8)
+    size: tuple[int, int] = (24, 8)
 ) -> NDArray[np.uint8]:
     """
     "Pixelates" and resizes a grayscale image to a smaller size, useful for
@@ -969,7 +970,7 @@ def get_lidar_average_distance(
     right_index: int = (center_index + num_side_samples) % len(scan)
 
     # Select samples in the window, handling if we cross the edge of the array
-    samples: List[float]
+    samples: list[float]
     if right_index < left_index:
         samples = scan[left_index:].tolist() + scan[0 : right_index + 1].tolist()
     else:
@@ -1051,7 +1052,7 @@ class ARMarker:
     def detect_colors(
         self,
         color_image: NDArray[(Any, Any), np.float32],
-        potential_colors: List[tuple[tuple[int, int, int], tuple[int, int, int], str]],
+        potential_colors: list[tuple[tuple[int, int, int], tuple[int, int, int], str]],
     ) -> None:
         """
         Attempts to detect the provided colors in the border around the AR marker.
@@ -1157,10 +1158,10 @@ class ARMarker:
 
 def get_ar_markers(
     color_image: NDArray[(Any, Any, 3), np.uint8],
-    potential_colors: List[
+    potential_colors: list[
         tuple[tuple[int, int, int], tuple[int, int, int], str]
     ] = None,
-) -> List[ARMarker]:
+) -> list[ARMarker]:
     """
     Finds AR markers in an image.
 
@@ -1190,7 +1191,7 @@ def get_ar_markers(
     )
 
     # Create an ARMarker object for each detected marker
-    markers: List[ARMarker] = []
+    markers: list[ARMarker] = []
     for i in range(len(corners)):
         # Rearrange each corner point into the (row, col) format
         corners_formatted = corners[i][0].astype(np.int32)
@@ -1211,7 +1212,7 @@ def get_ar_markers(
 
 def draw_ar_markers(
     color_image: NDArray[(Any, Any, 3), np.uint8],
-    markers: List[ARMarker],
+    markers: list[ARMarker],
     color: tuple[int, int, int] = ColorBGR.green.value,
 ) -> NDArray[(Any, Any, 3), np.uint8]:
     """

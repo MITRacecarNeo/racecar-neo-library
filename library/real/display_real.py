@@ -72,8 +72,3 @@ class DisplayReal(Display):
 
     def get_matrix(self) -> NDArray[(8, 24), np.uint8]:
         return self.__matrix
-
-    def new_matrix(self):
-        arr = np.empty(shape=(8, 24))
-        arr.fill(0)  # Init numpy array of size 8 (rows) x 24 (columns) with all zeros
-        return arr

@@ -204,28 +204,30 @@ class Display(abc.ABC):
 
         self.show_color_image(image)
 
+    @abc.abstractmethod
     def set_matrix(self, matrix: NDArray[(8, 24), np.uint8]) -> None:
         """
         Sets the dot matrix display module to the pattern in the argument (2D matrix).
-        
+
         Args:
             matrix: The 8x24 NumPy array with the pattern to be displayed on the dot
                 matrix display module.
-        
+
         Note:
             A 1 in the matrix indicates an LED that is on, while a 0 in the
             matrix indicates an LED that is off.
-        
+
         Example::
 
-            dot_matrix = np.ones((8,24), dtype=np.uint8)
-        
+            dot_matrix = np.ones((8, 24), dtype=np.uint8)
+
             # Turn all the LEDs on the dot matrix module on
             rc.display.set_matrix(dot_matrix)
 
         """
         pass
 
+    @abc.abstractmethod
     def get_matrix(self) -> NDArray[(8, 24), np.uint8]:
         """
         Returns the current configuration of the dot matrix display module.
@@ -233,11 +235,11 @@ class Display(abc.ABC):
         Returns:
             An 8x24 NumPy array (data type: np.uint8) representing the current
             configuration of the dot matrix display module.
-        
+
         Note:
             A 1 in the matrix indicates an LED that is on, while a 0 in the
             matrix indicates an LED that is off.
-        
+
         Example::
 
             # Gets current configuration values of the dot matrix module
@@ -245,16 +247,20 @@ class Display(abc.ABC):
         """
         pass
 
-    def new_matrix(self):
+    def new_matrix(self) -> NDArray[(8, 24), np.uint8]:
         """
         Returns a new matrix of all zeroes for the dot matrix display module.
-        
+
         Returns:
             An 8x24 NumPy array (data type: np.uint8) of all zeroes.
-        
+
         Example::
 
             # Create a new matrix of all zeroes.
             my_matrix = rc.display.new_matrix()
+
+            # Set the top left pixel to on, then display the matrix on the dot matrix.
+            my_matrix[0, 0] = 1
+            rc.display.set_matrix(my_matrix)
         """
-        pass
+        return np.zeros((8, 24), dtype=np.uint8)
