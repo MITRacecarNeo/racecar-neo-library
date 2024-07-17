@@ -134,7 +134,7 @@ automatically create a new window if one was not already created.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="display.Display.get_matrix">
-<span class="sig-name descname"><span class="pre">get_matrix</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">8</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">24</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">UInt</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#display.Display.get_matrix" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#display.Display.get_matrix'"><span>#</span></a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_matrix</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">8</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">24</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">UInt</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#display.Display.get_matrix" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#display.Display.get_matrix'"><span>#</span></a></dt>
 <dd><p>Returns the current configuration of the dot matrix display module.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -158,7 +158,7 @@ matrix indicates an LED that is off.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="display.Display.new_matrix">
-<span class="sig-name descname"><span class="pre">new_matrix</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#display.Display.new_matrix" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#display.Display.new_matrix'"><span>#</span></a></dt>
+<span class="sig-name descname"><span class="pre">new_matrix</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">8</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">24</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">UInt</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#display.Display.new_matrix" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#display.Display.new_matrix'"><span>#</span></a></dt>
 <dd><p>Returns a new matrix of all zeroes for the dot matrix display module.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -171,12 +171,16 @@ matrix indicates an LED that is off.</p>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># Create a new matrix of all zeroes.</span>
 </span><span id="line-2"><span class="n">my_matrix</span> <span class="o">=</span> <span class="n">rc</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">new_matrix</span><span class="p">()</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="c1"># Set the top left pixel to on, then display the matrix on the dot matrix.</span>
+</span><span id="line-5"><span class="n">my_matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span id="line-6"><span class="n">rc</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_matrix</span><span class="p">(</span><span class="n">my_matrix</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="display.Display.set_matrix">
-<span class="sig-name descname"><span class="pre">set_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">8</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">24</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">UInt</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#display.Display.set_matrix" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#display.Display.set_matrix'"><span>#</span></a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">8</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">24</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">UInt</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#display.Display.set_matrix" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#display.Display.set_matrix'"><span>#</span></a></dt>
 <dd><p>Sets the dot matrix display module to the pattern in the argument (2D matrix).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -190,7 +194,7 @@ matrix display module.</p>
 matrix indicates an LED that is off.</p>
 </div>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">dot_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">8</span><span class="p">,</span><span class="mi">24</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">dot_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">8</span><span class="p">,</span> <span class="mi">24</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
 </span><span id="line-2">
 </span><span id="line-3"><span class="c1"># Turn all the LEDs on the dot matrix module on</span>
 </span><span id="line-4"><span class="n">rc</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_matrix</span><span class="p">(</span><span class="n">dot_matrix</span><span class="p">)</span>
