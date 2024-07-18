@@ -1161,7 +1161,7 @@ def get_ar_markers(
     potential_colors: list[
         tuple[tuple[int, int, int], tuple[int, int, int], str]
     ] = None,
-    marker_type: cv.aruco.PredefinedDictionaryType = cv.aruco.DICT_6X6_250
+    marker_type: int = cv.aruco.DICT_6X6_250
 ) -> list[ARMarker]:
     """
     Finds AR markers in an image.
