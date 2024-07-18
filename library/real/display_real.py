@@ -62,7 +62,7 @@ class DisplayReal(Display):
             cv.imshow(self.__WINDOW_NAME, image)
             cv.waitKey(1)
 
-    def set_matrix(self, matrix: NDArray[(8, 24), np.uint8]):
+    def set_matrix(self, matrix: NDArray[(8, 24), np.uint8]) -> None:
         self.__matrix = matrix
         with canvas(self.device) as draw:
             for x in range(0, self.device.width):
@@ -72,3 +72,11 @@ class DisplayReal(Display):
 
     def get_matrix(self) -> NDArray[(8, 24), np.uint8]:
         return self.__matrix
+
+    def set_matrix_intensity(self, intensity: float) -> None:
+        assert (
+            0.0 <= intensity <= 1.0
+        ), f"intensity [{intensity}] must be between 0.0 and 1.0 inclusive."
+
+        contrast = int(intensity * 255)
+        self.device.contrast(contrast)
