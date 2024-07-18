@@ -273,6 +273,11 @@ class Display(abc.ABC):
         Args:
             intensity: The LED intensity (between 0.0 and 1.0) to set.
 
+        Note:
+            Due to the way the racecar's LED driver works, an intensity of 0.0 does *not*
+            correspond to turning the LEDs completely off, and therefore `set_matrix_intensity`
+            cannot be used to make a fade-in or fade-out animation.
+
         Example::
 
             # Pulse the dot matrix display using a sin wave profile.
