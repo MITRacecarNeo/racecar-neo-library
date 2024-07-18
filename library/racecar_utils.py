@@ -1051,7 +1051,7 @@ class ARMarker:
 
     def detect_colors(
         self,
-        color_image: NDArray[(Any, Any), np.float32],
+        color_image: NDArray[(Any, Any), np.uint8],
         potential_colors: list[tuple[tuple[int, int, int], tuple[int, int, int], str]],
     ) -> None:
         """
@@ -1161,6 +1161,7 @@ def get_ar_markers(
     potential_colors: list[
         tuple[tuple[int, int, int], tuple[int, int, int], str]
     ] = None,
+    marker_type: cv.aruco.PredefinedDictionaryType = cv.aruco.DICT_6X6_250
 ) -> list[ARMarker]:
     """
     Finds AR markers in an image.
@@ -1169,15 +1170,24 @@ def get_ar_markers(
         color_image: The color image in which to search for AR markers.
         potential_colors: The potential colors of the AR marker, each represented as
             (hsv_min, hsv_max, color_name)
+        marker_type: The type of ArUco marker to look for. By default, this function looks
+            for 6x6 markers.
+
+    Warning:
+        By default, this function looks for 6x6 AR markers which are used in the racecar sim.
+        To track the 5x5 markers used in-person, pass `cv.aruco.DICT_5X5_250` to `type`.
 
     Returns:
         A list of each AR marker's four corners clockwise and an array of the AR marker ids.
 
     Example::
 
-        # Detect the AR markers in the current color image
+        # Detect 6x6 ArUco markers in the current color image.
         image = rc.camera.get_color_image()
         markers = racecar_utils.get_ar_markers(image)
+
+        # Or, detect 5x5 markers instead:
+        markers = racecar_utils.get_ar_markers(image, marker_type=cv.aruco.DICT_5X5_250)
 
         # Print information detected for the zeroth marker
         if len(markers) >= 1:
@@ -1186,7 +1196,7 @@ def get_ar_markers(
     # Use ArUco to find the raw corner and id information
     corners, ids, _ = cv.aruco.detectMarkers(
         color_image,
-        cv.aruco.Dictionary_get(cv.aruco.DICT_6X6_250),
+        cv.aruco.Dictionary_get(marker_type),
         parameters=cv.aruco.DetectorParameters_create(),
     )
 
