@@ -47,7 +47,3 @@ class TelemetrySim(Telemetry):
         
         plt.savefig(self._PLOT_FILE_NAME)
         self.log_file.seek(0, 2)
-
-
-
-
