@@ -9,18 +9,9 @@ RACECAR Neo library documentation
 This is the documentation for the RACECAR Neo python library used in the BWSI RACECAR course.
 
 .. toctree::
-   :maxdepth: 2
    :caption: Contents:
 
-   docs/core
-   docs/camera
-   docs/controller
-   docs/display
-   docs/drive
-   docs/lidar
-   docs/physics
-   docs/telemetry
-   docs/utils
+   modules/index
 
 |
 
