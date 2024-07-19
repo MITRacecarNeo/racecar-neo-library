@@ -12,6 +12,7 @@ This is the documentation for the RACECAR Neo python library used in the BWSI RA
    :caption: Contents:
 
    modules/index
+   guides/index
 
 |
 
