@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 
-<html :class="{'dark': darkMode === 'dark' || (darkMode === 'system' &amp;&amp; window.matchMedia('(prefers-color-scheme: dark)').matches)}" class="scroll-smooth" data-content_root="../../" lang="en" x-data="{ darkMode: localStorage.getItem('darkMode') || localStorage.setItem('darkMode', 'system'), activeSection: '' }" x-init="$watch('darkMode', val =&gt; localStorage.setItem('darkMode', val))">
+<html :class="{'dark': darkMode === 'dark' || (darkMode === 'system' &amp;&amp; window.matchMedia('(prefers-color-scheme: dark)').matches)}" class="scroll-smooth" data-content_root="../" lang="en" x-data="{ darkMode: localStorage.getItem('darkMode') || localStorage.setItem('darkMode', 'system'), activeSection: '' }" x-init="$watch('darkMode', val =&gt; localStorage.setItem('darkMode', val))">
 <head>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <meta charset="utf-8"/>
 <meta content="white" media="(prefers-color-scheme: light)" name="theme-color"/>
 <meta content="black" media="(prefers-color-scheme: dark)" name="theme-color"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Drive | racecar-neo-library  documentation</title>
-<meta content="Drive | racecar-neo-library  documentation" property="og:title"/>
-<meta content="Drive | racecar-neo-library  documentation" name="twitter:title"/>
-<link href="../../_static/pygments.css?v=63e1294f" rel="stylesheet" type="text/css"/>
-<link href="../../_static/theme.css?v=ecdfb4fc" rel="stylesheet" type="text/css"/>
-<link href="../../search.html" rel="search" title="Search"/>
-<link href="../../genindex.html" rel="index" title="Index"/>
-<link href="lidar.html" rel="next" title="Lidar"/>
-<link href="display.html" rel="prev" title="Display"/>
+<title>Physics | racecar-neo-library  documentation</title>
+<meta content="Physics | racecar-neo-library  documentation" property="og:title"/>
+<meta content="Physics | racecar-neo-library  documentation" name="twitter:title"/>
+<link href="../_static/pygments.css?v=63e1294f" rel="stylesheet" type="text/css"/>
+<link href="../_static/theme.css?v=ecdfb4fc" rel="stylesheet" type="text/css"/>
+<link href="../search.html" rel="search" title="Search"/>
+<link href="../genindex.html" rel="index" title="Index"/>
+<link href="telemetry.html" rel="next" title="Telemetry"/>
+<link href="lidar.html" rel="prev" title="Lidar"/>
 <script>
     <!-- Prevent Flash of wrong theme -->
       const userPreference = localStorage.getItem('darkMode');
@@ -42,7 +42,7 @@
 <span class="sr-only">Toggle navigation menu</span>
 </button>
 <div class="flex items-center justify-between flex-1 space-x-2 sm:space-x-4 md:justify-end">
-<div class="flex-1 w-full md:w-auto md:flex-none"><form @keydown.k.window.meta="$refs.search.focus()" action="../../search.html" class="relative flex items-center group" id="searchbox" method="get">
+<div class="flex-1 w-full md:w-auto md:flex-none"><form @keydown.k.window.meta="$refs.search.focus()" action="../search.html" class="relative flex items-center group" id="searchbox" method="get">
 <input aria-label="Search the docs" class="inline-flex items-center font-medium transition-colors bg-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background border border-input hover:bg-accent focus:bg-accent hover:text-accent-foreground focus:text-accent-foreground hover:placeholder-accent-foreground py-2 px-4 relative h-9 w-full justify-start rounded-[0.5rem] text-sm text-muted-foreground sm:pr-12 md:w-40 lg:w-64" id="search-input" name="q" placeholder="Search ..." type="search" x-ref="search"/>
 <kbd class="pointer-events-none absolute right-1.5 top-2 hidden h-5 select-none text-muted-foreground items-center gap-1 rounded border border-border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex group-hover:bg-accent group-hover:text-accent-foreground">
 <span class="text-xs">⌘</span>
@@ -75,9 +75,9 @@
 <li class="toctree-l2"><a class="reference internal" href="camera.html">Camera</a></li>
 <li class="toctree-l2"><a class="reference internal" href="controller.html">Controller</a></li>
 <li class="toctree-l2"><a class="reference internal" href="display.html">Display</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Drive</a></li>
+<li class="toctree-l2"><a class="reference internal" href="drive.html">Drive</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lidar.html">Lidar</a></li>
-<li class="toctree-l2"><a class="reference internal" href="physics.html">Physics</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Physics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="telemetry.html">Telemetry</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.html">Utils</a></li>
 </ul>
@@ -106,88 +106,75 @@
 </svg>
 </a>
 <div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="index.html">Modules</a>
-<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Drive</span>
+<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Physics</span>
 </nav>
 <div id="content" role="main">
-<section id="drive">
-<h1>Drive<a class="headerlink" href="#drive" title="Link to this heading"><span>#</span></a></h1>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">rc</span><span class="o">.</span><span class="n">drive</span>
+<section id="physics">
+<h1>Physics<a class="headerlink" href="#physics" title="Link to this heading"><span>#</span></a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">rc</span><span class="o">.</span><span class="n">physics</span>
 </span></code></pre></div>
 </div>
-<p id="module-drive">Copyright MIT
+<p id="module-physics">Copyright MIT
 MIT License</p>
 <p>BWSI Autonomous RACECAR Course
 Racecar Neo LTS</p>
-<p>File Name: drive.py
-File Description: Defines the interface of the Drive module of the racecar_core library.</p>
+<p>File Name: physics.py
+File Description: Defines the interface of the Physics module of the racecar_core library</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="drive.Drive">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">drive.</span></span><span class="sig-name descname"><span class="pre">Drive</span></span><a class="headerlink" href="#drive.Drive" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#drive.Drive'"><span>#</span></a></dt>
-<dd><dl class="py method">
-<dt class="sig sig-object py" id="drive.Drive.set_max_speed">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_max_speed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_speed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.25</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#drive.Drive.set_max_speed" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#drive.Drive.set_max_speed'"><span>#</span></a></dt>
-<dd><p>Sets the maximum throttle in the forward and backward direction.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>max_speed</strong> – The scale factor applied to speed inputs, ranging from
-0.0 to 1.0.</p>
-</dd>
-</dl>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>The RACECAR contains expensive and fragile equipment.  Please only increase
-the max speed if you are in a safe environment without the potential for
-hard collisions.</p>
-</div>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># Update the max speed to 0.5</span>
-</span><span id="line-2"><span class="n">rc</span><span class="o">.</span><span class="n">set_max_speed</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
-</span></code></pre></div>
-</div>
-</dd></dl>
+<dt class="sig sig-object py" id="physics.Physics">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">physics.</span></span><span class="sig-name descname"><span class="pre">Physics</span></span><a class="headerlink" href="#physics.Physics" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#physics.Physics'"><span>#</span></a></dt>
+<dd><p>Returns the linear acceleration and angular velocity measured by the IMU.</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="drive.Drive.set_speed_angle">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_speed_angle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">speed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#drive.Drive.set_speed_angle" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#drive.Drive.set_speed_angle'"><span>#</span></a></dt>
-<dd><p>Sets the throttle applied to the back wheels and the angle of the front wheels.</p>
+<dt class="sig sig-object py" id="physics.Physics.get_angular_velocity">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_angular_velocity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">3</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#physics.Physics.get_angular_velocity" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#physics.Physics.get_angular_velocity'"><span>#</span></a></dt>
+<dd><p>Returns a 3D vector containing the car’s angular velocity.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>speed</strong> – The amount of throttle (torque) applied to the back wheels from -1.0
-(full backward) to 1.0 (full forward).</p></li>
-<li><p><strong>angle</strong> – The amount to turn the front wheels from -1.0 (full left) to 1.0
-(full right).</p></li>
-</ul>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The average angular velocity of the car along the (x, y, z) axes during the
+last frame in rad/s.</p>
 </dd>
 </dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The speed and angle arguments are unitless ratios.</p>
+<p>The x-axis (pitch) points out of the right of the car.
+The y-axis (yaw) points directly up (perpendicular to the ground).
+The z-axis (roll) points out of the front of the car.
+Rotation sign uses the right hand rule. For example, when the car turns to
+the left, it has a positive angular velocity along the y axis.</p>
 </div>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">if</span> <span class="n">counter</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-</span><span id="line-2">    <span class="c1"># Drive straight forward at full speed</span>
-</span><span id="line-3">    <span class="n">rc</span><span class="o">.</span><span class="n">drive</span><span class="o">.</span><span class="n">set_speed_angle</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-</span><span id="line-4"><span class="k">elif</span> <span class="n">counter</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
-</span><span id="line-5">    <span class="c1"># Drive reverse at full speed with the wheels pointing fully to the left</span>
-</span><span id="line-6">    <span class="n">rc</span><span class="o">.</span><span class="n">drive</span><span class="o">.</span><span class="n">set_speed_angle</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-</span><span id="line-7"><span class="k">else</span><span class="p">:</span>
-</span><span id="line-8">    <span class="c1"># Drive 70% to the right at half speed forward</span>
-</span><span id="line-9">    <span class="n">rc</span><span class="o">.</span><span class="n">drive</span><span class="o">.</span><span class="n">set_speed_angle</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># ang_vel stores the average angular velocity over the previous frame</span>
+</span><span id="line-2"><span class="n">ang_vel</span> <span class="o">=</span> <span class="n">rc</span><span class="o">.</span><span class="n">physics</span><span class="o">.</span><span class="n">get_angular_velocity</span><span class="p">()</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="c1"># yaw stores the yaw of the car, which is positive when it turns to the left</span>
+</span><span id="line-5"><span class="c1"># and negative when it turns to the right.</span>
+</span><span id="line-6"><span class="n">yaw</span> <span class="o">=</span> <span class="n">ang_vel</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 </span></code></pre></div>
 </div>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="drive.Drive.stop">
-<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#drive.Drive.stop" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#drive.Drive.stop'"><span>#</span></a></dt>
-<dd><p>Brings the car to a stop and points the front wheels forward.</p>
+<dt class="sig sig-object py" id="physics.Physics.get_linear_acceleration">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_linear_acceleration</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">3</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#physics.Physics.get_linear_acceleration" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#physics.Physics.get_linear_acceleration'"><span>#</span></a></dt>
+<dd><p>Returns a 3D vector containing the car’s linear acceleration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The average linear acceleration of the car along the (x, y, z) axes during
+the last frame in m/s^2.</p>
+</dd>
+</dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>stop is equivalent to rc.drive.set_speed_angle(0, 0)</p>
+<p>The x-axis points out of the right of the car.
+The y-axis points directly up (perpendicular to the ground).
+The z-axis points out of the front of the car.</p>
 </div>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># Stops the car if the counter is greater than 5</span>
-</span><span id="line-2"><span class="k">if</span> <span class="n">counter</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
-</span><span id="line-3">    <span class="n">rc</span><span class="o">.</span><span class="n">drive</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># accel stores the average acceleration over the previous frame</span>
+</span><span id="line-2"><span class="n">accel</span> <span class="o">=</span> <span class="n">rc</span><span class="o">.</span><span class="n">physics</span><span class="o">.</span><span class="n">get_linear_acceleration</span><span class="p">()</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="c1"># forward accel stores acceleration in the forward direction.  This will be</span>
+</span><span id="line-5"><span class="c1"># positive when the car accelerates, and negative when it decelerates.</span>
+</span><span id="line-6"><span class="n">forward_accel</span> <span class="o">=</span> <span class="n">accel</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 </span></code></pre></div>
 </div>
 </dd></dl>
@@ -196,10 +183,9 @@ hard collisions.</p>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
-<li><a :data-current="activeSection === '#drive.Drive'" class="reference internal" href="#drive.Drive"><code class="docutils literal notranslate"><span class="pre">Drive</span></code></a><ul>
-<li><a :data-current="activeSection === '#drive.Drive.set_max_speed'" class="reference internal" href="#drive.Drive.set_max_speed"><code class="docutils literal notranslate"><span class="pre">Drive.set_max_speed()</span></code></a></li>
-<li><a :data-current="activeSection === '#drive.Drive.set_speed_angle'" class="reference internal" href="#drive.Drive.set_speed_angle"><code class="docutils literal notranslate"><span class="pre">Drive.set_speed_angle()</span></code></a></li>
-<li><a :data-current="activeSection === '#drive.Drive.stop'" class="reference internal" href="#drive.Drive.stop"><code class="docutils literal notranslate"><span class="pre">Drive.stop()</span></code></a></li>
+<li><a :data-current="activeSection === '#physics.Physics'" class="reference internal" href="#physics.Physics"><code class="docutils literal notranslate"><span class="pre">Physics</span></code></a><ul>
+<li><a :data-current="activeSection === '#physics.Physics.get_angular_velocity'" class="reference internal" href="#physics.Physics.get_angular_velocity"><code class="docutils literal notranslate"><span class="pre">Physics.get_angular_velocity()</span></code></a></li>
+<li><a :data-current="activeSection === '#physics.Physics.get_linear_acceleration'" class="reference internal" href="#physics.Physics.get_linear_acceleration"><code class="docutils literal notranslate"><span class="pre">Physics.get_linear_acceleration()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -215,9 +201,9 @@ hard collisions.</p>
 </div>
 </footer>
 </div>
-<script src="../../_static/documentation_options.js?v=5929fcd5"></script>
-<script src="../../_static/doctools.js?v=9a2dae69"></script>
-<script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-<script defer="defer" src="../../_static/theme.js?v=e82a16a3"></script>
+<script src="../_static/documentation_options.js?v=5929fcd5"></script>
+<script src="../_static/doctools.js?v=9a2dae69"></script>
+<script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+<script defer="defer" src="../_static/theme.js?v=e82a16a3"></script>
 </body>
 </html>
