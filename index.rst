@@ -19,6 +19,7 @@ This is the documentation for the RACECAR Neo python library used in the BWSI RA
    docs/drive
    docs/lidar
    docs/physics
+   docs/telemetry
    docs/utils
 
 |
