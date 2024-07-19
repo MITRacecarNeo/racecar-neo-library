@@ -1194,11 +1194,11 @@ def get_ar_markers(
             print(markers[0])
     """
     # Use ArUco to find the raw corner and id information
-    corners, ids, _ = cv.aruco.detectMarkers(
-        color_image,
-        cv.aruco.Dictionary_get(marker_type),
-        parameters=cv.aruco.DetectorParameters_create(),
-    )
+    dictionary = cv.aruco.getPredefinedDictionary(marker_type)
+    params = cv.aruco.DetectorParameters()
+
+    detector = cv.aruco.ArucoDetector(dictionary, params)
+    corners, ids, _ = detector.detectMarkers(color_image)
 
     # Create an ARMarker object for each detected marker
     markers: list[ARMarker] = []
