@@ -7,15 +7,15 @@
 <meta content="white" media="(prefers-color-scheme: light)" name="theme-color"/>
 <meta content="black" media="(prefers-color-scheme: dark)" name="theme-color"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Lidar | racecar-neo-library  documentation</title>
-<meta content="Lidar | racecar-neo-library  documentation" property="og:title"/>
-<meta content="Lidar | racecar-neo-library  documentation" name="twitter:title"/>
+<title>Telemetry | racecar-neo-library  documentation</title>
+<meta content="Telemetry | racecar-neo-library  documentation" property="og:title"/>
+<meta content="Telemetry | racecar-neo-library  documentation" name="twitter:title"/>
 <link href="../_static/pygments.css?v=63e1294f" rel="stylesheet" type="text/css"/>
 <link href="../_static/theme.css?v=ecdfb4fc" rel="stylesheet" type="text/css"/>
 <link href="../search.html" rel="search" title="Search"/>
 <link href="../genindex.html" rel="index" title="Index"/>
-<link href="physics.html" rel="next" title="Physics"/>
-<link href="drive.html" rel="prev" title="Drive"/>
+<link href="utils.html" rel="next" title="Utils"/>
+<link href="physics.html" rel="prev" title="Physics"/>
 <script>
     <!-- Prevent Flash of wrong theme -->
       const userPreference = localStorage.getItem('darkMode');
@@ -75,9 +75,9 @@
 <li class="toctree-l1"><a class="reference internal" href="controller.html">Controller</a></li>
 <li class="toctree-l1"><a class="reference internal" href="display.html">Display</a></li>
 <li class="toctree-l1"><a class="reference internal" href="drive.html">Drive</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Lidar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lidar.html">Lidar</a></li>
 <li class="toctree-l1"><a class="reference internal" href="physics.html">Physics</a></li>
-<li class="toctree-l1"><a class="reference internal" href="telemetry.html">Telemetry</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Telemetry</a></li>
 <li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
 </ul>
 </nav>
@@ -98,87 +98,78 @@
 <path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z"></path>
 </svg>
 </a>
-<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Lidar</span>
+<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Telemetry</span>
 </nav>
 <div id="content" role="main">
-<section id="module-lidar">
-<span id="lidar"></span><h1>Lidar<a class="headerlink" href="#module-lidar" title="Link to this heading"><span>#</span></a></h1>
+<section id="module-telemetry">
+<span id="telemetry"></span><h1>Telemetry<a class="headerlink" href="#module-telemetry" title="Link to this heading"><span>#</span></a></h1>
 <p>Copyright MIT
 MIT License</p>
 <p>BWSI Autonomous RACECAR Course
 Racecar Neo LTS</p>
-<p>File Name: lidar.py
-File Description: Defines the interface for the Lidar module of the racecar_core library.</p>
+<p>File Name: telemetry.py
+File Description: Defines the interface of the Telemetry module of the racecar_core library</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="lidar.Lidar">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lidar.</span></span><span class="sig-name descname"><span class="pre">Lidar</span></span><a class="headerlink" href="#lidar.Lidar" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#lidar.Lidar'"><span>#</span></a></dt>
-<dd><p>Returns the scan data captured by the Lidar.</p>
+<dt class="sig sig-object py" id="telemetry.Telemetry">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">telemetry.</span></span><span class="sig-name descname"><span class="pre">Telemetry</span></span><a class="headerlink" href="#telemetry.Telemetry" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#telemetry.Telemetry'"><span>#</span></a></dt>
+<dd><p>Records and visualizes real time sensor data and internal states</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="lidar.Lidar.get_num_samples">
-<span class="sig-name descname"><span class="pre">get_num_samples</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#lidar.Lidar.get_num_samples" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#lidar.Lidar.get_num_samples'"><span>#</span></a></dt>
-<dd><p>Returns the number of samples in a full LIDAR scan.</p>
+<dt class="sig sig-object py" id="telemetry.Telemetry.declare_variables">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">declare_variables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#telemetry.Telemetry.declare_variables" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#telemetry.Telemetry.declare_variables'"><span>#</span></a></dt>
+<dd><p>Declare a list of variables that will be recorded by telemetry.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The number of points collected in a complete scan.</p>
-</dd>
-</dl>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">scan</span> <span class="o">=</span> <span class="n">rc</span><span class="o">.</span><span class="n">lidar</span><span class="o">.</span><span class="n">get_samples</span><span class="p">()</span>
-</span><span id="line-2">
-</span><span id="line-3"><span class="c1"># Access the sample directly behind the car</span>
-</span><span id="line-4"><span class="n">rear_distance</span> <span class="o">=</span> <span class="n">scan</span><span class="p">[</span><span class="n">rc</span><span class="o">.</span><span class="n">lidar</span><span class="o">.</span><span class="n">get_num_samples</span><span class="p">()</span> <span class="o">//</span> <span class="mi">2</span><span class="p">]</span>
-</span></code></pre></div>
-</div>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="lidar.Lidar.get_samples">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_samples</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">720</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#lidar.Lidar.get_samples" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#lidar.Lidar.get_samples'"><span>#</span></a></dt>
-<dd><p>Returns the current LIDAR scan as an array of distance measurements.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>An array of distance measurements in cm.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>names</strong> – The names of each variable to be declared.</p>
 </dd>
 </dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Samples are in clockwise order, with the 0th sample directly in front of the
-car.  Each sample is an equal angle apart.</p>
+<p>This function should only be called once, and all subsequent calls will have no effect.
+In addition to the variables declared here, when a data point is pushed to telemetry, its timestamp will
+also be recorded.</p>
 </div>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># Access the most recent lidar scan.</span>
-</span><span id="line-2"><span class="n">scan</span> <span class="o">=</span> <span class="n">rc</span><span class="o">.</span><span class="n">lidar</span><span class="o">.</span><span class="n">get_samples</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># Declare variables speed and angle to be recorded</span>
+</span><span id="line-2"><span class="n">rc</span><span class="o">.</span><span class="n">telemetry</span><span class="o">.</span><span class="n">declare_variables</span><span class="p">(</span><span class="s2">"speed"</span><span class="p">,</span> <span class="s2">"angle"</span><span class="p">)</span>
 </span><span id="line-3">
-</span><span id="line-4"><span class="c1"># Get the distance of the measurement directly in front of the car</span>
-</span><span id="line-5"><span class="n">forward_distance</span> <span class="o">=</span> <span class="n">scan</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="line-4"><span class="c1"># Push a data point containing a speed and angle value to telemetry</span>
+</span><span id="line-5"><span class="n">rc</span><span class="o">.</span><span class="n">telemetry</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="lidar.Lidar.get_samples_async">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_samples_async</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">720</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#lidar.Lidar.get_samples_async" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#lidar.Lidar.get_samples_async'"><span>#</span></a></dt>
-<dd><p>Returns the current LIDAR scan without the car in “go” mode.</p>
+<dt class="sig sig-object py" id="telemetry.Telemetry.record">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">record</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#telemetry.Telemetry.record" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#telemetry.Telemetry.record'"><span>#</span></a></dt>
+<dd><p>Record a data point. This should contain a value for each declared variable.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>An array of distance measurements in cm.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>values</strong> – The value of each declared variable, in the same order as the declaration.</p>
 </dd>
 </dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Samples are in clockwise order, with the 0th sample directly in front of the
-car.  Each sample is an equal angle apart.</p>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>This function breaks the start-update paradigm and should only be used in
-Jupyter Notebook.</p>
+<p><cite>declare_variables</cite> must be called before this function.
+If too few / too many values are provided, an exception will be thrown.</p>
 </div>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># Access the most recent lidar scan.</span>
-</span><span id="line-2"><span class="n">scan</span> <span class="o">=</span> <span class="n">rc</span><span class="o">.</span><span class="n">lidar</span><span class="o">.</span><span class="n">get_samples_async</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># Declare variables speed and angle to be recorded</span>
+</span><span id="line-2"><span class="n">rc</span><span class="o">.</span><span class="n">telemetry</span><span class="o">.</span><span class="n">declare_variables</span><span class="p">(</span><span class="s2">"speed"</span><span class="p">,</span> <span class="s2">"angle"</span><span class="p">)</span>
 </span><span id="line-3">
-</span><span id="line-4"><span class="c1"># Get the distance of the measurement directly in front of the car</span>
-</span><span id="line-5"><span class="n">forward_distance</span> <span class="o">=</span> <span class="n">lidar_ranges</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="line-4"><span class="c1"># Push a data point containing a speed value and an angle value into Telemetry</span>
+</span><span id="line-5"><span class="n">rc</span><span class="o">.</span><span class="n">telemetry</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
 </span></code></pre></div>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="telemetry.Telemetry.visualize">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">visualize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#telemetry.Telemetry.visualize" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#telemetry.Telemetry.visualize'"><span>#</span></a></dt>
+<dd><p>Generate and save a time-series graph of the recorded data points</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function does not need to be manually called, as it should be
+called automatically when the user program exits.
+If some variables look squished on the line graph, consider normalizing
+your variables so they have similar magnitude.</p>
 </div>
 </dd></dl>
 </dd></dl>
@@ -186,10 +177,10 @@ Jupyter Notebook.</p>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
-<li><a :data-current="activeSection === '#lidar.Lidar'" class="reference internal" href="#lidar.Lidar"><code class="docutils literal notranslate"><span class="pre">Lidar</span></code></a><ul>
-<li><a :data-current="activeSection === '#lidar.Lidar.get_num_samples'" class="reference internal" href="#lidar.Lidar.get_num_samples"><code class="docutils literal notranslate"><span class="pre">Lidar.get_num_samples()</span></code></a></li>
-<li><a :data-current="activeSection === '#lidar.Lidar.get_samples'" class="reference internal" href="#lidar.Lidar.get_samples"><code class="docutils literal notranslate"><span class="pre">Lidar.get_samples()</span></code></a></li>
-<li><a :data-current="activeSection === '#lidar.Lidar.get_samples_async'" class="reference internal" href="#lidar.Lidar.get_samples_async"><code class="docutils literal notranslate"><span class="pre">Lidar.get_samples_async()</span></code></a></li>
+<li><a :data-current="activeSection === '#telemetry.Telemetry'" class="reference internal" href="#telemetry.Telemetry"><code class="docutils literal notranslate"><span class="pre">Telemetry</span></code></a><ul>
+<li><a :data-current="activeSection === '#telemetry.Telemetry.declare_variables'" class="reference internal" href="#telemetry.Telemetry.declare_variables"><code class="docutils literal notranslate"><span class="pre">Telemetry.declare_variables()</span></code></a></li>
+<li><a :data-current="activeSection === '#telemetry.Telemetry.record'" class="reference internal" href="#telemetry.Telemetry.record"><code class="docutils literal notranslate"><span class="pre">Telemetry.record()</span></code></a></li>
+<li><a :data-current="activeSection === '#telemetry.Telemetry.visualize'" class="reference internal" href="#telemetry.Telemetry.visualize"><code class="docutils literal notranslate"><span class="pre">Telemetry.visualize()</span></code></a></li>
 </ul>
 </li>
 </ul>
