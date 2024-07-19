@@ -19,3 +19,13 @@ class DisplaySim(Display):
         if not self._Display__isHeadless:
             cv.imshow(self.__WINDOW_NAME, image)
             cv.waitKey(1)
+
+    def set_matrix(self, matrix: NDArray[(8, 24), np.uint8]) -> None:
+        print('Method [set_matrix_intensity] not yet implemented for Sim.')
+
+    def get_matrix(self) -> NDArray[(8, 24), np.uint8]:
+        print('Method [set_matrix_intensity] not yet implemented for Sim.')
+        return np.zeros((8, 24), dtype=np.uint8)
+
+    def set_matrix_intensity(self, intensity: float) -> None:
+        print('Method [set_matrix_intensity] not yet implemented for Sim.')

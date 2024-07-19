@@ -31,6 +31,9 @@ class TelemetrySim(Telemetry):
         print(','.join(map(str, values)), file=self.log_file)
 
     def visualize(self) -> None:
+        if self.variable_names is None:
+            return
+
         # Seek to beginning of file before reading, 
         # then seek to the end afterwards in case we want to write more data
         self.log_file.seek(0)

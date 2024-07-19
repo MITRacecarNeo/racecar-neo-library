@@ -113,7 +113,7 @@ class RacecarSim(Racecar):
         self.drive = drive_sim.DriveSim(self)
         self.physics = physics_sim.PhysicsSim(self)
         self.lidar = lidar_sim.LidarSim(self)
-        self.telemetry = telemetry_sim.Telemetry()
+        self.telemetry = telemetry_sim.TelemetrySim()
 
         self.__start: Callable[[], None]
         self.__update: Callable[[], None]
