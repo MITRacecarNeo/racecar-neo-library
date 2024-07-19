@@ -31,10 +31,10 @@ class Telemetry(abc.ABC):
 
         Example::
 
-            # Declare variables speed and angle to be recorded
+            # Declare variables to be recorded
             rc.telemetry.declare_variables("speed", "angle")
 
-            # Push a data point containing a speed and angle value to telemetry
+            # Push a data point containing a speed and angle value to the telemetry
             rc.telemetry.record(1, 0.5)
         """
         pass
@@ -53,11 +53,11 @@ class Telemetry(abc.ABC):
 
         Example::
 
-            # Declare variables speed and angle to be recorded
+            # Declare variables to be recorded
             rc.telemetry.declare_variables("speed", "angle")
 
-            # Push a data point containing a speed value and an angle value into Telemetry
-            rc.telemetry.push(1, 0.5)
+            # Push a data point containing a speed and angle value to the telemetry
+            rc.telemetry.record(1, 0.5)
         """
         pass
 
