@@ -3,4 +3,6 @@ mypy
 nptyping == 1.4.4
 opencv-python == 4.8.1.78
 pandas == 2.0.3
+
 sphinxawesome-theme
+myst_parser

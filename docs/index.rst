@@ -8,7 +8,10 @@ RACECAR Neo library documentation
 
 This is the documentation for the RACECAR Neo python library used in the BWSI RACECAR course.
 
+For API documentation, check out **Modules**. Go to **Guides** for miscellaneous guides on advanced racecar operations.
+
 .. toctree::
+   :maxdepth: 2
    :caption: Contents:
 
    modules/index
