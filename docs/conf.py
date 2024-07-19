@@ -10,7 +10,6 @@ sys.path.insert(0, os.path.relpath('library'))
 project = 'racecar-neo-library'
 copyright = '2024, MIT.'
 author = 'BWSI Autonomous RACECAR'
-root_doc = 'docs/index'
 
 
 # -- General configuration ---------------------------------------------------
