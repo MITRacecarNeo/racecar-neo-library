@@ -43,7 +43,7 @@ class LidarReal(Lidar):
     # For RPLidar - replace "inf" with 0 to match sim LIDAR data
     def __scan_callback(self, data):
         scan_data = np.flip(np.multiply(np.array(data.ranges), 100))
-        self.__samples_new = [0 if str(x) == "inf" else x for x in scan_data]
+        self.__samples_new = np.array([0 if str(x) == "inf" else x for x in scan_data])
 
     def __update(self):
         self.__samples = self.__samples_new
