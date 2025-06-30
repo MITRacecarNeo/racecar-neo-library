@@ -88,6 +88,9 @@ class RacecarReal(Racecar):
         self.__run_thread.daemon = True
         self.__run_thread.start()
 
+        # Async thread handler
+        self.__async_thread = None
+
         # Print welcome message
         print(">> Racecar initialization successful")
         print(
@@ -107,6 +110,18 @@ class RacecarReal(Racecar):
                 break
         ros2.shutdown()
 
+    def go_async(self) -> None:
+        self.__running = True
+        self.__async_thread = threading.Thread(target=self.__spin_async, daemon=True)
+        self.__async_thread.start()
+
+    def __spin_async(self) -> None:
+        self.__user_start = self.__default_start
+        self.__user_update = self.__default_update
+        self.__handle_start()
+        while self.__running:
+            self.__executor.spin_once()
+        
     def set_start_update(
         self,
         start: Callable[[], None],
