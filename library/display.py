@@ -228,6 +228,30 @@ class Display(abc.ABC):
         pass
 
     @abc.abstractmethod
+    def show_text(
+        self,
+        text: str,
+        scroll_speed: float = 2.0
+    ) -> None:
+        """
+        Displays text on the 8x24 matrix. If the text is too long, it scrolls.
+
+        Args:
+            text: The string to display.
+            scroll_speed: The scrolling speed in characters per second.
+
+        Example::
+
+            # Display a message on the LED matrix
+            rc.display.show_text("Hello, Racecar!")
+
+            # Display a long message that will scroll
+            rc.display.show_text("This message is too long to fit and will scroll", scroll_speed=3)
+        """
+        pass
+
+
+    @abc.abstractmethod
     def get_matrix(self) -> NDArray[(8, 24), np.uint8]:
         """
         Returns the current configuration of the dot matrix display module.
