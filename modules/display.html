@@ -11,7 +11,7 @@
 <meta content="Display | racecar-neo-library  documentation" property="og:title"/>
 <meta content="Display | racecar-neo-library  documentation" name="twitter:title"/>
 <link href="../_static/pygments.css?v=63e1294f" rel="stylesheet" type="text/css"/>
-<link href="../_static/theme.css?v=ecdfb4fc" rel="stylesheet" type="text/css"/>
+<link href="../_static/theme.css?v=42baaae4" rel="stylesheet" type="text/css"/>
 <link href="../search.html" rel="search" title="Search"/>
 <link href="../genindex.html" rel="index" title="Index"/>
 <link href="drive.html" rel="next" title="Drive"/>
@@ -29,7 +29,7 @@
       if (!userPreference) {localStorage.setItem('darkMode', mode)}
     </script>
 </head>
-<body :class="{ 'overflow-hidden': showSidebar }" class="min-h-screen font-sans antialiased bg-background text-foreground" x-data="{ showSidebar: false }">
+<body :class="{ 'overflow-hidden': showSidebar }" class="min-h-screen font-sans antialiased bg-background text-foreground" x-data="{ showSidebar: false, showScrollTop: false }">
 <div @click.self="showSidebar = false" class="fixed inset-0 z-50 overflow-hidden bg-background/80 backdrop-blur-sm md:hidden" x-cloak="" x-show="showSidebar"></div><div class="relative flex flex-col min-h-screen" id="page"><a class="absolute top-0 left-0 z-[100] block bg-background p-4 text-xl transition -translate-x-full opacity-0 focus:translate-x-0 focus:opacity-100" href="#content">
       Skip to content
     </a><header class="sticky top-0 z-40 w-full border-b shadow-sm border-border supports-backdrop-blur:bg-background/60 bg-background/95 backdrop-blur"><div class="container flex items-center h-14">
@@ -122,11 +122,11 @@ Racecar Neo LTS</p>
 File Description: Defines the interface of the Display module of the racecar_core library.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="display.Display">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">display.</span></span><span class="sig-name descname"><span class="pre">Display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">isHeadless</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#display.Display" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#display.Display'"><span>#</span></a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">display.</span></span><span class="sig-name descname"><span class="pre">Display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">isHeadless</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#display.Display" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#display.Display'"><span>#</span></a></dt>
 <dd><p>Allows the user to print images to the screen.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="display.Display.create_window">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_window</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#display.Display.create_window" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#display.Display.create_window'"><span>#</span></a></dt>
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_window</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#display.Display.create_window" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#display.Display.create_window'"><span>#</span></a></dt>
 <dd><p>Creates an empty window into which images will be displayed.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -146,7 +146,7 @@ automatically create a new window if one was not already created.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="display.Display.get_matrix">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_matrix</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">8</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">24</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">UInt</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#display.Display.get_matrix" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#display.Display.get_matrix'"><span>#</span></a></dt>
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_matrix</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">8</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">24</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">UInt</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#display.Display.get_matrix" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#display.Display.get_matrix'"><span>#</span></a></dt>
 <dd><p>Returns the current configuration of the dot matrix display module.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -192,7 +192,7 @@ matrix indicates an LED that is off.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="display.Display.set_matrix">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">8</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">24</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">UInt</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#display.Display.set_matrix" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#display.Display.set_matrix'"><span>#</span></a></dt>
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">8</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">24</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">UInt</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#display.Display.set_matrix" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#display.Display.set_matrix'"><span>#</span></a></dt>
 <dd><p>Sets the dot matrix display module to the pattern in the argument (2D matrix).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -215,7 +215,7 @@ matrix indicates an LED that is off.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="display.Display.set_matrix_intensity">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_matrix_intensity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">intensity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#display.Display.set_matrix_intensity" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#display.Display.set_matrix_intensity'"><span>#</span></a></dt>
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_matrix_intensity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">intensity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#display.Display.set_matrix_intensity" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#display.Display.set_matrix_intensity'"><span>#</span></a></dt>
 <dd><p>Sets the intensity of the dot matrix display module.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -241,7 +241,7 @@ cannot be used to make a fade-in or fade-out animation.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="display.Display.show_color_image">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">show_color_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">NDArray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#display.Display.show_color_image" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#display.Display.show_color_image'"><span>#</span></a></dt>
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">show_color_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">NDArray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#display.Display.show_color_image" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#display.Display.show_color_image'"><span>#</span></a></dt>
 <dd><p>Displays a color image in a window.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -348,14 +348,14 @@ If this is not the case, the visualization will be inaccurate.</p>
 </div><footer class="py-6 border-t border-border md:py-0">
 <div class="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
 <div class="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
-<p class="text-sm leading-loose text-center text-muted-foreground md:text-left">© 2024, MIT. Built with <a class="font-medium underline underline-offset-4" href="https://www.sphinx-doc.org" rel="noreferrer">Sphinx 7.3.7</a></p>
+<p class="text-sm leading-loose text-center text-muted-foreground md:text-left">© 2024, MIT. Built with <a class="font-medium underline underline-offset-4" href="https://www.sphinx-doc.org" rel="noreferrer">Sphinx 8.2.3</a></p>
 </div>
 </div>
 </footer>
 </div>
 <script src="../_static/documentation_options.js?v=5929fcd5"></script>
-<script src="../_static/doctools.js?v=9a2dae69"></script>
+<script src="../_static/doctools.js?v=9bcbadda"></script>
 <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-<script defer="defer" src="../_static/theme.js?v=e82a16a3"></script>
+<script defer="defer" src="../_static/theme.js?v=073f68d9"></script>
 </body>
 </html>
