@@ -22,3 +22,6 @@ class PhysicsSim(Physics):
         )
         values = struct.unpack("fff", self.__racecar._RacecarSim__receive_data(12))
         return np.array(values)
+    
+    def get_magnetic_field(self):
+        return None # Nothing here yet!
