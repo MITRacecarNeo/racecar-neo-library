@@ -324,6 +324,27 @@ If this is not the case, the visualization will be inaccurate.</p>
 </span></code></pre></div>
 </div>
 </dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="display.Display.show_text">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">show_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scroll_speed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#display.Display.show_text" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#display.Display.show_text'"><span>#</span></a></dt>
+<dd><p>Displays text on the 8x24 matrix. If the text is too long, it scrolls.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> – The string to display.</p></li>
+<li><p><strong>scroll_speed</strong> – The scrolling speed in characters per second.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># Display a message on the LED matrix</span>
+</span><span id="line-2"><span class="n">rc</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">show_text</span><span class="p">(</span><span class="s2">"Hello, Racecar!"</span><span class="p">)</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="c1"># Display a long message that will scroll</span>
+</span><span id="line-5"><span class="n">rc</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">show_text</span><span class="p">(</span><span class="s2">"This message is too long to fit and will scroll"</span><span class="p">,</span> <span class="n">scroll_speed</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+</dd></dl>
 </dd></dl>
 </section>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
@@ -338,6 +359,7 @@ If this is not the case, the visualization will be inaccurate.</p>
 <li><a :data-current="activeSection === '#display.Display.show_color_image'" class="reference internal" href="#display.Display.show_color_image"><code class="docutils literal notranslate"><span class="pre">Display.show_color_image()</span></code></a></li>
 <li><a :data-current="activeSection === '#display.Display.show_depth_image'" class="reference internal" href="#display.Display.show_depth_image"><code class="docutils literal notranslate"><span class="pre">Display.show_depth_image()</span></code></a></li>
 <li><a :data-current="activeSection === '#display.Display.show_lidar'" class="reference internal" href="#display.Display.show_lidar"><code class="docutils literal notranslate"><span class="pre">Display.show_lidar()</span></code></a></li>
+<li><a :data-current="activeSection === '#display.Display.show_text'" class="reference internal" href="#display.Display.show_text"><code class="docutils literal notranslate"><span class="pre">Display.show_text()</span></code></a></li>
 </ul>
 </li>
 </ul>
