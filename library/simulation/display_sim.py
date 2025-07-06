@@ -72,3 +72,6 @@ class DisplaySim(Display):
                     row.append(" ")
             table.add_row(*row)
         return Panel(table, title=self.__WINDOW_NAME)
+    
+    def show_text(self) -> None:
+        pass # placeholder (for now)
