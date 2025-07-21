@@ -115,7 +115,9 @@ class DisplayReal(Display):
         text: str,
         scroll_speed: float = 2.0,
     ) -> None:
-        self._stop_scrolling()
+        #self._stop_scrolling()
+        if self.__text_thread is not None and self.__text_thread.is_alive():
+            return
 
         # Create the full text matrix
         char_matrices = []
