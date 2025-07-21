@@ -93,7 +93,9 @@ class DisplaySim(Display):
             scroll_speed: The scrolling speed in characters per second.
         """
         # Stop any existing scrolling animation before starting a new one
-        self._stop_scrolling()
+        #self._stop_scrolling()
+        if self.__text_thread is not None and self.__text_thread.is_alive():
+            return
 
         # Create the full text matrix by converting each character into a bitmap
         char_matrices = []
