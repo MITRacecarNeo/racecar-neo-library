@@ -48,8 +48,8 @@ class LidarReal(Lidar):
     def __update(self):
         self.__samples = self.__samples_new
 
-    def get_samples(self) -> NDArray[720, np.float32]:
+    def get_samples(self) -> NDArray[1080, np.float32]:
         return self.__samples
 
-    def get_samples_async(self) -> NDArray[720, np.float32]:
+    def get_samples_async(self) -> NDArray[1080, np.float32]:
         return self.__samples_new
