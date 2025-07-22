@@ -41,6 +41,7 @@ class LidarReal(Lidar):
     # LIDAR Scan returns value in meters, multiplying by 100 to be processed in cm
     # LIDAR Scan reversed, flipping order of data entry to correct for CW spin - matches with sim
     # For RPLidar - replace "inf" with 0 to match sim LIDAR data
+    # Note: The real LIDAR returns a scan of length 1080.
     def __scan_callback(self, data):
         scan_data = np.flip(np.multiply(np.array(data.ranges), 100))
         self.__samples_new = np.array([0 if str(x) == "inf" else x for x in scan_data])
