@@ -1,17 +1,26 @@
+"""
+Copyright MIT
+GNU General Public License v3.0
+
+BWSI Autonomous RACECAR Course
+Racecar Neo LTS
+
+File Name: telemetry_sim.py
+File Description: Contains the Telemetry simulation module of the racecar_core library.
+"""
+
 import time
 
 import pandas as pd
 from matplotlib import pyplot as plt
-from telemetry import Telemetry
+from telemetry import Telemetry, _resolve_log_paths
 
 
 class TelemetrySim(Telemetry):
 
-    _LOG_FILE_NAME = "log.csv"
-    _PLOT_FILE_NAME = "log.png"
-
     def __init__(self) -> None:
         self.variable_names = None
+        self._LOG_FILE_NAME, self._PLOT_FILE_NAME = _resolve_log_paths()
         self.log_file = open(self._LOG_FILE_NAME, "w+")
         self.start_time = time.time()
 
@@ -34,7 +43,7 @@ class TelemetrySim(Telemetry):
         if self.variable_names is None:
             return
 
-        # Seek to beginning of file before reading, 
+        # Seek to beginning of file before reading,
         # then seek to the end afterwards in case we want to write more data
         self.log_file.seek(0)
         frame = pd.read_csv(self.log_file)
@@ -47,6 +56,6 @@ class TelemetrySim(Telemetry):
             if variable != "time":
                 ax.plot(frame["time"], frame[variable], label=variable)
         ax.legend()
-        
+
         plt.savefig(self._PLOT_FILE_NAME)
         self.log_file.seek(0, 2)
