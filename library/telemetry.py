@@ -1,6 +1,6 @@
 """
 Copyright MIT
-MIT License
+GNU General Public License v3.0
 
 BWSI Autonomous RACECAR Course
 Racecar Neo LTS
@@ -10,6 +10,48 @@ File Description: Defines the interface of the Telemetry module of the racecar_c
 """
 
 import abc
+import os
+import re
+import sys
+import time
+
+
+def _resolve_log_paths() -> tuple[str, str]:
+    """
+    Build the CSV and PNG log paths inside racecar-student/labs/logs/.
+
+    Filename format: YYYYMMDD_HHMMSS_<calling_file_stem>.{csv,png}, where the
+    timestamp is wall-clock local time on the student's machine. Creates the
+    logs/ folder on first use.
+    """
+    # labs/ lives at <library_root>/../labs/, regardless of which racecar-venv or
+    # CWD the student runs from. __file__ is racecar-student/library/telemetry.py.
+    library_dir = os.path.dirname(os.path.abspath(__file__))
+    labs_dir = os.path.abspath(os.path.join(library_dir, "..", "labs"))
+    logs_dir = os.path.join(labs_dir, "logs")
+    os.makedirs(logs_dir, exist_ok=True)
+
+    # Identify what produced the log. .py scripts give us argv[0]; notebooks
+    # leak their path through __vsc_ipynb_file__ (VS Code) or JPY_SESSION_NAME.
+    stem = "interactive"
+    argv0 = sys.argv[0] if sys.argv else ""
+    main_mod = sys.modules.get("__main__")
+    nb_path = getattr(main_mod, "__vsc_ipynb_file__", None) or os.environ.get("JPY_SESSION_NAME")
+    if nb_path:
+        stem = os.path.splitext(os.path.basename(nb_path))[0]
+    elif argv0 and not argv0.endswith(("ipykernel_launcher.py", "kernel.py")):
+        base = os.path.basename(argv0)
+        if base:
+            stem = os.path.splitext(base)[0]
+    elif "ipykernel" in sys.modules:
+        stem = "notebook"
+
+    # Strip anything that would make the filename awkward on Windows/macOS.
+    stem = re.sub(r"[^A-Za-z0-9._-]+", "_", stem).strip("._-") or "log"
+
+    timestamp = time.strftime("%Y%m%d_%H%M%S")
+    base = f"{timestamp}_{stem}"
+    return os.path.join(logs_dir, base + ".csv"), os.path.join(logs_dir, base + ".png")
 
 
 class Telemetry(abc.ABC):
