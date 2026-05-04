@@ -27,7 +27,49 @@ import racecar_utils as rc_utils
 
 
 class RacecarSim(Racecar):
-    __IP = "127.0.0.1"
+    # Resolve the simulator IP: use RACECAR_SIM_IP env var if set,
+    # otherwise auto-detect the WSL2 Windows host gateway, falling back to localhost.
+    @staticmethod
+    def __resolve_sim_ip() -> str:
+        import os
+        env_ip = os.environ.get("RACECAR_SIM_IP") or os.environ.get("DRONE_SIM_IP")
+        if env_ip:
+            return env_ip
+        # Check if we are running in WSL2
+        is_wsl2 = False
+        try:
+            with open("/proc/version") as f:
+                is_wsl2 = "microsoft" in f.read().lower()
+        except OSError:
+            pass
+        if not is_wsl2:
+            return "127.0.0.1"
+        # In WSL2 NAT mode the Windows host is the default gateway
+        # (stored little-endian in /proc/net/route).
+        # In WSL2 mirrored mode the default gateway is the real router,
+        # and localhost (127.0.0.1) reaches the Windows host directly.
+        try:
+            with open("/proc/net/route") as f:
+                for line in f:
+                    fields = line.strip().split()
+                    if fields[1] == "00000000":  # default route
+                        hex_ip = fields[2]
+                        ip = ".".join(
+                            str(int(hex_ip[i:i+2], 16))
+                            for i in range(6, -1, -2)
+                        )
+                        # Hyper-V NAT gateways live in 172.16.0.0/12
+                        first_octet = int(hex_ip[6:8], 16)
+                        second_octet = int(hex_ip[4:6], 16)
+                        if first_octet == 172 and 16 <= second_octet <= 31:
+                            return ip  # NAT mode — gateway is the Windows host
+                        # Gateway is outside Hyper-V range — likely mirrored mode
+                        return "127.0.0.1"
+        except (OSError, IndexError, ValueError):
+            pass
+        return "127.0.0.1"
+
+    __IP = __resolve_sim_ip.__func__()
     __UNITY_PORT = (__IP, 5065)
     __UNITY_ASYNC_PORT = (__IP, 5064)
     __VERSION = 1
