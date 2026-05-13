@@ -1,6 +1,6 @@
 """
 Copyright MIT
-MIT License
+GNU General Public License v3.0
 
 BWSI Autonomous RACECAR Course
 Racecar Neo LTS
@@ -24,6 +24,8 @@ import display_real
 import drive_real
 import lidar_real
 import physics_real
+import telemetry_real
+import vision_real
 
 from racecar_core import Racecar
 
@@ -48,6 +50,8 @@ class RacecarReal(Racecar):
         self.drive = drive_real.DriveReal()
         self.lidar = lidar_real.LidarReal()
         self.physics = physics_real.PhysicsReal()
+        self.telemetry = telemetry_real.TelemetryReal()
+        self.vision = vision_real.VisionReal()
 
         # Add all nodes to the executor
         rate_added = self.__executor.add_node(self.__rate_node)
@@ -55,13 +59,28 @@ class RacecarReal(Racecar):
         lidar_added = self.__executor.add_node(self.lidar.node)
         controller_added = self.__executor.add_node(self.controller.node)
         physics_added = self.__executor.add_node(self.physics.node)
-        assert rate_added and lidar_added and camera_added and controller_added, (
+        display_added = self.__executor.add_node(self.display.node)
+        telemetry_added = self.__executor.add_node(self.telemetry.node)
+        vision_added = self.__executor.add_node(self.vision.node)
+        # drive owns its own 20 Hz republish timer (independent of __run), so
+        # the publisher keeps mux's command_timeout_sec satisfied even when
+        # the run loop is wedged under go_async()'s rate.sleep() pattern.
+        drive_added = self.__executor.add_node(self.drive.node)
+        assert (
+            rate_added and lidar_added and camera_added and controller_added
+            and physics_added and display_added and telemetry_added
+            and vision_added and drive_added
+        ), (
             "Issues initializing Racecar nodes. Node status: \n"
             f"Rate operational: {rate_added} | "
             f"Camera operational: {camera_added} | "
             f"Lidar operational: {lidar_added} | "
             f"Controller operational: {controller_added} | "
             f"Physics operational: {physics_added} | "
+            f"Display operational: {display_added} | "
+            f"Telemetry operational: {telemetry_added} | "
+            f"Vision operational: {vision_added} | "
+            f"Drive operational: {drive_added} | "
         )
 
         # User provided start and update functions
@@ -111,16 +130,30 @@ class RacecarReal(Racecar):
         ros2.shutdown()
 
     def go_async(self) -> None:
+        """
+        Start the ROS2 executor in a background thread so the notebook /
+        REPL can interact with rc.* synchronously. Unlike go(), this does
+        NOT install the default trigger-based driving callback — the
+        notebook is the active controller, and a 60 Hz default_update
+        racing on self.drive.__message would clobber every set_speed_angle
+        call with zero (forward_trigger=0, back_trigger=0 → speed=0).
+        """
         self.__running = True
+        # Suppress the run loop's continuous __cur_update calls so they
+        # don't fight the notebook for drive control. Sensor callbacks
+        # still fire from the executor; the run loop's __update_modules
+        # call still services controller edge detection, telemetry, etc.
+        self.__cur_update = self.__noop_update
+        self.__cur_update_slow = None
         self.__async_thread = threading.Thread(target=self.__spin_async, daemon=True)
         self.__async_thread.start()
 
     def __spin_async(self) -> None:
-        self.__user_start = self.__default_start
-        self.__user_update = self.__default_update
-        self.__handle_start()
         while self.__running:
             self.__executor.spin_once()
+
+    def __noop_update(self):
+        pass
         
     def set_start_update(
         self,
@@ -192,13 +225,17 @@ class RacecarReal(Racecar):
 
     def __update_modules(self):
         """
-        Calls the update function on each module.
+        Calls the update function on each module. Drive is not listed —
+        it publishes from its own 20 Hz ROS timer (driven by the executor)
+        so it stays alive even when this run loop deadlocks on
+        rclpy.Rate.sleep() under go_async().
         """
-        self.drive._DriveReal__update()
         self.controller._ControllerReal__update()
         self.camera._CameraReal__update()
         self.physics._PhysicsReal__update()
         self.lidar._LidarReal__update()
+        self.vision._VisionReal__update()
+        self.telemetry._TelemetryReal__update()
 
     def __default_start(self):
         """

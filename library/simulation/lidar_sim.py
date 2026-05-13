@@ -1,5 +1,6 @@
 import numpy as np
-from nptyping import NDArray
+class NDArray:  # stub - no runtime dependency on nptyping
+    def __class_getitem__(cls, _): return cls
 
 from lidar import Lidar
 

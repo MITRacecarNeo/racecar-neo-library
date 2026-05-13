@@ -1,6 +1,6 @@
 """
 Copyright MIT and Harvey Mudd College
-MIT License
+GNU General Public License v3.0
 Summer 2020
 
 Manages communication with RacecarSim.
