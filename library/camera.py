@@ -1,6 +1,6 @@
 """
 Copyright MIT
-MIT License
+GNU General Public License v3.0
 
 BWSI Autonomous RACECAR Course
 Racecar Neo LTS
@@ -12,7 +12,8 @@ File Description: Defines the interface of the Camera module of the racecar_core
 import abc
 import copy
 import numpy as np
-from nptyping import NDArray
+class NDArray:  # stub - no runtime dependency on nptyping
+    def __class_getitem__(cls, _): return cls
 
 
 class Camera(abc.ABC):
