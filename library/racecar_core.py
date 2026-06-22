@@ -1,6 +1,6 @@
 """
 Copyright MIT
-GNU General Public License v3.0
+MIT License
 
 BWSI Autonomous RACECAR Course
 Racecar Neo LTS
@@ -18,9 +18,10 @@ import controller
 import display
 import drive
 import lidar
+import nav
 import physics
+import slam
 import telemetry
-import vision
 
 import racecar_utils as rc_utils
 
@@ -37,9 +38,10 @@ class Racecar(abc.ABC):
         self.display: display.Display
         self.drive: drive.Drive
         self.lidar: lidar.Lidar
+        self.nav: nav.Nav
         self.physics: physics.Physics
+        self.slam: slam.Slam
         self.telemetry: telemetry.Telemetry
-        self.vision: vision.Vision
 
     @abc.abstractmethod
     def go(self) -> None:

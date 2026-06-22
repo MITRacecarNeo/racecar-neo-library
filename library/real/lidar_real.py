@@ -1,6 +1,6 @@
 """
 Copyright MIT
-GNU General Public License v3.0
+MIT License
 
 BWSI Autonomous RACECAR Course
 Racecar Neo LTS
@@ -13,8 +13,7 @@ from lidar import Lidar
 
 # General
 import numpy as np
-class NDArray:  # stub - no runtime dependency on nptyping
-    def __class_getitem__(cls, _): return cls
+from nptyping import NDArray
 
 # ROS2
 import rclpy as ros2
@@ -25,12 +24,6 @@ from sensor_msgs.msg import LaserScan
 class LidarReal(Lidar):
     # The ROS topic from which we get Lidar data
     __SCAN_TOPIC = "/scan"
-
-    # RPLIDAR with angle_compensate=true emits ~1080 samples per scan; this
-    # overrides the abstract base's 720 default for the physical car. The sim
-    # side keeps 720. Labs that assume one or the other must use
-    # rc.lidar.get_num_samples() rather than hard-coding the length.
-    _NUM_SAMPLES: int = 1080
 
     def __init__(self):
         # ROS node
@@ -50,7 +43,7 @@ class LidarReal(Lidar):
     # For RPLidar - replace "inf" with 0 to match sim LIDAR data
     # Note: The real LIDAR returns a scan of length 1080.
     def __scan_callback(self, data):
-        scan_data = np.flip(np.multiply(np.array(data.ranges), 100))
+        scan_data = np.roll(np.flip(np.multiply(np.array(data.ranges), 100)), 720) # rotate 180 degrees to the right
         self.__samples_new = np.array([0 if str(x) == "inf" else x for x in scan_data])
 
     def __update(self):

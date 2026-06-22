@@ -1,7 +1,6 @@
 import numpy as np
 import cv2 as cv
-class NDArray:  # stub - no runtime dependency on nptyping
-    def __class_getitem__(cls, _): return cls
+from nptyping import NDArray
 
 from camera import Camera
 

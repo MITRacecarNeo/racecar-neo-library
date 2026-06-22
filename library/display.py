@@ -1,6 +1,6 @@
 """
 Copyright MIT
-GNU General Public License v3.0
+MIT License
 
 BWSI Autonomous RACECAR Course
 Racecar Neo LTS
@@ -13,8 +13,7 @@ import abc
 import numpy as np
 import math
 from typing import Any
-class NDArray:  # stub - no runtime dependency on nptyping
-    def __class_getitem__(cls, _): return cls
+from nptyping import NDArray
 
 import racecar_utils as rc_utils
 

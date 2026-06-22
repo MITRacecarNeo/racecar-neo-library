@@ -1,6 +1,6 @@
 """
 Copyright MIT
-GNU General Public License v3.0
+MIT License
 
 BWSI Autonomous RACECAR Course
 Racecar Neo LTS
@@ -12,8 +12,7 @@ File Description: Contains helper functions to support common operations.
 import cv2 as cv
 import numpy as np
 from typing import Any, Optional
-class NDArray:  # stub - no runtime dependency on nptyping
-    def __class_getitem__(cls, _): return cls
+from nptyping import NDArray
 from enum import Enum, IntEnum
 
 
