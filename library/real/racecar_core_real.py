@@ -23,7 +23,9 @@ import controller_real
 import display_real
 import drive_real
 import lidar_real
+import nav_real
 import physics_real
+import slam_real
 import telemetry_real
 import vision_real
 
@@ -52,6 +54,8 @@ class RacecarReal(Racecar):
         self.physics = physics_real.PhysicsReal()
         self.telemetry = telemetry_real.TelemetryReal()
         self.vision = vision_real.VisionReal()
+        self.slam = slam_real.SlamReal()
+        self.nav = nav_real.NavReal()
 
         # Add all nodes to the executor
         rate_added = self.__executor.add_node(self.__rate_node)
@@ -66,10 +70,12 @@ class RacecarReal(Racecar):
         # the publisher keeps mux's command_timeout_sec satisfied even when
         # the run loop is wedged under go_async()'s rate.sleep() pattern.
         drive_added = self.__executor.add_node(self.drive.node)
+        slam_added = self.__executor.add_node(self.slam.node)
+        nav_added = self.__executor.add_node(self.nav.node)
         assert (
             rate_added and lidar_added and camera_added and controller_added
             and physics_added and display_added and telemetry_added
-            and vision_added and drive_added
+            and vision_added and drive_added and slam_added and nav_added
         ), (
             "Issues initializing Racecar nodes. Node status: \n"
             f"Rate operational: {rate_added} | "
@@ -81,6 +87,8 @@ class RacecarReal(Racecar):
             f"Telemetry operational: {telemetry_added} | "
             f"Vision operational: {vision_added} | "
             f"Drive operational: {drive_added} | "
+            f"Slam operational: {slam_added} | "
+            f"Nav operational: {nav_added} | "
         )
 
         # User provided start and update functions
@@ -236,6 +244,8 @@ class RacecarReal(Racecar):
         self.lidar._LidarReal__update()
         self.vision._VisionReal__update()
         self.telemetry._TelemetryReal__update()
+        self.slam._SlamReal__update()
+        self.nav._NavReal__update()
 
     def __default_start(self):
         """
