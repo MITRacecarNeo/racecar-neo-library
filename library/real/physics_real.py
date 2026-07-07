@@ -26,12 +26,23 @@ from rclpy.qos import (
     QoSProfile,
 )
 from sensor_msgs.msg import Imu, MagneticField
+from std_msgs.msg import Float32, Float32MultiArray
 
 
 class PhysicsReal(Physics):
-    # The ROS topic from which we read imu data
-    __IMU_TOPIC = "/imu"
+    # The ROS topic from which we read imu data. imu_fusion_node merges the
+    # RealSense and Teensy LSM9DS1 IMUs into /imu/fused (single source of truth
+    # when only one publishes). /mag has no source yet (the D435i has no
+    # magnetometer); it stays empty until the Teensy LSM9DS1.
+    __IMU_TOPIC = "/imu/fused"
     __MAG_TOPIC = "/mag"
+    # Vehicle speed (m/s) republished by pit_node from the Teensy encoder.
+    __ENCODER_TOPIC = "/encoder/speed"
+    # Power telemetry (INA226) and the eight FlySky RC channels, republished by
+    # pit_node: voltage in V, current in A, RC channels normalized to [-1, 1].
+    __VOLTAGE_TOPIC = "/battery/voltage"
+    __CURRENT_TOPIC = "/battery/current"
+    __RC_TOPIC = "/rc/channels"
 
     # Limit on buffer size to prevent memory overflow
     __BUFFER_CAP = 60
@@ -56,12 +67,35 @@ class PhysicsReal(Physics):
             MagneticField, self.__MAG_TOPIC, self.__mag_callback, qos_profile
         )
 
+        # subscribe to the encoder speed topic (m/s)
+        self.__encoder_sub = self.node.create_subscription(
+            Float32, self.__ENCODER_TOPIC, self.__encoder_callback, qos_profile
+        )
+
+        # subscribe to the power telemetry (V, A) and RC channel topics
+        self.__voltage_sub = self.node.create_subscription(
+            Float32, self.__VOLTAGE_TOPIC, self.__voltage_callback, qos_profile
+        )
+        self.__current_sub = self.node.create_subscription(
+            Float32, self.__CURRENT_TOPIC, self.__current_callback, qos_profile
+        )
+        self.__rc_sub = self.node.create_subscription(
+            Float32MultiArray, self.__RC_TOPIC, self.__rc_callback, qos_profile
+        )
+
         self.__acceleration = np.array([0, 0, 0])
         self.__acceleration_buffer = deque()
         self.__angular_velocity = np.array([0, 0, 0])
         self.__angular_velocity_buffer = deque()
         self.__magnetic_field = np.array([0, 0, 0])
         self.__magnetic_field_buffer = deque()
+        self.__encoder_speed = 0.0
+        self.__encoder_speed_buffer = deque()
+        self.__voltage = 0.0
+        self.__voltage_buffer = deque()
+        self.__current = 0.0
+        self.__current_buffer = deque()
+        self.__rc_channels = np.zeros(8)
 
     def __imu_callback(self, data):
         new_acceleration = np.array(
@@ -88,7 +122,29 @@ class PhysicsReal(Physics):
         self.__magnetic_field_buffer.append(new_magnetic_field)
         if len(self.__magnetic_field_buffer) > self.__BUFFER_CAP:
             self.__magnetic_field_buffer.popleft()
-    
+
+    def __encoder_callback(self, data):
+        self.__encoder_speed_buffer.append(data.data)
+        if len(self.__encoder_speed_buffer) > self.__BUFFER_CAP:
+            self.__encoder_speed_buffer.popleft()
+
+    def __voltage_callback(self, data):
+        self.__voltage_buffer.append(data.data)
+        if len(self.__voltage_buffer) > self.__BUFFER_CAP:
+            self.__voltage_buffer.popleft()
+
+    def __current_callback(self, data):
+        self.__current_buffer.append(data.data)
+        if len(self.__current_buffer) > self.__BUFFER_CAP:
+            self.__current_buffer.popleft()
+
+    def __rc_callback(self, data):
+        # RC channels are control inputs; keep the most recent frame, not an
+        # average. Pad or truncate to eight in case a frame is malformed.
+        values = list(data.data)[:8]
+        values += [0.0] * (8 - len(values))
+        self.__rc_channels = np.array(values)
+
     def __update(self):
         if len(self.__acceleration_buffer) > 0:
             self.__acceleration = np.mean(self.__acceleration_buffer, axis=0)
@@ -102,6 +158,18 @@ class PhysicsReal(Physics):
             self.__magnetic_field = np.mean(self.__magnetic_field_buffer, axis=0)
             self.__magnetic_field_buffer.clear()
 
+        if len(self.__encoder_speed_buffer) > 0:
+            self.__encoder_speed = float(np.mean(self.__encoder_speed_buffer))
+            self.__encoder_speed_buffer.clear()
+
+        if len(self.__voltage_buffer) > 0:
+            self.__voltage = float(np.mean(self.__voltage_buffer))
+            self.__voltage_buffer.clear()
+
+        if len(self.__current_buffer) > 0:
+            self.__current = float(np.mean(self.__current_buffer))
+            self.__current_buffer.clear()
+
     def get_linear_acceleration(self) -> NDArray[3, np.float32]:
         return np.array(self.__acceleration)
 
@@ -110,3 +178,15 @@ class PhysicsReal(Physics):
 
     def get_magnetic_field(self) -> NDArray[3, np.float32]:
         return np.array(self.__magnetic_field)
+
+    def get_encoder_speed(self) -> float:
+        return self.__encoder_speed
+
+    def get_battery_voltage(self) -> float:
+        return self.__voltage
+
+    def get_battery_current(self) -> float:
+        return self.__current
+
+    def get_rc_channels(self) -> NDArray[8, np.float32]:
+        return np.array(self.__rc_channels)

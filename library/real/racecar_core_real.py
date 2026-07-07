@@ -22,6 +22,7 @@ import camera_real
 import controller_real
 import display_real
 import drive_real
+import led_real
 import lidar_real
 import physics_real
 import telemetry_real
@@ -48,6 +49,7 @@ class RacecarReal(Racecar):
         self.controller = controller_real.ControllerReal(self)
         self.display = display_real.DisplayReal(isHeadless)
         self.drive = drive_real.DriveReal()
+        self.led = led_real.LedReal()
         self.lidar = lidar_real.LidarReal()
         self.physics = physics_real.PhysicsReal()
         self.telemetry = telemetry_real.TelemetryReal()
@@ -60,6 +62,7 @@ class RacecarReal(Racecar):
         controller_added = self.__executor.add_node(self.controller.node)
         physics_added = self.__executor.add_node(self.physics.node)
         display_added = self.__executor.add_node(self.display.node)
+        led_added = self.__executor.add_node(self.led.node)
         telemetry_added = self.__executor.add_node(self.telemetry.node)
         vision_added = self.__executor.add_node(self.vision.node)
         # drive owns its own 20 Hz republish timer (independent of __run), so
@@ -68,7 +71,7 @@ class RacecarReal(Racecar):
         drive_added = self.__executor.add_node(self.drive.node)
         assert (
             rate_added and lidar_added and camera_added and controller_added
-            and physics_added and display_added and telemetry_added
+            and physics_added and display_added and led_added and telemetry_added
             and vision_added and drive_added
         ), (
             "Issues initializing Racecar nodes. Node status: \n"
@@ -78,6 +81,7 @@ class RacecarReal(Racecar):
             f"Controller operational: {controller_added} | "
             f"Physics operational: {physics_added} | "
             f"Display operational: {display_added} | "
+            f"Led operational: {led_added} | "
             f"Telemetry operational: {telemetry_added} | "
             f"Vision operational: {vision_added} | "
             f"Drive operational: {drive_added} | "

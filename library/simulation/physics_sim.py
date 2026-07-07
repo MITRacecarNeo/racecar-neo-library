@@ -26,3 +26,15 @@ class PhysicsSim(Physics):
     
     def get_magnetic_field(self):
         return None # Nothing here yet!
+
+    def get_encoder_speed(self) -> float:
+        return 0.0  # No drive encoder in simulation.
+
+    def get_battery_voltage(self) -> float:
+        return 0.0  # No power sensor in simulation.
+
+    def get_battery_current(self) -> float:
+        return 0.0  # No power sensor in simulation.
+
+    def get_rc_channels(self) -> NDArray[8, np.float32]:
+        return np.zeros(8)  # No RC receiver in simulation.
