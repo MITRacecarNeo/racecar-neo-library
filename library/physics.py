@@ -103,3 +103,104 @@ class Physics(abc.ABC):
             The z-axis points directly up (perpendicular to the ground).
         """
         pass
+
+    @abc.abstractmethod
+    def get_encoder_speed(self) -> float:
+        """
+        Returns the car's forward speed measured by the drive encoder.
+
+        Returns:
+            The average forward speed of the car over the last frame in m/s,
+            derived from the NEO-PIT hall encoder (the Teensy applies the gear
+            ratios and wheel circumference). Positive is forward.
+
+        Note:
+            --- In the Simulator ---
+            This function returns 0.0 (there is no drive encoder in simulation).
+
+            --- In the Physical RACECAR ---
+            The value comes from the /encoder/speed topic.
+
+        Example::
+
+            # speed stores the car's forward speed in m/s
+            speed = rc.physics.get_encoder_speed()
+        """
+        pass
+
+    @abc.abstractmethod
+    def get_battery_voltage(self) -> float:
+        """
+        Returns the battery bus voltage measured by the NEO-PIT power sensor.
+
+        Returns:
+            The bus voltage in volts (INA226 sensor).
+
+        Note:
+            --- In the Simulator ---
+            This function returns 0.0 (there is no power sensor in simulation).
+
+            --- In the Physical RACECAR ---
+            The value comes from the /battery/voltage topic.
+
+        Example::
+
+            # voltage stores the battery voltage in volts
+            voltage = rc.physics.get_battery_voltage()
+        """
+        pass
+
+    @abc.abstractmethod
+    def get_battery_current(self) -> float:
+        """
+        Returns the battery current measured by the NEO-PIT power sensor.
+
+        Returns:
+            The current draw in amps (INA226 sensor).
+
+        Note:
+            --- In the Simulator ---
+            This function returns 0.0 (there is no power sensor in simulation).
+
+            --- In the Physical RACECAR ---
+            The value comes from the /battery/current topic.
+
+        Example::
+
+            # current stores the battery draw in amps
+            current = rc.physics.get_battery_current()
+        """
+        pass
+
+    @abc.abstractmethod
+    def get_rc_channels(self) -> NDArray[8, np.float32]:
+        """
+        Returns the eight FlySky RC transmitter channels.
+
+        Returns:
+            An array of eight values, each in the range [-1, 1] (0 at the
+            channel's center or with no transmitter signal). Channel map on the
+            FlySky iA6B (verified on hardware):
+                [0] right stick X (steering)   [4] switch A
+                [1] right stick Y              [5] switch B
+                [2] left stick Y (throttle)    [6] switch C
+                [3] left stick X               [7] switch D
+            The firmware drives steering from channel 0 and throttle from
+            channel 2.
+
+        Note:
+            --- In the Simulator ---
+            This function returns eight zeros (there is no RC receiver in
+            simulation).
+
+            --- In the Physical RACECAR ---
+            The values come from the /rc/channels topic, normalized by the
+            firmware pulse widths.
+
+        Example::
+
+            # channels stores the eight RC channels in [-1, 1]
+            channels = rc.physics.get_rc_channels()
+            steering = channels[0]
+        """
+        pass

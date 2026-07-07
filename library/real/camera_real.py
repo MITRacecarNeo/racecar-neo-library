@@ -27,19 +27,10 @@ from cv_bridge import CvBridge, CvBridgeError
 
 
 class CameraReal(Camera):
-    # The ROS topic from which we read camera data. gscam publishes a raw
-    # sensor_msgs/Image after decoding the MJPEG stream itself, so we use
-    # cv_bridge with bgr8 (not cv.imdecode on a JPEG buffer).
-    __COLOR_TOPIC = "/camera/forward"
-
-    # v2 cameras (Logitech BRIO + Arducam B0578) are RGB-only. Depth is not
-    # available on the physical RACECAR; the depth API is retained so labs
-    # that compile against the sim still parse, but every call warns.
-    __DEPTH_WARNING = (
-        "rc.camera.get_depth_image*() is unsupported on the v2 RACECAR — "
-        "the physical platform has no depth sensor. This call returns None. "
-        "Depth-based labs only run in the simulator."
-    )
+    # RACECAR topics fed by the RealSense D435i; realsense.launch.py remaps the
+    # RealSense color/image_raw and depth/image_rect_raw onto these names.
+    __COLOR_TOPIC = "/camera/color"
+    __DEPTH_TOPIC = "/camera/depth"
 
     def __init__(self):
         self.__bridge = CvBridge()
@@ -56,7 +47,11 @@ class CameraReal(Camera):
         self.__color_image = None
         self.__color_image_new = None
 
-        self.__depth_warned = False
+        self.__depth_image_sub = self.node.create_subscription(
+            Image, self.__DEPTH_TOPIC, self.__depth_callback, qos_profile
+        )
+        self.__depth_image = None
+        self.__depth_image_new = None
 
     def __color_callback(self, data):
         try:
@@ -66,13 +61,17 @@ class CameraReal(Camera):
         except CvBridgeError as e:
             print(f"camera_real: failed to decode color frame: {e}")
 
-    def __warn_depth_unsupported(self):
-        if not self.__depth_warned:
-            print(f"[WARNING] {self.__DEPTH_WARNING}")
-            self.__depth_warned = True
+    def __depth_callback(self, data):
+        # RealSense depth is 16UC1 (uint16) in millimeters; the API returns cm.
+        try:
+            depth_mm = self.__bridge.imgmsg_to_cv2(data, desired_encoding="passthrough")
+            self.__depth_image_new = depth_mm.astype(np.float32) / 10.0
+        except CvBridgeError as e:
+            print(f"camera_real: failed to decode depth frame: {e}")
 
     def __update(self):
         self.__color_image = self.__color_image_new
+        self.__depth_image = self.__depth_image_new
 
     def get_color_image_no_copy(self) -> NDArray[(480, 640, 3), np.uint8]:
         return self.__color_image
@@ -81,9 +80,7 @@ class CameraReal(Camera):
         return self.__color_image_new
 
     def get_depth_image(self) -> NDArray[(480, 640), np.float32]:
-        self.__warn_depth_unsupported()
-        return None
+        return self.__depth_image
 
     def get_depth_image_async(self) -> NDArray[(480, 640), np.float32]:
-        self.__warn_depth_unsupported()
-        return None
+        return self.__depth_image_new

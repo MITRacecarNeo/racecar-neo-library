@@ -17,6 +17,7 @@ import camera
 import controller
 import display
 import drive
+import led
 import lidar
 import physics
 import telemetry
@@ -36,6 +37,7 @@ class Racecar(abc.ABC):
         self.controller: controller.Controller
         self.display: display.Display
         self.drive: drive.Drive
+        self.led: led.Led
         self.lidar: lidar.Lidar
         self.physics: physics.Physics
         self.telemetry: telemetry.Telemetry

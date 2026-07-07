@@ -18,6 +18,7 @@ import camera_sim
 import controller_sim
 import display_sim
 import drive_sim
+import led_sim
 import lidar_sim
 import physics_sim
 import telemetry_sim
@@ -153,6 +154,7 @@ class RacecarSim(Racecar):
         self.controller = controller_sim.ControllerSim(self)
         self.display = display_sim.DisplaySim(isHeadless)
         self.drive = drive_sim.DriveSim(self)
+        self.led = led_sim.LedSim(self)
         self.physics = physics_sim.PhysicsSim(self)
         self.lidar = lidar_sim.LidarSim(self)
         self.telemetry = telemetry_sim.TelemetrySim()
