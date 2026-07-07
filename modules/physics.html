@@ -24,9 +24,9 @@
 <title>Physics | racecar-neo-library  documentation</title>
 <meta content="Physics | racecar-neo-library  documentation" property="og:title"/>
 <meta content="Physics | racecar-neo-library  documentation" name="twitter:title"/>
-<link href="../_static/pygments.css?v=51381c46" rel="stylesheet" type="text/css"/>
+<link href="../_static/pygments.css?v=0a3749eb" rel="stylesheet" type="text/css"/>
 <link href="../_static/pygments_dark.css" id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css"/>
-<link href="../_static/theme.css?v=73505e79" rel="stylesheet" type="text/css"/>
+<link href="../_static/theme.css?v=d6d7c91b" rel="stylesheet" type="text/css"/>
 <link href="../search.html" rel="search" title="Search"/>
 <link href="../genindex.html" rel="index" title="Index"/>
 <link href="telemetry.html" rel="next" title="Telemetry"/>
@@ -118,7 +118,7 @@
 </span></code></pre></div>
 </div>
 <p id="module-physics">Copyright MIT
-MIT License</p>
+GNU General Public License v3.0</p>
 <p>BWSI Autonomous RACECAR Course
 Racecar Neo LTS</p>
 <p>File Name: physics.py
@@ -129,7 +129,7 @@ File Description: Defines the interface of the Physics module of the racecar_cor
 <dd><p>Returns the linear acceleration and angular velocity measured by the IMU.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="physics.Physics.get_angular_velocity">
-<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_angular_velocity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">3</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#physics.Physics.get_angular_velocity" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#physics.Physics.get_angular_velocity'"><span>#</span></a></dt>
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_angular_velocity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">NDArray</span></span></span><a class="headerlink" href="#physics.Physics.get_angular_velocity" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#physics.Physics.get_angular_velocity'"><span>#</span></a></dt>
 <dd><p>Returns a 3D vector containing the car’s angular velocity.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -161,8 +161,76 @@ The z-axis (yaw) points directly up (perpendicular to the ground).</p>
 </div>
 </dd></dl>
 <dl class="py method">
+<dt class="sig sig-object py" id="physics.Physics.get_battery_current">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_battery_current</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#physics.Physics.get_battery_current" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#physics.Physics.get_battery_current'"><span>#</span></a></dt>
+<dd><p>Returns the battery current measured by the NEO-PIT power sensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The current draw in amps (INA226 sensor).</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>— In the Simulator —
+This function returns 0.0 (there is no power sensor in simulation).</p>
+<p>— In the Physical RACECAR —
+The value comes from the /battery/current topic.</p>
+</div>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># current stores the battery draw in amps</span>
+</span><span id="line-2"><span class="n">current</span> <span class="o">=</span> <span class="n">rc</span><span class="o">.</span><span class="n">physics</span><span class="o">.</span><span class="n">get_battery_current</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="physics.Physics.get_battery_voltage">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_battery_voltage</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#physics.Physics.get_battery_voltage" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#physics.Physics.get_battery_voltage'"><span>#</span></a></dt>
+<dd><p>Returns the battery bus voltage measured by the NEO-PIT power sensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The bus voltage in volts (INA226 sensor).</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>— In the Simulator —
+This function returns 0.0 (there is no power sensor in simulation).</p>
+<p>— In the Physical RACECAR —
+The value comes from the /battery/voltage topic.</p>
+</div>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># voltage stores the battery voltage in volts</span>
+</span><span id="line-2"><span class="n">voltage</span> <span class="o">=</span> <span class="n">rc</span><span class="o">.</span><span class="n">physics</span><span class="o">.</span><span class="n">get_battery_voltage</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="physics.Physics.get_encoder_speed">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_encoder_speed</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#physics.Physics.get_encoder_speed" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#physics.Physics.get_encoder_speed'"><span>#</span></a></dt>
+<dd><p>Returns the car’s forward speed measured by the drive encoder.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The average forward speed of the car over the last frame in m/s,
+derived from the NEO-PIT hall encoder (the Teensy applies the gear
+ratios and wheel circumference). Positive is forward.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>— In the Simulator —
+This function returns 0.0 (there is no drive encoder in simulation).</p>
+<p>— In the Physical RACECAR —
+The value comes from the /encoder/speed topic.</p>
+</div>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># speed stores the car's forward speed in m/s</span>
+</span><span id="line-2"><span class="n">speed</span> <span class="o">=</span> <span class="n">rc</span><span class="o">.</span><span class="n">physics</span><span class="o">.</span><span class="n">get_encoder_speed</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+</dd></dl>
+<dl class="py method">
 <dt class="sig sig-object py" id="physics.Physics.get_linear_acceleration">
-<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_linear_acceleration</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">3</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#physics.Physics.get_linear_acceleration" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#physics.Physics.get_linear_acceleration'"><span>#</span></a></dt>
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_linear_acceleration</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">NDArray</span></span></span><a class="headerlink" href="#physics.Physics.get_linear_acceleration" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#physics.Physics.get_linear_acceleration'"><span>#</span></a></dt>
 <dd><p>Returns a 3D vector containing the car’s linear acceleration.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -193,7 +261,7 @@ The z-axis points directly up (perpendicular to the ground).</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="physics.Physics.get_magnetic_field">
-<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_magnetic_field</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">NDArray</span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">3</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#physics.Physics.get_magnetic_field" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#physics.Physics.get_magnetic_field'"><span>#</span></a></dt>
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_magnetic_field</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">NDArray</span></span></span><a class="headerlink" href="#physics.Physics.get_magnetic_field" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#physics.Physics.get_magnetic_field'"><span>#</span></a></dt>
 <dd><p>Returns a 3D vector containing the car’s magnetic field measurements.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -211,6 +279,42 @@ The y-axis points towards the right of the car.
 The z-axis points directly up (perpendicular to the ground).</p>
 </div>
 </dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="physics.Physics.get_rc_channels">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_rc_channels</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">NDArray</span></span></span><a class="headerlink" href="#physics.Physics.get_rc_channels" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#physics.Physics.get_rc_channels'"><span>#</span></a></dt>
+<dd><p>Returns the eight FlySky RC transmitter channels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><p>An array of eight values, each in the range [-1, 1] (0 at the
+channel’s center or with no transmitter signal). Channel map on the
+FlySky iA6B (verified on hardware):</p>
+<blockquote>
+<div><p>[0] right stick X (steering)   [4] switch A
+[1] right stick Y              [5] switch B
+[2] left stick Y (throttle)    [6] switch C
+[3] left stick X               [7] switch D</p>
+</div></blockquote>
+<p>The firmware drives steering from channel 0 and throttle from
+channel 2.</p>
+</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>— In the Simulator —
+This function returns eight zeros (there is no RC receiver in
+simulation).</p>
+<p>— In the Physical RACECAR —
+The values come from the /rc/channels topic, normalized by the
+firmware pulse widths.</p>
+</div>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># channels stores the eight RC channels in [-1, 1]</span>
+</span><span id="line-2"><span class="n">channels</span> <span class="o">=</span> <span class="n">rc</span><span class="o">.</span><span class="n">physics</span><span class="o">.</span><span class="n">get_rc_channels</span><span class="p">()</span>
+</span><span id="line-3"><span class="n">steering</span> <span class="o">=</span> <span class="n">channels</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></code></pre></div>
+</div>
+</dd></dl>
 </dd></dl>
 </section>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
@@ -218,8 +322,12 @@ The z-axis points directly up (perpendicular to the ground).</p>
 <ul>
 <li><a :data-current="activeSection === '#physics.Physics'" class="reference internal" href="#physics.Physics"><code class="docutils literal notranslate"><span class="pre">Physics</span></code></a><ul>
 <li><a :data-current="activeSection === '#physics.Physics.get_angular_velocity'" class="reference internal" href="#physics.Physics.get_angular_velocity"><code class="docutils literal notranslate"><span class="pre">Physics.get_angular_velocity()</span></code></a></li>
+<li><a :data-current="activeSection === '#physics.Physics.get_battery_current'" class="reference internal" href="#physics.Physics.get_battery_current"><code class="docutils literal notranslate"><span class="pre">Physics.get_battery_current()</span></code></a></li>
+<li><a :data-current="activeSection === '#physics.Physics.get_battery_voltage'" class="reference internal" href="#physics.Physics.get_battery_voltage"><code class="docutils literal notranslate"><span class="pre">Physics.get_battery_voltage()</span></code></a></li>
+<li><a :data-current="activeSection === '#physics.Physics.get_encoder_speed'" class="reference internal" href="#physics.Physics.get_encoder_speed"><code class="docutils literal notranslate"><span class="pre">Physics.get_encoder_speed()</span></code></a></li>
 <li><a :data-current="activeSection === '#physics.Physics.get_linear_acceleration'" class="reference internal" href="#physics.Physics.get_linear_acceleration"><code class="docutils literal notranslate"><span class="pre">Physics.get_linear_acceleration()</span></code></a></li>
 <li><a :data-current="activeSection === '#physics.Physics.get_magnetic_field'" class="reference internal" href="#physics.Physics.get_magnetic_field"><code class="docutils literal notranslate"><span class="pre">Physics.get_magnetic_field()</span></code></a></li>
+<li><a :data-current="activeSection === '#physics.Physics.get_rc_channels'" class="reference internal" href="#physics.Physics.get_rc_channels"><code class="docutils literal notranslate"><span class="pre">Physics.get_rc_channels()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -230,7 +338,7 @@ The z-axis points directly up (perpendicular to the ground).</p>
 </div><footer class="py-6 border-t border-border md:py-0">
 <div class="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
 <div class="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
-<p class="text-sm leading-loose text-center text-muted-foreground md:text-left">© 2024, MIT. Built with <a class="font-medium underline underline-offset-4" href="https://www.sphinx-doc.org" rel="noreferrer">Sphinx 9.1.0</a></p>
+<p class="text-sm leading-loose text-center text-muted-foreground md:text-left">© 2024, MIT. Built with <a class="font-medium underline underline-offset-4" href="https://www.sphinx-doc.org" rel="noreferrer">Sphinx 9.0.4</a></p>
 </div>
 </div>
 </footer>
@@ -238,6 +346,6 @@ The z-axis points directly up (perpendicular to the ground).</p>
 <script src="../_static/documentation_options.js?v=5929fcd5"></script>
 <script src="../_static/doctools.js?v=fd6eb6e6"></script>
 <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
-<script defer="defer" src="../_static/theme.js?v=582b20c5"></script>
+<script defer="defer" src="../_static/theme.js?v=5db23cf8"></script>
 </body>
 </html>

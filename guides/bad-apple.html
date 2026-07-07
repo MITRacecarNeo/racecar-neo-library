@@ -24,9 +24,9 @@
 <title>Generalized Bad Apple | racecar-neo-library  documentation</title>
 <meta content="Generalized Bad Apple | racecar-neo-library  documentation" property="og:title"/>
 <meta content="Generalized Bad Apple | racecar-neo-library  documentation" name="twitter:title"/>
-<link href="../_static/pygments.css?v=51381c46" rel="stylesheet" type="text/css"/>
+<link href="../_static/pygments.css?v=0a3749eb" rel="stylesheet" type="text/css"/>
 <link href="../_static/pygments_dark.css" id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css"/>
-<link href="../_static/theme.css?v=73505e79" rel="stylesheet" type="text/css"/>
+<link href="../_static/theme.css?v=d6d7c91b" rel="stylesheet" type="text/css"/>
 <link href="../search.html" rel="search" title="Search"/>
 <link href="../genindex.html" rel="index" title="Index"/>
 <link href="index.html" rel="prev" title="Guides"/>
@@ -151,8 +151,8 @@
 <h2>Step 2 — Pixelation and masking<a class="headerlink" href="#step-2-pixelation-and-masking" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#step-2-pixelation-and-masking'"><span>#</span></a></h2>
 <p>Now that we have a folder of image files to play, we’ll need to preprocess them so that they’re ready for the racecar. In the racecar library, there <em>is</em> a <a class="reference external" href="https://mitracecarneo.github.io/racecar-neo-library/docs/utils.html#racecar_utils.pixelate_image">utility function that lets you pixelate images for the dot matrix</a>; however, uploading your raw frameset to the racecar is inefficient and sometimes prohibitively so (for bad apple, the raw 6562 frames took up a combined ~500 MB).</p>
 <p>Instead, we’ll want to squish our images to 8x24 <em>before</em> copying them to the pi. The following python script will traverse all files in the folder specified by <code class="docutils literal notranslate"><span class="pre">INPUT_PATH</span></code>, pixelating them and dumping them in <code class="docutils literal notranslate"><span class="pre">OUTPUT_PATH</span></code>.</p>
-<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span> <span class="nn">os</span>
-</span><span id="line-2"><span class="kn">import</span> <span class="nn">cv2</span>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+</span><span id="line-2"><span class="kn">import</span><span class="w"> </span><span class="nn">cv2</span>
 </span><span id="line-3">
 </span><span id="line-4">
 </span><span id="line-5"><span class="n">INPUT_PATH</span> <span class="o">=</span> <span class="s1">'./image_sequence'</span>
@@ -185,7 +185,7 @@
 <p>If your frames were already in black and white (like the frames of bad apple), this is likely all the preprocessing you need to do.</p>
 <p>Otherwise, if your frames have color or differing grayscale values, you’ll probably want to convert it to a binary image as well. The easiest way to accomplish this is via masking: <a class="reference external" href="https://docs.opencv.org/3.4/da/d97/tutorial_threshold_inRange.html"><code class="docutils literal notranslate"><span class="pre">cv2.inRange(img,</span> <span class="pre">low,</span> <span class="pre">high)</span></code> may be very helpful here</a>.</p>
 <p>If you’d like to test your image transform before applying it to all your frames, you can create a simple test script like so:</p>
-<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span> <span class="nn">cv2</span>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span><span class="w"> </span><span class="nn">cv2</span>
 </span><span id="line-2">
 </span><span id="line-3">
 </span><span id="line-4"><span class="n">FRAME_PATH</span> <span class="o">=</span> <span class="s1">'...'</span>  <span class="c1"># Fill this in with the path to the frame you want to test with!</span>
@@ -208,8 +208,8 @@
 </div>
 <p>so you can specify ranges in HSV instead. If interested, you can read more about the internal calculations behind colorspace conversions <a class="reference external" href="https://docs.opencv.org/3.4/de/d25/imgproc_color_conversions.html">here</a>.</p>
 <p>Here’s an example of everything together in the test script:</p>
-<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-</span><span id="line-2"><span class="kn">import</span> <span class="nn">cv2</span>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span id="line-2"><span class="kn">import</span><span class="w"> </span><span class="nn">cv2</span>
 </span><span id="line-3">
 </span><span id="line-4">
 </span><span id="line-5"><span class="n">FRAME_PATH</span> <span class="o">=</span> <span class="s1">'./frames/ezgif-frame-050.jpg'</span>
@@ -245,14 +245,14 @@
 </span></code></pre></div>
 </div>
 <p>Then, you can run the animation using a script like so</p>
-<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span> <span class="nn">sys</span>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 </span><span id="line-2">
-</span><span id="line-3"><span class="kn">import</span> <span class="nn">cv2</span>
+</span><span id="line-3"><span class="kn">import</span><span class="w"> </span><span class="nn">cv2</span>
 </span><span id="line-4">
 </span><span id="line-5"><span class="c1"># If this file is nested inside a folder in the labs folder, the relative path should</span>
 </span><span id="line-6"><span class="c1"># be [1, ../../library] instead.</span>
 </span><span id="line-7"><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">'../../library'</span><span class="p">)</span>
-</span><span id="line-8"><span class="kn">import</span> <span class="nn">racecar_core</span>
+</span><span id="line-8"><span class="kn">import</span><span class="w"> </span><span class="nn">racecar_core</span>
 </span><span id="line-9">
 </span><span id="line-10"><span class="n">rc</span> <span class="o">=</span> <span class="n">racecar_core</span><span class="o">.</span><span class="n">create_racecar</span><span class="p">()</span>
 </span><span id="line-11">
@@ -270,7 +270,7 @@
 </span><span id="line-23">
 </span><span id="line-24">
 </span><span id="line-25"><span class="c1"># [FUNCTION] The start function is run once every time the start button is pressed</span>
-</span><span id="line-26"><span class="k">def</span> <span class="nf">start</span><span class="p">():</span>
+</span><span id="line-26"><span class="k">def</span><span class="w"> </span><span class="nf">start</span><span class="p">():</span>
 </span><span id="line-27">    <span class="k">global</span> <span class="n">time</span>
 </span><span id="line-28">    <span class="n">time</span> <span class="o">=</span> <span class="mi">0</span>
 </span><span id="line-29">
@@ -278,7 +278,7 @@
 </span><span id="line-31"><span class="c1"># [FUNCTION] After start() is run, this function is run once every frame (ideally at</span>
 </span><span id="line-32"><span class="c1"># 60 frames per second or slower depending on processing speed) until the back button</span>
 </span><span id="line-33"><span class="c1"># is pressed</span>
-</span><span id="line-34"><span class="k">def</span> <span class="nf">update</span><span class="p">():</span>
+</span><span id="line-34"><span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">():</span>
 </span><span id="line-35">    <span class="k">global</span> <span class="n">time</span>
 </span><span id="line-36">    <span class="n">time</span> <span class="o">+=</span> <span class="n">rc</span><span class="o">.</span><span class="n">get_delta_time</span><span class="p">()</span>
 </span><span id="line-37">
@@ -290,7 +290,7 @@
 </span><span id="line-43"><span class="c1"># [FUNCTION] update_slow() is similar to update() but is called once per second by</span>
 </span><span id="line-44"><span class="c1"># default. It is especially useful for printing debug messages, since printing a</span>
 </span><span id="line-45"><span class="c1"># message every frame in update is computationally expensive and creates clutter</span>
-</span><span id="line-46"><span class="k">def</span> <span class="nf">update_slow</span><span class="p">():</span>
+</span><span id="line-46"><span class="k">def</span><span class="w"> </span><span class="nf">update_slow</span><span class="p">():</span>
 </span><span id="line-47">    <span class="k">pass</span>
 </span><span id="line-48">
 </span><span id="line-49">
@@ -322,7 +322,7 @@
 </div><footer class="py-6 border-t border-border md:py-0">
 <div class="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
 <div class="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
-<p class="text-sm leading-loose text-center text-muted-foreground md:text-left">© 2024, MIT. Built with <a class="font-medium underline underline-offset-4" href="https://www.sphinx-doc.org" rel="noreferrer">Sphinx 9.1.0</a></p>
+<p class="text-sm leading-loose text-center text-muted-foreground md:text-left">© 2024, MIT. Built with <a class="font-medium underline underline-offset-4" href="https://www.sphinx-doc.org" rel="noreferrer">Sphinx 9.0.4</a></p>
 </div>
 </div>
 </footer>
@@ -330,6 +330,6 @@
 <script src="../_static/documentation_options.js?v=5929fcd5"></script>
 <script src="../_static/doctools.js?v=fd6eb6e6"></script>
 <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
-<script defer="defer" src="../_static/theme.js?v=582b20c5"></script>
+<script defer="defer" src="../_static/theme.js?v=5db23cf8"></script>
 </body>
 </html>
