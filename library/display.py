@@ -244,7 +244,7 @@ class Display(abc.ABC):
         Example::
 
             # Display a message on the LED matrix
-            rc.display.show_text("Hello, Racecar!")
+            rc.display.show_text("Hello!")
 
             # Display a long message that will scroll
             rc.display.show_text("This message is too long to fit and will scroll", scroll_speed=3)

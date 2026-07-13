@@ -40,6 +40,15 @@ FONT = {
     '-': [0x08, 0x08, 0x08, 0x08, 0x08], '_': [0x80, 0x80, 0x80, 0x80, 0x80],
 }
 
+PRECOMPUTED_FONT = {}
+for char, hex_cols in FONT.items():
+    char_matrix = np.zeros((8, 6), dtype=np.uint8)
+    for c in range(5):
+        for r in range(7):
+            if (hex_cols[c] >> r) & 1:
+                char_matrix[r + 1, c] = 1
+    PRECOMPUTED_FONT[char] = char_matrix
+
 
 class DisplaySim(Display):
     __WINDOW_NAME: str = "RacecarSim display window"
@@ -71,6 +80,7 @@ class DisplaySim(Display):
             self._live.start()
 
     def set_matrix(self, matrix: NDArray[(8, 24), np.uint8]) -> None:
+        self._stop_scrolling()
         arr = np.array(matrix, dtype=np.uint8)
         if arr.shape != (8, 24):
             print("WARNING: Matrix must be of shape (8, 24). Reshaping to fit.")
@@ -94,26 +104,13 @@ class DisplaySim(Display):
             scroll_speed: The scrolling speed in characters per second.
         """
         # Stop any existing scrolling animation before starting a new one
-        #self._stop_scrolling()
-        if self.__text_thread is not None and self.__text_thread.is_alive():
-            return
+        self._stop_scrolling()
+        #if self.__text_thread is not None and self.__text_thread.is_alive():
+        #    return
 
         # Create the full text matrix by converting each character into a bitmap
-        char_matrices = []
-        for char in text.upper():
-            if char in FONT:
-                # Create an 8x6 matrix for each character (7x5 font + 1px padding)
-                char_matrix = np.zeros((8, 6), dtype=np.uint8)
-                font_char = FONT[char]
-                # Iterate through each of the 5 columns of the character's font data
-                for c in range(5):
-                    # Iterate through the 7 bits of the column data to draw pixels
-                    for r in range(7):
-                        # If the bit is 1, draw a pixel
-                        if (font_char[c] >> r) & 1:
-                            # Center the 6-pixel high font in the 8-pixel matrix
-                            char_matrix[r + 1, c] = 1
-                char_matrices.append(char_matrix)
+        # Grab precomputed matrices directly
+        char_matrices = [PRECOMPUTED_FONT[char] for char in text.upper() if char in PRECOMPUTED_FONT]
 
         if not char_matrices:
             self.set_matrix(np.zeros((8, 24), dtype=np.uint8))
@@ -125,13 +122,13 @@ class DisplaySim(Display):
 
         # If the text fits on the display, center it
         if full_width <= 24:
-            # Center the text if it fits
             pad_left = (24 - full_width) // 2
             pad_right = 24 - full_width - pad_left
             display_matrix = np.pad(
                 full_matrix, ((0, 0), (pad_left, pad_right)), "constant"
             )
-            self.set_matrix(display_matrix)
+            self.__matrix = display_matrix
+            self._draw_matrix()
         # If the text is too long, scroll it
         else:
             # Start scrolling animation in a new thread to avoid blocking the main program
@@ -139,16 +136,15 @@ class DisplaySim(Display):
             self.__text_thread = threading.Thread(
                 target=self._scroll_text,
                 args=(full_matrix, scroll_speed, self.__text_stop_event),
+                daemon=True
             )
             self.__text_thread.daemon = True
             self.__text_thread.start()
 
     def _stop_scrolling(self) -> None:
-        """Stops any active text scrolling animation by setting an event and joining the thread."""
+        """Stops any active text scrolling animation."""
         if self.__text_stop_event:
             self.__text_stop_event.set()
-        if self.__text_thread:
-            self.__text_thread.join()
         self.__text_stop_event = None
         self.__text_thread = None
 
@@ -166,22 +162,21 @@ class DisplaySim(Display):
         start_pos = 0
         end_pos = full_width + 24
 
-        # Loop through the padded matrix, showing one 24-pixel frame at a time
-        for i in range(start_pos, end_pos):
-            # Exit the thread if the stop event is set
-            if stop_event.is_set():
-                return
+        # Loop scrolling text until terminated by a new message
+        while True:
+            # Loop through the padded matrix, showing one 24-pixel frame at a time
+            for i in range(start_pos, end_pos):
+                # Exit the thread if the stop event is set
+                if stop_event.is_set():
+                    return
 
-            # Extract the current 8x24 frame to display
-            frame = padded_matrix[:, i : i + 24]
-            self.set_matrix(frame)
+                # Extract the current 8x24 frame to display
+                self.__matrix = padded_matrix[:, i:i + 24]
+                self._draw_matrix()
 
-            # Pause to control the scrolling speed
-            # scroll_speed is in characters/sec, each char is 6px wide
-            time.sleep(1.0 / (scroll_speed * 6))
-
-        # After scrolling, clear the display
-        self.set_matrix(np.zeros((8, 24), dtype=np.uint8))
+                # Pause to control the scrolling speed
+                # scroll_speed is in characters/sec, each char is 6px wide
+                time.sleep(1.0 / (scroll_speed * 6))
 
     def set_matrix_intensity(self, intensity: float) -> None:
         self.__intensity = intensity
