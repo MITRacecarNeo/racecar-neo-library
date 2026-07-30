@@ -13,3 +13,4 @@ Modules
    physics
    telemetry
    utils
+   vision
