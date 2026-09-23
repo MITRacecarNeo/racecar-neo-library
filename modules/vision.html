@@ -21,16 +21,16 @@
 <meta content="#ffffff" media="(prefers-color-scheme: light)" name="theme-color"/>
 <meta content="#030711" media="(prefers-color-scheme: dark)" name="theme-color"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Telemetry | racecar-neo-library  documentation</title>
-<meta content="Telemetry | racecar-neo-library  documentation" property="og:title"/>
-<meta content="Telemetry | racecar-neo-library  documentation" name="twitter:title"/>
+<title>Vision | racecar-neo-library  documentation</title>
+<meta content="Vision | racecar-neo-library  documentation" property="og:title"/>
+<meta content="Vision | racecar-neo-library  documentation" name="twitter:title"/>
 <link href="../_static/pygments.css?v=0a3749eb" rel="stylesheet" type="text/css"/>
 <link href="../_static/pygments_dark.css" id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css"/>
 <link href="../_static/theme.css?v=d6d7c91b" rel="stylesheet" type="text/css"/>
 <link href="../search.html" rel="search" title="Search"/>
 <link href="../genindex.html" rel="index" title="Index"/>
-<link href="utils.html" rel="next" title="Utils"/>
-<link href="physics.html" rel="prev" title="Physics"/>
+<link href="../guides/index.html" rel="next" title="Guides"/>
+<link href="utils.html" rel="prev" title="Utils"/>
 </head>
 <body :class="{ 'overflow-hidden': showSidebar }" class="min-h-screen font-sans antialiased bg-background text-foreground" x-data="{ showSidebar: false, showScrollTop: false }">
 <div @click.self="showSidebar = false" class="fixed inset-0 z-50 overflow-hidden bg-background/80 backdrop-blur-sm md:hidden" x-cloak="" x-show="showSidebar"></div><div class="relative flex flex-col min-h-screen" id="page"><a class="absolute top-0 left-0 z-[100] block bg-background p-4 text-xl transition -translate-x-full opacity-0 focus:translate-x-0 focus:opacity-100" href="#content">
@@ -81,9 +81,9 @@
 <li class="toctree-l2"><a class="reference internal" href="drive.html">Drive</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lidar.html">Lidar</a></li>
 <li class="toctree-l2"><a class="reference internal" href="physics.html">Physics</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Telemetry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="telemetry.html">Telemetry</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.html">Utils</a></li>
-<li class="toctree-l2"><a class="reference internal" href="vision.html">Vision</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Vision</a></li>
 </ul>
 </li>
 <li class="toctree-l1" x-data="{ expanded: $el.classList.contains('current') ? true : false }"><a :class="{ 'expanded' : expanded }" @click="expanded = !expanded" class="reference internal expandable" href="../guides/index.html">Guides<button @click.prevent.stop="expanded = !expanded" type="button" x-cloak=""><span class="sr-only"></span><svg fill="currentColor" height="18px" stroke="none" viewbox="0 0 24 24" width="18px" xmlns="http://www.w3.org/2000/svg"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg></button></a><ul x-cloak="" x-show="expanded">
@@ -110,81 +110,74 @@
 </svg>
 </a>
 <div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="index.html">Modules</a>
-<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Telemetry</span>
+<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Vision</span>
 </nav>
 <div id="content" role="main">
-<section id="telemetry">
-<h1>Telemetry<a class="headerlink" href="#telemetry" title="Link to this heading"><span>#</span></a></h1>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">rc</span><span class="o">.</span><span class="n">telemetry</span>
+<section id="vision">
+<h1>Vision<a class="headerlink" href="#vision" title="Link to this heading"><span>#</span></a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">rc</span><span class="o">.</span><span class="n">vision</span>
 </span></code></pre></div>
 </div>
-<p id="module-telemetry">Copyright MIT
+<p id="module-vision">Copyright MIT
 GNU General Public License v3.0</p>
 <p>BWSI Autonomous RACECAR Course
 Racecar Neo LTS</p>
-<p>File Name: telemetry.py
-File Description: Defines the interface of the Telemetry module of the racecar_core library</p>
+<p>File Name: vision.py
+File Description: Defines the interface of the Vision module of the
+racecar_core library. Exposes Coral EdgeTPU object detections to student
+code as a list of Detection objects.</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="telemetry.Telemetry">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">telemetry.</span></span><span class="sig-name descname"><span class="pre">Telemetry</span></span><a class="headerlink" href="#telemetry.Telemetry" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#telemetry.Telemetry'"><span>#</span></a></dt>
-<dd><p>Records and visualizes real time sensor data and internal states</p>
+<dt class="sig sig-object py" id="vision.Detection">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">vision.</span></span><span class="sig-name descname"><span class="pre">Detection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bbox</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#vision.Detection" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#vision.Detection'"><span>#</span></a></dt>
+<dd><p>A single object detection result from the EdgeTPU.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vision.Detection.class_id">
+<span class="sig-name descname"><span class="pre">class_id</span></span><a class="headerlink" href="#vision.Detection.class_id" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#vision.Detection.class_id'"><span>#</span></a></dt>
+<dd><p>Label string (or numeric ID as string) of the detected
+object, as emitted by edgetpu_node.</p>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vision.Detection.score">
+<span class="sig-name descname"><span class="pre">score</span></span><a class="headerlink" href="#vision.Detection.score" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#vision.Detection.score'"><span>#</span></a></dt>
+<dd><p>Confidence in [0.0, 1.0].</p>
+</dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="vision.Detection.bbox">
+<span class="sig-name descname"><span class="pre">bbox</span></span><a class="headerlink" href="#vision.Detection.bbox" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#vision.Detection.bbox'"><span>#</span></a></dt>
+<dd><p>(center_x, center_y, width, height) in pixels of the source
+image (the /camera/forward frame).</p>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="vision.Vision">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">vision.</span></span><span class="sig-name descname"><span class="pre">Vision</span></span><a class="headerlink" href="#vision.Vision" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#vision.Vision'"><span>#</span></a></dt>
+<dd><p>Provides access to onboard ML object detection via the Coral EdgeTPU.</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="telemetry.Telemetry.declare_variables">
-<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">declare_variables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#telemetry.Telemetry.declare_variables" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#telemetry.Telemetry.declare_variables'"><span>#</span></a></dt>
-<dd><p>Declare a list of variables that will be recorded by telemetry.</p>
+<dt class="sig sig-object py" id="vision.Vision.get_detections">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_detections</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#vision.Detection" title="vision.Detection"><span class="pre">Detection</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#vision.Vision.get_detections" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#vision.Vision.get_detections'"><span>#</span></a></dt>
+<dd><p>Returns the latest list of object detections from the EdgeTPU.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>names</strong> – The names of each variable to be declared.</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of Detection objects with class_id, score, and pixel-space
+bounding box. Empty list if nothing was detected or the edgetpu
+node is not publishing.</p>
 </dd>
 </dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This function should only be called once, and all subsequent calls will have no effect.
-In addition to the variables declared here, when a data point is pushed to telemetry, its timestamp will
-also be recorded.</p>
-</div>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># Declare variables to be recorded</span>
-</span><span id="line-2"><span class="n">rc</span><span class="o">.</span><span class="n">telemetry</span><span class="o">.</span><span class="n">declare_variables</span><span class="p">(</span><span class="s2">"speed"</span><span class="p">,</span> <span class="s2">"angle"</span><span class="p">)</span>
-</span><span id="line-3">
-</span><span id="line-4"><span class="c1"># Push a data point containing a speed and angle value to the telemetry</span>
-</span><span id="line-5"><span class="n">rc</span><span class="o">.</span><span class="n">telemetry</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">detections</span> <span class="o">=</span> <span class="n">rc</span><span class="o">.</span><span class="n">vision</span><span class="o">.</span><span class="n">get_detections</span><span class="p">()</span>
+</span><span id="line-2"><span class="k">for</span> <span class="n">det</span> <span class="ow">in</span> <span class="n">detections</span><span class="p">:</span>
+</span><span id="line-3">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Found </span><span class="si">{</span><span class="n">det</span><span class="o">.</span><span class="n">class_id</span><span class="si">}</span><span class="s2"> at (</span><span class="si">{</span><span class="n">det</span><span class="o">.</span><span class="n">bbox</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">det</span><span class="o">.</span><span class="n">bbox</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="telemetry.Telemetry.record">
-<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">record</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#telemetry.Telemetry.record" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#telemetry.Telemetry.record'"><span>#</span></a></dt>
-<dd><p>Record a data point. This should contain a value for each declared variable.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>values</strong> – The value of each declared variable, in the same order as the declaration.</p>
-</dd>
-</dl>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p><cite>declare_variables</cite> must be called before this function.
-If too few / too many values are provided, an exception will be thrown.</p>
-</div>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># Declare variables to be recorded</span>
-</span><span id="line-2"><span class="n">rc</span><span class="o">.</span><span class="n">telemetry</span><span class="o">.</span><span class="n">declare_variables</span><span class="p">(</span><span class="s2">"speed"</span><span class="p">,</span> <span class="s2">"angle"</span><span class="p">)</span>
-</span><span id="line-3">
-</span><span id="line-4"><span class="c1"># Push a data point containing a speed and angle value to the telemetry</span>
-</span><span id="line-5"><span class="n">rc</span><span class="o">.</span><span class="n">telemetry</span><span class="o">.</span><span class="n">record</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
-</span></code></pre></div>
-</div>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="telemetry.Telemetry.visualize">
-<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">visualize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#telemetry.Telemetry.visualize" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#telemetry.Telemetry.visualize'"><span>#</span></a></dt>
-<dd><p>Generate and save a time-series graph of the recorded data points</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This function does not need to be manually called, as it should be
-called automatically when the user program exits.
-If some variables look squished on the line graph, consider normalizing
-your variables so they have similar magnitude.</p>
+<dt class="sig sig-object py" id="vision.Vision.get_detections_async">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_detections_async</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#vision.Detection" title="vision.Detection"><span class="pre">Detection</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#vision.Vision.get_detections_async" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#vision.Vision.get_detections_async'"><span>#</span></a></dt>
+<dd><p>Returns the latest detections without the car in “go” mode.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This function breaks the start-update paradigm and should only
+be used in Jupyter Notebook.</p>
 </div>
 </dd></dl>
 </dd></dl>
@@ -192,10 +185,15 @@ your variables so they have similar magnitude.</p>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] h-full overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
-<li><a :data-current="activeSection === '#telemetry.Telemetry'" class="reference internal" href="#telemetry.Telemetry"><code class="docutils literal notranslate"><span class="pre">Telemetry</span></code></a><ul>
-<li><a :data-current="activeSection === '#telemetry.Telemetry.declare_variables'" class="reference internal" href="#telemetry.Telemetry.declare_variables"><code class="docutils literal notranslate"><span class="pre">Telemetry.declare_variables()</span></code></a></li>
-<li><a :data-current="activeSection === '#telemetry.Telemetry.record'" class="reference internal" href="#telemetry.Telemetry.record"><code class="docutils literal notranslate"><span class="pre">Telemetry.record()</span></code></a></li>
-<li><a :data-current="activeSection === '#telemetry.Telemetry.visualize'" class="reference internal" href="#telemetry.Telemetry.visualize"><code class="docutils literal notranslate"><span class="pre">Telemetry.visualize()</span></code></a></li>
+<li><a :data-current="activeSection === '#vision.Detection'" class="reference internal" href="#vision.Detection"><code class="docutils literal notranslate"><span class="pre">Detection</span></code></a><ul>
+<li><a :data-current="activeSection === '#vision.Detection.class_id'" class="reference internal" href="#vision.Detection.class_id"><code class="docutils literal notranslate"><span class="pre">Detection.class_id</span></code></a></li>
+<li><a :data-current="activeSection === '#vision.Detection.score'" class="reference internal" href="#vision.Detection.score"><code class="docutils literal notranslate"><span class="pre">Detection.score</span></code></a></li>
+<li><a :data-current="activeSection === '#vision.Detection.bbox'" class="reference internal" href="#vision.Detection.bbox"><code class="docutils literal notranslate"><span class="pre">Detection.bbox</span></code></a></li>
+</ul>
+</li>
+<li><a :data-current="activeSection === '#vision.Vision'" class="reference internal" href="#vision.Vision"><code class="docutils literal notranslate"><span class="pre">Vision</span></code></a><ul>
+<li><a :data-current="activeSection === '#vision.Vision.get_detections'" class="reference internal" href="#vision.Vision.get_detections"><code class="docutils literal notranslate"><span class="pre">Vision.get_detections()</span></code></a></li>
+<li><a :data-current="activeSection === '#vision.Vision.get_detections_async'" class="reference internal" href="#vision.Vision.get_detections_async"><code class="docutils literal notranslate"><span class="pre">Vision.get_detections_async()</span></code></a></li>
 </ul>
 </li>
 </ul>
