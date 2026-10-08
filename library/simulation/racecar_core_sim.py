@@ -73,7 +73,7 @@ class RacecarSim(Racecar):
     __IP = __resolve_sim_ip.__func__()
     __UNITY_PORT = (__IP, 5065)
     __UNITY_ASYNC_PORT = (__IP, 5064)
-    __VERSION = 1
+    __VERSION = 2
 
     class Header(IntEnum):
         """
@@ -109,6 +109,13 @@ class RacecarSim(Racecar):
         lidar_get_samples = 26
         physics_get_linear_acceleration = 27
         physics_get_angular_velocity = 28
+        physics_get_magnetic_field = 29
+        physics_get_encoder_speed = 30
+        physics_get_battery_voltage = 31
+        physics_get_battery_current = 32
+        display_set_matrix = 33
+        display_show_text = 34
+        led_set_pixels = 35
 
     class Error(IntEnum):
         """

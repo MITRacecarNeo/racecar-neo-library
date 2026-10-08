@@ -26,10 +26,10 @@ class LidarReal(Lidar):
     # The ROS topic from which we get Lidar data
     __SCAN_TOPIC = "/scan"
 
-    # RPLIDAR with angle_compensate=true emits ~1080 samples per scan; this
-    # overrides the abstract base's 720 default for the physical car. The sim
-    # side keeps 720. Labs that assume one or the other must use
-    # rc.lidar.get_num_samples() rather than hard-coding the length.
+    # RPLIDAR with angle_compensate=true emits ~1080 samples per scan, the
+    # abstract base's default; RacecarSim v2.9.2 and later also send 1080.
+    # Labs should still use rc.lidar.get_num_samples() rather than hard-coding
+    # the length.
     _NUM_SAMPLES: int = 1080
 
     def __init__(self):
