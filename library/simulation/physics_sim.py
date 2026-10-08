@@ -10,31 +10,36 @@ class PhysicsSim(Physics):
     def __init__(self, racecar) -> None:
         self.__racecar = racecar
 
+    def __request(self, header, size: int) -> bytes:
+        # Inside start/update the sim answers on the sync port; anywhere else
+        # (Jupyter) on the async port
+        is_async = not self.__racecar._RacecarSim__in_call
+        self.__racecar._RacecarSim__send_header(header, is_async)
+        return self.__racecar._RacecarSim__receive_data(size)
+
     def get_linear_acceleration(self) -> NDArray[3, np.float32]:
-        self.__racecar._RacecarSim__send_header(
-            self.__racecar.Header.physics_get_linear_acceleration
-        )
-        values = struct.unpack("fff", self.__racecar._RacecarSim__receive_data(12))
-        return np.array(values)
+        data = self.__request(self.__racecar.Header.physics_get_linear_acceleration, 12)
+        return np.array(struct.unpack("fff", data))
 
     def get_angular_velocity(self) -> NDArray[3, np.float32]:
-        self.__racecar._RacecarSim__send_header(
-            self.__racecar.Header.physics_get_angular_velocity
-        )
-        values = struct.unpack("fff", self.__racecar._RacecarSim__receive_data(12))
-        return np.array(values)
-    
-    def get_magnetic_field(self):
-        return None # Nothing here yet!
+        data = self.__request(self.__racecar.Header.physics_get_angular_velocity, 12)
+        return np.array(struct.unpack("fff", data))
+
+    def get_magnetic_field(self) -> NDArray[3, np.float32]:
+        data = self.__request(self.__racecar.Header.physics_get_magnetic_field, 12)
+        return np.array(struct.unpack("fff", data))
 
     def get_encoder_speed(self) -> float:
-        return 0.0  # No drive encoder in simulation.
+        data = self.__request(self.__racecar.Header.physics_get_encoder_speed, 4)
+        return struct.unpack("f", data)[0]
 
     def get_battery_voltage(self) -> float:
-        return 0.0  # No power sensor in simulation.
+        data = self.__request(self.__racecar.Header.physics_get_battery_voltage, 4)
+        return struct.unpack("f", data)[0]
 
     def get_battery_current(self) -> float:
-        return 0.0  # No power sensor in simulation.
+        data = self.__request(self.__racecar.Header.physics_get_battery_current, 4)
+        return struct.unpack("f", data)[0]
 
     def get_rc_channels(self) -> NDArray[8, np.float32]:
         return np.zeros(8)  # No RC receiver in simulation.
