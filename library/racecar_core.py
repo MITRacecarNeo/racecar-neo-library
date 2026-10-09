@@ -49,8 +49,8 @@ class Racecar(abc.ABC):
         Starts the RACECAR, beginning in default drive mode.
 
         Note:
-            go idles blocks execution until the program is exited when START + END are
-            pressed simultaneously.
+            go blocks execution until the program exits, when BACK and START are
+            pressed together.
         """
         pass
 

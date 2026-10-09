@@ -8,7 +8,7 @@ sys.path.insert(0, os.path.relpath('library'))
 # -- Project information -----------------------------------------------------
 
 project = 'racecar-neo-library'
-copyright = '2024, MIT.'
+copyright = '2024-2026, MIT.'
 author = 'BWSI Autonomous RACECAR'
 
 
@@ -30,4 +30,3 @@ pygments_style_dark = 'lightbulb'
 
 html_permalinks_icon = '<span>#</span>'
 html_theme = 'sphinxawesome_theme'
-html_static_path = ['_static']

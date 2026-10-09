@@ -67,7 +67,7 @@ class Lidar(abc.ABC):
             scan = rc.lidar.get_samples_async()
 
             # Get the distance of the measurement directly in front of the car
-            forward_distance = lidar_ranges[0]
+            forward_distance = scan[0]
         """
         pass
 

@@ -9,6 +9,7 @@ Modules
    controller
    display
    drive
+   led
    lidar
    physics
    telemetry

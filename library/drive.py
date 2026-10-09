@@ -13,19 +13,25 @@ import abc
 
 
 class Drive(abc.ABC):
+    """
+    Controls the car's speed and steering.
+    """
+
     @abc.abstractmethod
     def set_speed_angle(self, speed: float, angle: float) -> None:
         """
-        Sets the throttle applied to the back wheels and the angle of the front wheels.
+        Sets the car's target speed and the angle of the front wheels.
 
         Args:
-            speed: The amount of throttle (torque) applied to the back wheels from -1.0
-                (full backward) to 1.0 (full forward).
+            speed: The target speed from -1.0 (full backward) to 1.0 (full forward),
+                scaled by the maximum speed (see set_max_speed).
             angle: The amount to turn the front wheels from -1.0 (full left) to 1.0
                 (full right).
 
         Note:
-            The speed and angle arguments are unitless ratios.
+            The speed and angle arguments are unitless ratios. The car holds the
+            requested speed with a closed-loop speed controller on its drive
+            encoder, on all four wheels.
 
         Example::
 
@@ -65,6 +71,9 @@ class Drive(abc.ABC):
             max_speed: The scale factor applied to speed inputs, ranging from
                 0.0 to 1.0.
 
+        Note:
+            The car and RacecarSim both start at a max speed of 0.25.
+
         Warning:
             The RACECAR contains expensive and fragile equipment.  Please only increase
             the max speed if you are in a safe environment without the potential for
@@ -73,6 +82,6 @@ class Drive(abc.ABC):
         Example::
 
             # Update the max speed to 0.5
-            rc.set_max_speed(0.5)
+            rc.drive.set_max_speed(0.5)
         """
         pass

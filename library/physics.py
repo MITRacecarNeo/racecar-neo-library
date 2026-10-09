@@ -17,7 +17,9 @@ class NDArray:  # stub - no runtime dependency on nptyping
 
 class Physics(abc.ABC):
     """
-    Returns the linear acceleration and angular velocity measured by the IMU.
+    Returns the car's motion and power measurements: IMU (acceleration, angular
+    velocity, magnetic field), drive encoder speed, battery voltage and current,
+    and the RC transmitter channels.
     """
 
     @abc.abstractmethod
@@ -185,11 +187,13 @@ class Physics(abc.ABC):
         Returns:
             An array of eight values, each in the range [-1, 1] (0 at the
             channel's center or with no transmitter signal). Channel map on the
-            FlySky iA6B (verified on hardware):
+            FlySky iA6B (verified on hardware)::
+
                 [0] right stick X (steering)   [4] switch A
                 [1] right stick Y              [5] switch B
                 [2] left stick Y (throttle)    [6] switch C
                 [3] left stick X               [7] switch D
+
             The firmware drives steering from channel 0 and throttle from
             channel 2.
 
