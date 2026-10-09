@@ -8,10 +8,10 @@ from lidar import Lidar
 class LidarSim(Lidar):
     def __init__(self, racecar) -> None:
         self.__racecar = racecar
-        self.__ranges: NDArray[720, np.float32]
+        self.__ranges: NDArray[1080, np.float32]
         self.__is_current: bool = False
 
-    def get_samples(self) -> NDArray[720, np.float32]:
+    def get_samples(self) -> NDArray[1080, np.float32]:
         if not self.__is_current:
             self.__racecar._RacecarSim__send_header(
                 self.__racecar.Header.lidar_get_samples
@@ -23,7 +23,7 @@ class LidarSim(Lidar):
             self.__is_current = True
         return self.__ranges
 
-    def get_samples_async(self) -> NDArray[720, np.float32]:
+    def get_samples_async(self) -> NDArray[1080, np.float32]:
         self.__racecar._RacecarSim__send_header(
             self.__racecar.Header.lidar_get_samples, True
         )

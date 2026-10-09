@@ -21,7 +21,8 @@ import racecar_utils as rc_utils
 
 class Display(abc.ABC):
     """
-    Allows the user to print images to the screen.
+    Shows images in a window on the computer running the program, and controls
+    the 8x24 dot matrix display on the car.
     """
 
     # The radii dots used to indicate points
@@ -45,7 +46,7 @@ class Display(abc.ABC):
         Example::
 
             # Creates a window
-            rc.camera.create_window()
+            rc.display.create_window()
 
             # Display an image in this window
             image = rc.camera.get_color_image()
@@ -93,7 +94,7 @@ class Display(abc.ABC):
             # Show the depth_image captured by the camera.
             rc.display.show_depth_image(depth_image)
 
-            # Show anything that is at most 500 cm away, and show a black cross at
+            # Show anything that is at most 500 cm away, and show a green dot at
             # row 3, column 5
             rc.display.show_depth_image(depth_image, 500, [(3, 5)])
         """
@@ -215,8 +216,13 @@ class Display(abc.ABC):
                 matrix display module.
 
         Note:
-            A 1 in the matrix indicates an LED that is on, while a 0 in the
-            matrix indicates an LED that is off.
+            A nonzero value in the matrix indicates an LED that is on, while a 0
+            indicates an LED that is off. Row 0 is the top row and column 0 the
+            left column.
+
+            --- In the Simulator ---
+            The pattern stays until the program replaces it or exits. The matrix
+            appears in a panel on screen when "Show dot matrix" is on in Settings.
 
         Example::
 
@@ -241,13 +247,17 @@ class Display(abc.ABC):
             text: The string to display.
             scroll_speed: The scrolling speed in characters per second.
 
+        Note:
+            On the physical RACECAR and in RacecarSim, scroll_speed is not used:
+            text wider than the display scrolls across it once every 4 seconds.
+
         Example::
 
             # Display a message on the LED matrix
             rc.display.show_text("Hello!")
 
             # Display a long message that will scroll
-            rc.display.show_text("This message is too long to fit and will scroll", scroll_speed=3)
+            rc.display.show_text("This message is too long to fit and will scroll")
         """
         pass
 
@@ -262,8 +272,8 @@ class Display(abc.ABC):
             configuration of the dot matrix display module.
 
         Note:
-            A 1 in the matrix indicates an LED that is on, while a 0 in the
-            matrix indicates an LED that is off.
+            Returns the matrix last passed to set_matrix; a nonzero value is an
+            LED that is on. Text shown with show_text is not included.
 
         Example::
 
@@ -299,18 +309,12 @@ class Display(abc.ABC):
             intensity: The LED intensity (between 0.0 and 1.0) to set.
 
         Note:
-            Due to the way the racecar's LED driver works, an intensity of 0.0 does *not*
-            correspond to turning the LEDs completely off, and therefore `set_matrix_intensity`
-            cannot be used to make a fade-in or fade-out animation.
+            On the physical RACECAR and in RacecarSim this function has no effect:
+            the matrix contrast is fixed by the car's dot matrix driver. The first
+            call prints a warning.
 
         Example::
 
-            # Pulse the dot matrix display using a sin wave profile.
-            def update():
-                global time
-                time += rc.get_delta_time()
-
-                intensity = rc_utils.remap_range(math.sin(time), -1.0, 1.0, 0.0, 1.0)
-                rc.display.set_matrix_intensity(intensity)
+            rc.display.set_matrix_intensity(0.5)
         """
         pass

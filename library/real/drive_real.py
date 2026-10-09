@@ -35,7 +35,7 @@ class DriveReal(Drive):
         )
         self.__message = AckermannDriveStamped()
         self.__message.header.frame_id = self.__FRAME_ID
-        self.__max_speed = 0.50
+        self.__max_speed = 0.25
 
         self.node.create_timer(self.__PUBLISH_PERIOD_SEC, self.__update)
 
@@ -52,7 +52,7 @@ class DriveReal(Drive):
         # sim convention; the throttle/pwm chain handles servo-side sign.
         self.__message.drive.steering_angle = float(-angle)
 
-    def set_max_speed(self, max_speed: float = 0.50) -> None:
+    def set_max_speed(self, max_speed: float = 0.25) -> None:
         assert (
             0.0 <= max_speed <= 1.0
         ), f"max_speed [{max_speed}] must be between 0.0 and 1.0 inclusive."

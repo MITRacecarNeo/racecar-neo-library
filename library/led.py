@@ -17,10 +17,17 @@ Color = Tuple[int, int, int]
 
 class Led(abc.ABC):
     """
-    Controls the addressable RGB LED strip on the NEO-PIT board.
+    Controls the 84-LED addressable RGB strip in the light band around the car.
 
     Each LED is individually controllable. Colors are (red, green, blue)
-    tuples with each channel in the range [0, 255].
+    tuples with each channel in the range [0, 255]. LED 0 is at the front-left
+    end of the band; the index runs back along the left side, around the rear,
+    and forward along the right side to LED 83 at the front-right end.
+
+    Note:
+        Until a program sets the LEDs (and again after it exits), the strip
+        shows the battery level: red LEDs grow in from both ends of the band.
+        In the simulator, the strip is the light band of the car's model.
     """
 
     @abc.abstractmethod
@@ -42,6 +49,9 @@ class Led(abc.ABC):
         Args:
             index: The LED to set, from 0 to get_num_pixels() - 1.
             color: An (red, green, blue) tuple, each channel in [0, 255].
+
+        Raises:
+            IndexError: If index is outside [0, get_num_pixels() - 1].
 
         Example::
 
@@ -97,5 +107,15 @@ class Led(abc.ABC):
     def get_pixels(self) -> List[Color]:
         """
         Returns the current color of every LED as a list of (r, g, b) tuples.
+
+        Returns:
+            One (red, green, blue) tuple per LED, from LED 0 to LED 83, as last
+            set by the program.
+
+        Example::
+
+            # Shift the strip pattern one LED along the band
+            pixels = rc.led.get_pixels()
+            rc.led.set_pixels(pixels[-1:] + pixels[:-1])
         """
         pass
