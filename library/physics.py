@@ -30,15 +30,13 @@ class Physics(abc.ABC):
             the last frame in m/s^2.
 
         Note:
-            --- In the Simulator ---
-            The x-axis points out of the right of the car.
-            The y-axis points directly up (perpendicular to the ground).
-            The z-axis points out of the front of the car.
-
-            --- In the Physical RACECAR ---
+            The simulator and the physical RACECAR use the same axes (REP-103):
             The x-axis points out of the front of the car.
-            The y-axis points out of the right of the car.
+            The y-axis points out of the left of the car.
             The z-axis points directly up (perpendicular to the ground).
+
+            The accelerometer measures specific force, so a car at rest reads about
+            (0, 0, 9.81): gravity appears as an upward acceleration.
 
         Example::
 
@@ -47,7 +45,7 @@ class Physics(abc.ABC):
 
             # forward accel stores acceleration in the forward direction.  This will be
             # positive when the car accelerates, and negative when it decelerates.
-            forward_accel = accel[2]
+            forward_accel = accel[0]
         """
         pass
 
@@ -61,17 +59,12 @@ class Physics(abc.ABC):
             last frame in rad/s.
 
         Note:
-            --- In the Simulator ---
-            The x-axis (pitch) points out of the right of the car.
-            The y-axis (yaw) points directly up (perpendicular to the ground).
-            The z-axis (roll) points out of the front of the car.
-            Rotation sign uses the right hand rule. For example, when the car turns to
-            the left, it has a positive angular velocity along the y axis.
-
-            --- In the Physical RACECAR ---
+            The simulator and the physical RACECAR use the same axes (REP-103):
             The x-axis (roll) points out of the front of the car.
-            The y-axis (pitch) points out of the right of the car.
+            The y-axis (pitch) points out of the left of the car.
             The z-axis (yaw) points directly up (perpendicular to the ground).
+            Rotation sign uses the right hand rule. For example, when the car turns to
+            the left, it has a positive angular velocity along the z axis.
 
         Example::
 
@@ -80,7 +73,7 @@ class Physics(abc.ABC):
 
             # yaw stores the yaw of the car, which is positive when it turns to the left
             # and negative when it turns to the right.
-            yaw = ang_vel[1]
+            yaw = ang_vel[2]
         """
         pass
 
@@ -94,13 +87,21 @@ class Physics(abc.ABC):
             during the last frame in Teslas.
 
         Note:
-            --- In the Simulator ---
-            This function does not exist.
-
-            --- In the Physcial RACECAR ---
-            The x-axis points towards the back of the car.
-            The y-axis points towards the right of the car.
+            The simulator and the physical RACECAR use the same axes (REP-103):
+            The x-axis points out of the front of the car.
+            The y-axis points out of the left of the car.
             The z-axis points directly up (perpendicular to the ground).
+
+            Earth's field points north and steeply down, so z is negative (about
+            -47 uT near Boston). In the simulator magnetic north is the world +Z
+            direction of every level.
+
+        Example::
+
+            # heading stores the car's direction in degrees, 0 facing magnetic north and
+            # increasing counterclockwise (toward the west) on level ground
+            mag = rc.physics.get_magnetic_field()
+            heading = math.degrees(math.atan2(-mag[1], mag[0]))
         """
         pass
 
@@ -116,7 +117,9 @@ class Physics(abc.ABC):
 
         Note:
             --- In the Simulator ---
-            This function returns 0.0 (there is no drive encoder in simulation).
+            With Realism off, the car's true forward speed. With Realism on, the
+            speed of the wheels as the hall encoder measures it, so wheel slip and
+            spin show, and readings below about 0.075 m/s drop to 0 between edges.
 
             --- In the Physical RACECAR ---
             The value comes from the /encoder/speed topic.
@@ -138,7 +141,8 @@ class Physics(abc.ABC):
 
         Note:
             --- In the Simulator ---
-            This function returns 0.0 (there is no power sensor in simulation).
+            A 2S 5000 mAh pack, full (8.4 V) when the level loads, empty at 7.0 V;
+            the voltage sags slightly while the car drives.
 
             --- In the Physical RACECAR ---
             The value comes from the /battery/voltage topic.
@@ -160,7 +164,8 @@ class Physics(abc.ABC):
 
         Note:
             --- In the Simulator ---
-            This function returns 0.0 (there is no power sensor in simulation).
+            2.5 A while the drive is idle, 5 A to 10 A while it is commanded,
+            rising with speed.
 
             --- In the Physical RACECAR ---
             The value comes from the /battery/current topic.
