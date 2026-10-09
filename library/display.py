@@ -241,6 +241,10 @@ class Display(abc.ABC):
             text: The string to display.
             scroll_speed: The scrolling speed in characters per second.
 
+        Note:
+            On the physical RACECAR and in RacecarSim, scroll_speed is not used:
+            text wider than the display scrolls across it once every 4 seconds.
+
         Example::
 
             # Display a message on the LED matrix

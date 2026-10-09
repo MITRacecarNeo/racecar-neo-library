@@ -159,7 +159,7 @@ class RacecarSim(Racecar):
     def __init__(self, isHeadless: bool = False) -> None:
         self.camera = camera_sim.CameraSim(self)
         self.controller = controller_sim.ControllerSim(self)
-        self.display = display_sim.DisplaySim(isHeadless)
+        self.display = display_sim.DisplaySim(self, isHeadless)
         self.drive = drive_sim.DriveSim(self)
         self.led = led_sim.LedSim(self)
         self.physics = physics_sim.PhysicsSim(self)
