@@ -79,6 +79,7 @@
 <li class="toctree-l2"><a class="reference internal" href="controller.html">Controller</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Display</a></li>
 <li class="toctree-l2"><a class="reference internal" href="drive.html">Drive</a></li>
+<li class="toctree-l2"><a class="reference internal" href="led.html">Led</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lidar.html">Lidar</a></li>
 <li class="toctree-l2"><a class="reference internal" href="physics.html">Physics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="telemetry.html">Telemetry</a></li>
@@ -127,7 +128,8 @@ File Description: Defines the interface of the Display module of the racecar_cor
 <dl class="py class">
 <dt class="sig sig-object py" id="display.Display">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">display.</span></span><span class="sig-name descname"><span class="pre">Display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">isHeadless</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#display.Display" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#display.Display'"><span>#</span></a></dt>
-<dd><p>Allows the user to print images to the screen.</p>
+<dd><p>Shows images in a window on the computer running the program, and controls
+the 8x24 dot matrix display on the car.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="display.Display.create_window">
 <span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">create_window</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#display.Display.create_window" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#display.Display.create_window'"><span>#</span></a></dt>
@@ -140,7 +142,7 @@ automatically create a new window if one was not already created.</p>
 </div>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># Creates a window</span>
-</span><span id="line-2"><span class="n">rc</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">create_window</span><span class="p">()</span>
+</span><span id="line-2"><span class="n">rc</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">create_window</span><span class="p">()</span>
 </span><span id="line-3">
 </span><span id="line-4"><span class="c1"># Display an image in this window</span>
 </span><span id="line-5"><span class="n">image</span> <span class="o">=</span> <span class="n">rc</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">get_color_image</span><span class="p">()</span>
@@ -163,8 +165,8 @@ configuration of the dot matrix display module.</p>
 </dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>A 1 in the matrix indicates an LED that is on, while a 0 in the
-matrix indicates an LED that is off.</p>
+<p>Returns the matrix last passed to set_matrix; a nonzero value is an
+LED that is on. Text shown with show_text is not included.</p>
 </div>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># Gets current configuration values of the dot matrix module</span>
@@ -206,8 +208,12 @@ matrix display module.</p>
 </dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>A 1 in the matrix indicates an LED that is on, while a 0 in the
-matrix indicates an LED that is off.</p>
+<p>A nonzero value in the matrix indicates an LED that is on, while a 0
+indicates an LED that is off. Row 0 is the top row and column 0 the
+left column.</p>
+<p>— In the Simulator —
+The pattern stays until the program replaces it or exits. The matrix
+appears in a panel on screen when “Show dot matrix” is on in Settings.</p>
 </div>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">dot_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">8</span><span class="p">,</span> <span class="mi">24</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
@@ -228,18 +234,12 @@ matrix indicates an LED that is off.</p>
 </dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Due to the way the racecar’s LED driver works, an intensity of 0.0 does <em>not</em>
-correspond to turning the LEDs completely off, and therefore <cite>set_matrix_intensity</cite>
-cannot be used to make a fade-in or fade-out animation.</p>
+<p>On the physical RACECAR and in RacecarSim this function has no effect:
+the matrix contrast is fixed by the car’s dot matrix driver. The first
+call prints a warning.</p>
 </div>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># Pulse the dot matrix display using a sin wave profile.</span>
-</span><span id="line-2"><span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">():</span>
-</span><span id="line-3">    <span class="k">global</span> <span class="n">time</span>
-</span><span id="line-4">    <span class="n">time</span> <span class="o">+=</span> <span class="n">rc</span><span class="o">.</span><span class="n">get_delta_time</span><span class="p">()</span>
-</span><span id="line-5">
-</span><span id="line-6">    <span class="n">intensity</span> <span class="o">=</span> <span class="n">rc_utils</span><span class="o">.</span><span class="n">remap_range</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">time</span><span class="p">),</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
-</span><span id="line-7">    <span class="n">rc</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_matrix_intensity</span><span class="p">(</span><span class="n">intensity</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">rc</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_matrix_intensity</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
 </dd></dl>
@@ -281,7 +281,7 @@ the image as colored dots.</p></li>
 </span><span id="line-3"><span class="c1"># Show the depth_image captured by the camera.</span>
 </span><span id="line-4"><span class="n">rc</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">show_depth_image</span><span class="p">(</span><span class="n">depth_image</span><span class="p">)</span>
 </span><span id="line-5">
-</span><span id="line-6"><span class="c1"># Show anything that is at most 500 cm away, and show a black cross at</span>
+</span><span id="line-6"><span class="c1"># Show anything that is at most 500 cm away, and show a green dot at</span>
 </span><span id="line-7"><span class="c1"># row 3, column 5</span>
 </span><span id="line-8"><span class="n">rc</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">show_depth_image</span><span class="p">(</span><span class="n">depth_image</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="p">[(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">)])</span>
 </span></code></pre></div>
@@ -340,12 +340,17 @@ If this is not the case, the visualization will be inaccurate.</p>
 </ul>
 </dd>
 </dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>On the physical RACECAR and in RacecarSim, scroll_speed is not used:
+text wider than the display scrolls across it once every 4 seconds.</p>
+</div>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># Display a message on the LED matrix</span>
 </span><span id="line-2"><span class="n">rc</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">show_text</span><span class="p">(</span><span class="s2">"Hello!"</span><span class="p">)</span>
 </span><span id="line-3">
 </span><span id="line-4"><span class="c1"># Display a long message that will scroll</span>
-</span><span id="line-5"><span class="n">rc</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">show_text</span><span class="p">(</span><span class="s2">"This message is too long to fit and will scroll"</span><span class="p">,</span> <span class="n">scroll_speed</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</span><span id="line-5"><span class="n">rc</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">show_text</span><span class="p">(</span><span class="s2">"This message is too long to fit and will scroll"</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
 </dd></dl>
@@ -374,7 +379,7 @@ If this is not the case, the visualization will be inaccurate.</p>
 </div><footer class="py-6 border-t border-border md:py-0">
 <div class="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
 <div class="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
-<p class="text-sm leading-loose text-center text-muted-foreground md:text-left">© 2024, MIT. Built with <a class="font-medium underline underline-offset-4" href="https://www.sphinx-doc.org" rel="noreferrer">Sphinx 9.0.4</a></p>
+<p class="text-sm leading-loose text-center text-muted-foreground md:text-left">© 2024-2026, MIT. Built with <a class="font-medium underline underline-offset-4" href="https://www.sphinx-doc.org" rel="noreferrer">Sphinx 9.0.4</a></p>
 </div>
 </div>
 </footer>

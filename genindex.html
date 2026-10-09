@@ -111,6 +111,7 @@
 <li class="toctree-l2"><a class="reference internal" href="modules/controller.html">Controller</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/display.html">Display</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/drive.html">Drive</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/led.html">Led</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/lidar.html">Lidar</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/physics.html">Physics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/telemetry.html">Telemetry</a></li>
@@ -217,6 +218,8 @@
       <li><a href="modules/utils.html#racecar_utils.clamp">clamp() (in module racecar_utils)</a>
 </li>
       <li><a href="modules/vision.html#vision.Detection.class_id">class_id (vision.Detection attribute)</a>
+</li>
+      <li><a href="modules/led.html#led.Led.clear">clear() (led.Led method)</a>
 </li>
       <li><a href="modules/utils.html#racecar_utils.ColorBGR">ColorBGR (class in racecar_utils)</a>
 </li>
@@ -366,10 +369,10 @@
 </li>
       <li><a href="modules/camera.html#camera.Camera.get_height">get_height() (camera.Camera method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="modules/utils.html#racecar_utils.ARMarker.get_id">get_id() (racecar_utils.ARMarker method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="modules/controller.html#controller.Controller.get_joystick">get_joystick() (controller.Controller method)</a>
 </li>
       <li><a href="modules/utils.html#racecar_utils.get_largest_contour">get_largest_contour() (in module racecar_utils)</a>
@@ -386,11 +389,15 @@
 </li>
       <li><a href="modules/camera.html#camera.Camera.get_max_range">get_max_range() (camera.Camera method)</a>
 </li>
+      <li><a href="modules/led.html#led.Led.get_num_pixels">get_num_pixels() (led.Led method)</a>
+</li>
       <li><a href="modules/lidar.html#lidar.Lidar.get_num_samples">get_num_samples() (lidar.Lidar method)</a>
 </li>
       <li><a href="modules/utils.html#racecar_utils.ARMarker.get_orientation">get_orientation() (racecar_utils.ARMarker method)</a>
 </li>
       <li><a href="modules/utils.html#racecar_utils.get_pixel_average_distance">get_pixel_average_distance() (in module racecar_utils)</a>
+</li>
+      <li><a href="modules/led.html#led.Led.get_pixels">get_pixels() (led.Led method)</a>
 </li>
       <li><a href="modules/physics.html#physics.Physics.get_rc_channels">get_rc_channels() (physics.Physics method)</a>
 </li>
@@ -430,6 +437,15 @@
   <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="modules/controller.html#controller.Controller.Button.LB">LB (controller.Controller.Button attribute)</a>
 </li>
+      <li>
+    led
+
+      <ul style="list-style-type:none">
+        <li><a href="modules/led.html#module-led">module</a>
+</li>
+      </ul></li>
+      <li><a href="modules/led.html#led.Led">Led (class in led)</a>
+</li>
       <li><a href="modules/controller.html#controller.Controller.Joystick.LEFT">LEFT (controller.Controller.Joystick attribute)</a>
 
       <ul style="list-style-type:none">
@@ -438,6 +454,8 @@
         <li><a href="modules/utils.html#racecar_utils.Orientation.LEFT">(racecar_utils.Orientation attribute)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li>
     lidar
 
@@ -445,8 +463,6 @@
         <li><a href="modules/lidar.html#module-lidar">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="modules/lidar.html#lidar.Lidar">Lidar (class in lidar)</a>
 </li>
       <li><a href="modules/utils.html#racecar_utils.ColorBGR.light_blue">light_blue (racecar_utils.ColorBGR attribute)</a>
@@ -475,6 +491,8 @@
         <li><a href="modules/display.html#module-display">display</a>
 </li>
         <li><a href="modules/drive.html#module-drive">drive</a>
+</li>
+        <li><a href="modules/led.html#module-led">led</a>
 </li>
         <li><a href="modules/lidar.html#module-lidar">lidar</a>
 </li>
@@ -613,20 +631,26 @@
   <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="modules/vision.html#vision.Detection.score">score (vision.Detection attribute)</a>
 </li>
+      <li><a href="modules/led.html#led.Led.set_color">set_color() (led.Led method)</a>
+</li>
       <li><a href="modules/display.html#display.Display.set_matrix">set_matrix() (display.Display method)</a>
 </li>
       <li><a href="modules/display.html#display.Display.set_matrix_intensity">set_matrix_intensity() (display.Display method)</a>
 </li>
       <li><a href="modules/drive.html#drive.Drive.set_max_speed">set_max_speed() (drive.Drive method)</a>
 </li>
+      <li><a href="modules/led.html#led.Led.set_pixel">set_pixel() (led.Led method)</a>
+</li>
+      <li><a href="modules/led.html#led.Led.set_pixels">set_pixels() (led.Led method)</a>
+</li>
       <li><a href="modules/drive.html#drive.Drive.set_speed_angle">set_speed_angle() (drive.Drive method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="modules/core.html#racecar_core.Racecar.set_start_update">set_start_update() (racecar_core.Racecar method)</a>
 </li>
       <li><a href="modules/core.html#racecar_core.Racecar.set_update_slow_time">set_update_slow_time() (racecar_core.Racecar method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="modules/display.html#display.Display.show_color_image">show_color_image() (display.Display method)</a>
 </li>
       <li><a href="modules/display.html#display.Display.show_depth_image">show_depth_image() (display.Display method)</a>
@@ -747,7 +771,7 @@
       </div><footer class="py-6 border-t border-border md:py-0">
     <div class="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
       <div class="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
-        <p class="text-sm leading-loose text-center text-muted-foreground md:text-left">© 2024, MIT.&nbsp;Built with <a class="font-medium underline underline-offset-4"
+        <p class="text-sm leading-loose text-center text-muted-foreground md:text-left">© 2024-2026, MIT.&nbsp;Built with <a class="font-medium underline underline-offset-4"
     href="https://www.sphinx-doc.org"
     rel="noreferrer">Sphinx 9.0.4</a></p>
 </div>

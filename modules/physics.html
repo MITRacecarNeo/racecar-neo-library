@@ -79,6 +79,7 @@
 <li class="toctree-l2"><a class="reference internal" href="controller.html">Controller</a></li>
 <li class="toctree-l2"><a class="reference internal" href="display.html">Display</a></li>
 <li class="toctree-l2"><a class="reference internal" href="drive.html">Drive</a></li>
+<li class="toctree-l2"><a class="reference internal" href="led.html">Led</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lidar.html">Lidar</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Physics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="telemetry.html">Telemetry</a></li>
@@ -127,7 +128,9 @@ File Description: Defines the interface of the Physics module of the racecar_cor
 <dl class="py class">
 <dt class="sig sig-object py" id="physics.Physics">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">physics.</span></span><span class="sig-name descname"><span class="pre">Physics</span></span><a class="headerlink" href="#physics.Physics" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#physics.Physics'"><span>#</span></a></dt>
-<dd><p>Returns the linear acceleration and angular velocity measured by the IMU.</p>
+<dd><p>Returns the car’s motion and power measurements: IMU (acceleration, angular
+velocity, magnetic field), drive encoder speed, battery voltage and current,
+and the RC transmitter channels.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="physics.Physics.get_angular_velocity">
 <span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_angular_velocity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">NDArray</span></span></span><a class="headerlink" href="#physics.Physics.get_angular_velocity" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#physics.Physics.get_angular_velocity'"><span>#</span></a></dt>
@@ -140,16 +143,12 @@ last frame in rad/s.</p>
 </dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>— In the Simulator —
-The x-axis (pitch) points out of the right of the car.
-The y-axis (yaw) points directly up (perpendicular to the ground).
-The z-axis (roll) points out of the front of the car.
-Rotation sign uses the right hand rule. For example, when the car turns to
-the left, it has a positive angular velocity along the y axis.</p>
-<p>— In the Physical RACECAR —
+<p>The simulator and the physical RACECAR use the same axes (REP-103):
 The x-axis (roll) points out of the front of the car.
-The y-axis (pitch) points out of the right of the car.
-The z-axis (yaw) points directly up (perpendicular to the ground).</p>
+The y-axis (pitch) points out of the left of the car.
+The z-axis (yaw) points directly up (perpendicular to the ground).
+Rotation sign uses the right hand rule. For example, when the car turns to
+the left, it has a positive angular velocity along the z axis.</p>
 </div>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># ang_vel stores the average angular velocity over the previous frame</span>
@@ -157,7 +156,7 @@ The z-axis (yaw) points directly up (perpendicular to the ground).</p>
 </span><span id="line-3">
 </span><span id="line-4"><span class="c1"># yaw stores the yaw of the car, which is positive when it turns to the left</span>
 </span><span id="line-5"><span class="c1"># and negative when it turns to the right.</span>
-</span><span id="line-6"><span class="n">yaw</span> <span class="o">=</span> <span class="n">ang_vel</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span><span id="line-6"><span class="n">yaw</span> <span class="o">=</span> <span class="n">ang_vel</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 </span></code></pre></div>
 </div>
 </dd></dl>
@@ -173,7 +172,8 @@ The z-axis (yaw) points directly up (perpendicular to the ground).</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>— In the Simulator —
-This function returns 0.0 (there is no power sensor in simulation).</p>
+2.5 A while the drive is idle, 5 A to 10 A while it is commanded,
+rising with speed.</p>
 <p>— In the Physical RACECAR —
 The value comes from the /battery/current topic.</p>
 </div>
@@ -195,7 +195,8 @@ The value comes from the /battery/current topic.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>— In the Simulator —
-This function returns 0.0 (there is no power sensor in simulation).</p>
+A 2S 5000 mAh pack, full (8.4 V) when the level loads, empty at 7.0 V;
+the voltage sags slightly while the car drives.</p>
 <p>— In the Physical RACECAR —
 The value comes from the /battery/voltage topic.</p>
 </div>
@@ -219,7 +220,9 @@ ratios and wheel circumference). Positive is forward.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>— In the Simulator —
-This function returns 0.0 (there is no drive encoder in simulation).</p>
+With Realism off, the car’s true forward speed. With Realism on, the
+speed of the wheels as the hall encoder measures it, so wheel slip and
+spin show, and readings below about 0.075 m/s drop to 0 between edges.</p>
 <p>— In the Physical RACECAR —
 The value comes from the /encoder/speed topic.</p>
 </div>
@@ -241,14 +244,12 @@ the last frame in m/s^2.</p>
 </dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>— In the Simulator —
-The x-axis points out of the right of the car.
-The y-axis points directly up (perpendicular to the ground).
-The z-axis points out of the front of the car.</p>
-<p>— In the Physical RACECAR —
+<p>The simulator and the physical RACECAR use the same axes (REP-103):
 The x-axis points out of the front of the car.
-The y-axis points out of the right of the car.
+The y-axis points out of the left of the car.
 The z-axis points directly up (perpendicular to the ground).</p>
+<p>The accelerometer measures specific force, so a car at rest reads about
+(0, 0, 9.81): gravity appears as an upward acceleration.</p>
 </div>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># accel stores the average acceleration over the previous frame</span>
@@ -256,7 +257,7 @@ The z-axis points directly up (perpendicular to the ground).</p>
 </span><span id="line-3">
 </span><span id="line-4"><span class="c1"># forward accel stores acceleration in the forward direction.  This will be</span>
 </span><span id="line-5"><span class="c1"># positive when the car accelerates, and negative when it decelerates.</span>
-</span><span id="line-6"><span class="n">forward_accel</span> <span class="o">=</span> <span class="n">accel</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+</span><span id="line-6"><span class="n">forward_accel</span> <span class="o">=</span> <span class="n">accel</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </span></code></pre></div>
 </div>
 </dd></dl>
@@ -272,12 +273,20 @@ during the last frame in Teslas.</p>
 </dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>— In the Simulator —
-This function does not exist.</p>
-<p>— In the Physcial RACECAR —
-The x-axis points towards the back of the car.
-The y-axis points towards the right of the car.
+<p>The simulator and the physical RACECAR use the same axes (REP-103):
+The x-axis points out of the front of the car.
+The y-axis points out of the left of the car.
 The z-axis points directly up (perpendicular to the ground).</p>
+<p>Earth’s field points north and steeply down, so z is negative (about
+-47 uT near Boston). In the simulator magnetic north is the world +Z
+direction of every level.</p>
+</div>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># heading stores the car's direction in degrees, 0 facing magnetic north and</span>
+</span><span id="line-2"><span class="c1"># increasing counterclockwise (toward the west) on level ground</span>
+</span><span id="line-3"><span class="n">mag</span> <span class="o">=</span> <span class="n">rc</span><span class="o">.</span><span class="n">physics</span><span class="o">.</span><span class="n">get_magnetic_field</span><span class="p">()</span>
+</span><span id="line-4"><span class="n">heading</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">atan2</span><span class="p">(</span><span class="o">-</span><span class="n">mag</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">mag</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+</span></code></pre></div>
 </div>
 </dd></dl>
 <dl class="py method">
@@ -289,12 +298,12 @@ The z-axis points directly up (perpendicular to the ground).</p>
 <dd class="field-odd"><p><p>An array of eight values, each in the range [-1, 1] (0 at the
 channel’s center or with no transmitter signal). Channel map on the
 FlySky iA6B (verified on hardware):</p>
-<blockquote>
-<div><p>[0] right stick X (steering)   [4] switch A
-[1] right stick Y              [5] switch B
-[2] left stick Y (throttle)    [6] switch C
-[3] left stick X               [7] switch D</p>
-</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="n">right</span> <span class="n">stick</span> <span class="n">X</span> <span class="p">(</span><span class="n">steering</span><span class="p">)</span>   <span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="n">switch</span> <span class="n">A</span>
+</span><span id="line-2"><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="n">right</span> <span class="n">stick</span> <span class="n">Y</span>              <span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="n">switch</span> <span class="n">B</span>
+</span><span id="line-3"><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="n">left</span> <span class="n">stick</span> <span class="n">Y</span> <span class="p">(</span><span class="n">throttle</span><span class="p">)</span>    <span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="n">switch</span> <span class="n">C</span>
+</span><span id="line-4"><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="n">left</span> <span class="n">stick</span> <span class="n">X</span>               <span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="n">switch</span> <span class="n">D</span>
+</span></code></pre></div>
+</div>
 <p>The firmware drives steering from channel 0 and throttle from
 channel 2.</p>
 </p>
@@ -339,7 +348,7 @@ firmware pulse widths.</p>
 </div><footer class="py-6 border-t border-border md:py-0">
 <div class="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
 <div class="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
-<p class="text-sm leading-loose text-center text-muted-foreground md:text-left">© 2024, MIT. Built with <a class="font-medium underline underline-offset-4" href="https://www.sphinx-doc.org" rel="noreferrer">Sphinx 9.0.4</a></p>
+<p class="text-sm leading-loose text-center text-muted-foreground md:text-left">© 2024-2026, MIT. Built with <a class="font-medium underline underline-offset-4" href="https://www.sphinx-doc.org" rel="noreferrer">Sphinx 9.0.4</a></p>
 </div>
 </div>
 </footer>

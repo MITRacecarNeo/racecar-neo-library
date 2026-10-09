@@ -12,13 +12,13 @@ Therefore, consider *before* going through all of this hassle whether the animat
 
 That being said, after you've found a cool and compatible animation to play, we can get started with step 1:
 
-### Step 1 — Generating a frameset
+## Step 1 — Generating a frameset
 
 First, we'll need a collection of frames for the animation we want to play. Sometimes, you can find readily-available framesets online; for bad apple, I downloaded [this frameset from the Internet Archive](https://archive.org/details/bad_apple_is.7z).
 
 Otherwise, we'll need to create a frameset ourselves:
 
-#### GIFs
+### GIFs
 
 If your animation is a GIF, creating a frameset is as simple as extracting the frames from your GIF (in an oversimplified sense, a GIF file is just a collection of images; you can read more about the GIF file format [here](https://en.wikipedia.org/wiki/GIF#File_format)).
 
@@ -30,7 +30,7 @@ Open your GIF in Photopea, then select **File > Export Layers**. Uncheck the opt
 
 ![image](https://gist.github.com/user-attachments/assets/9873dba5-c6d1-4fac-83d6-703bda578bc3)
 
-#### YouTube videos
+### YouTube videos
 
 If your animation is a YouTube video, the process is a little more complex. You'll first need to download your video as an MP4; if you have YouTube premium, you can download it directly from the website!
 
@@ -38,7 +38,7 @@ Otherwise, you'll need to make use of one of several [sketchy YouTube to MP4 sit
 
 Assuming you've downloaded your video successfully, you can safely proceed to the next subsection.
 
-#### MP4s
+### MP4s
 
 If your animation is an MP4 or other common video format, you can use a site like [Ezgif](https://ezgif.com/video-to-jpg) to convert it to a frameset:
 
@@ -46,7 +46,7 @@ If your animation is an MP4 or other common video format, you can use a site lik
 
 ![image](https://gist.github.com/user-attachments/assets/3c4a90b7-36b7-45f0-a1d0-dc9339f6986f)
 
-### Step 2 — Pixelation and masking
+## Step 2 — Pixelation and masking
 
 Now that we have a folder of image files to play, we'll need to preprocess them so that they're ready for the racecar. In the racecar library, there *is* a [utility function that lets you pixelate images for the dot matrix](https://mitracecarneo.github.io/racecar-neo-library/docs/utils.html#racecar_utils.pixelate_image); however, uploading your raw frameset to the racecar is inefficient and sometimes prohibitively so (for bad apple, the raw 6562 frames took up a combined ~500 MB).
 
@@ -144,7 +144,7 @@ cv2.waitKey()
 
 Then, you can place your mask transform in the original pixelation script to generate your final processed frames.
 
-### Step 3 — Play it on the racecar!
+## Step 3 — Play it on the racecar!
 
 Now that we have a collection of labelled, pixelated, black-and-white frames, we can finally play our animation on the racecar! Remember that we can copy our frames over to the racecar using
 ```bash
