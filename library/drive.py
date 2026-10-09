@@ -30,8 +30,7 @@ class Drive(abc.ABC):
 
         Note:
             The speed and angle arguments are unitless ratios. The car holds the
-            requested speed with a closed-loop speed controller on its drive
-            encoder, on all four wheels.
+            requested speed with a closed-loop controller on its drive encoder.
 
         Example::
 
@@ -65,7 +64,7 @@ class Drive(abc.ABC):
     @abc.abstractmethod
     def set_max_speed(self, max_speed: float = 0.25) -> None:
         """
-        Sets the maximum throttle in the forward and backward direction.
+        Sets the maximum speed in the forward and backward direction.
 
         Args:
             max_speed: The scale factor applied to speed inputs, ranging from

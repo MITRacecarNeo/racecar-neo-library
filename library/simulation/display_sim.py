@@ -38,7 +38,7 @@ class DisplaySim(Display):
     def set_matrix(self, matrix: NDArray[(8, 24), np.uint8]) -> None:
         arr = np.array(matrix, dtype=np.uint8)
         if arr.shape != (self.__ROWS, self.__COLUMNS):
-            print("WARNING: Matrix must be of shape (8, 24). Reshaping to fit.")
+            print(f"WARNING: Matrix must be of shape ({self.__ROWS}, {self.__COLUMNS}). Reshaping to fit.")
             arr = arr.reshape((self.__ROWS, self.__COLUMNS))
         self.__matrix = arr
         # One bit per pixel, row-major, most significant bit first; nonzero is on
@@ -50,9 +50,8 @@ class DisplaySim(Display):
 
     def show_text(self, text: str, scroll_speed: float = 2.0) -> None:
         """
-        Displays text on the 8x24 matrix in RacecarSim; text wider than the
-        display scrolls across it every 4 seconds, as on the car. scroll_speed
-        is accepted for compatibility and not used, as on the car.
+        Sends text to RacecarSim, which scrolls text wider than the display
+        across it every 4 seconds, as on the car. scroll_speed is not used.
         """
         data = str(text).encode("ascii", errors="replace")[: self.__MAX_TEXT]
         self.__send(struct.pack("BB", self.__racecar.Header.display_show_text, len(data)) + data)

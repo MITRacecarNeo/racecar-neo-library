@@ -257,7 +257,7 @@ class Display(abc.ABC):
             rc.display.show_text("Hello!")
 
             # Display a long message that will scroll
-            rc.display.show_text("This message is too long to fit and will scroll", scroll_speed=3)
+            rc.display.show_text("This message is too long to fit and will scroll")
         """
         pass
 
@@ -272,8 +272,8 @@ class Display(abc.ABC):
             configuration of the dot matrix display module.
 
         Note:
-            A 1 in the matrix indicates an LED that is on, while a 0 in the
-            matrix indicates an LED that is off.
+            Returns the matrix last passed to set_matrix; a nonzero value is an
+            LED that is on. Text shown with show_text is not included.
 
         Example::
 
@@ -310,17 +310,11 @@ class Display(abc.ABC):
 
         Note:
             On the physical RACECAR and in RacecarSim this function has no effect:
-            the matrix brightness is fixed by the car's dot matrix driver. The first
+            the matrix contrast is fixed by the car's dot matrix driver. The first
             call prints a warning.
 
         Example::
 
-            # Pulse the dot matrix display using a sin wave profile.
-            def update():
-                global time
-                time += rc.get_delta_time()
-
-                intensity = rc_utils.remap_range(math.sin(time), -1.0, 1.0, 0.0, 1.0)
-                rc.display.set_matrix_intensity(intensity)
+            rc.display.set_matrix_intensity(0.5)
         """
         pass

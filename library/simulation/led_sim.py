@@ -63,8 +63,10 @@ class LedSim(Led):
             self.__flush()
 
     def __flush(self) -> None:
-        """Send the frame if it changed since the last send; RacecarSim calls
-        this after start and each update."""
+        """
+        Sends the frame if it changed since the last send. RacecarSim calls this
+        after start and after each update.
+        """
         if not self.__dirty:
             return
         self.__dirty = False

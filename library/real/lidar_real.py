@@ -26,12 +26,6 @@ class LidarReal(Lidar):
     # The ROS topic from which we get Lidar data
     __SCAN_TOPIC = "/scan"
 
-    # RPLIDAR with angle_compensate=true emits ~1080 samples per scan, the
-    # abstract base's default; RacecarSim v2.9.2 and later also send 1080.
-    # Labs should still use rc.lidar.get_num_samples() rather than hard-coding
-    # the length.
-    _NUM_SAMPLES: int = 1080
-
     def __init__(self):
         # ROS node
         self.node = ros2.create_node("scan_sub")
@@ -48,7 +42,6 @@ class LidarReal(Lidar):
     # LIDAR Scan returns value in meters, multiplying by 100 to be processed in cm
     # LIDAR Scan reversed, flipping order of data entry to correct for CW spin - matches with sim
     # For RPLidar - replace "inf" with 0 to match sim LIDAR data
-    # Note: The real LIDAR returns a scan of length 1080.
     def __scan_callback(self, data):
         scan_data = np.flip(np.multiply(np.array(data.ranges), 100))
         self.__samples_new = np.array([0 if str(x) == "inf" else x for x in scan_data])
