@@ -217,6 +217,7 @@ class RacecarSim(Racecar):
                     self.__in_call = True
                     self.set_update_slow_time()
                     self.__start()
+                    self.led._LedSim__flush()
                     self.__in_call = False
                 except SystemExit:
                     raise
@@ -285,6 +286,7 @@ class RacecarSim(Racecar):
         self.camera._CameraSim__update()
         self.controller._ControllerSim__update()
         self.lidar._LidarSim__update()
+        self.led._LedSim__flush()
 
     def __handle_sigint(self, signal_received: int, frame) -> None:
         # Send exit command to sync port if we are in the middle of servicing a start
