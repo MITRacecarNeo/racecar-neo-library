@@ -25,6 +25,7 @@ import drive_real
 import led_real
 import lidar_real
 import physics_real
+import slam_real
 import telemetry_real
 import vision_real
 
@@ -52,6 +53,7 @@ class RacecarReal(Racecar):
         self.led = led_real.LedReal()
         self.lidar = lidar_real.LidarReal()
         self.physics = physics_real.PhysicsReal()
+        self.slam = slam_real.SlamReal()
         self.telemetry = telemetry_real.TelemetryReal()
         self.vision = vision_real.VisionReal()
 
@@ -65,6 +67,7 @@ class RacecarReal(Racecar):
         led_added = self.__executor.add_node(self.led.node)
         telemetry_added = self.__executor.add_node(self.telemetry.node)
         vision_added = self.__executor.add_node(self.vision.node)
+        slam_added = self.__executor.add_node(self.slam.node)
         # drive owns its own 20 Hz republish timer (independent of __run), so
         # the publisher keeps mux's command_timeout_sec satisfied even when
         # the run loop is wedged under go_async()'s rate.sleep() pattern.
@@ -72,7 +75,7 @@ class RacecarReal(Racecar):
         assert (
             rate_added and lidar_added and camera_added and controller_added
             and physics_added and display_added and led_added and telemetry_added
-            and vision_added and drive_added
+            and vision_added and slam_added and drive_added
         ), (
             "Issues initializing Racecar nodes. Node status: \n"
             f"Rate operational: {rate_added} | "
@@ -84,6 +87,7 @@ class RacecarReal(Racecar):
             f"Led operational: {led_added} | "
             f"Telemetry operational: {telemetry_added} | "
             f"Vision operational: {vision_added} | "
+            f"Slam operational: {slam_added} | "
             f"Drive operational: {drive_added} | "
         )
 
@@ -239,6 +243,7 @@ class RacecarReal(Racecar):
         self.physics._PhysicsReal__update()
         self.lidar._LidarReal__update()
         self.vision._VisionReal__update()
+        self.slam._SlamReal__update()
         self.telemetry._TelemetryReal__update()
 
     def __default_start(self):

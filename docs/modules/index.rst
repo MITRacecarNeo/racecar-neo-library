@@ -12,6 +12,7 @@ Modules
    led
    lidar
    physics
+   slam
    telemetry
    utils
    vision
