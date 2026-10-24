@@ -26,10 +26,10 @@
 <meta content="Physics | racecar-neo-library  documentation" name="twitter:title"/>
 <link href="../_static/pygments.css?v=0a3749eb" rel="stylesheet" type="text/css"/>
 <link href="../_static/pygments_dark.css" id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css"/>
-<link href="../_static/theme.css?v=d6d7c91b" rel="stylesheet" type="text/css"/>
+<link href="../_static/theme.css?v=009055c6" rel="stylesheet" type="text/css"/>
 <link href="../search.html" rel="search" title="Search"/>
 <link href="../genindex.html" rel="index" title="Index"/>
-<link href="telemetry.html" rel="next" title="Telemetry"/>
+<link href="slam.html" rel="next" title="Slam"/>
 <link href="lidar.html" rel="prev" title="Lidar"/>
 </head>
 <body :class="{ 'overflow-hidden': showSidebar }" class="min-h-screen font-sans antialiased bg-background text-foreground" x-data="{ showSidebar: false, showScrollTop: false }">
@@ -82,6 +82,7 @@
 <li class="toctree-l2"><a class="reference internal" href="led.html">Led</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lidar.html">Lidar</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Physics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="slam.html">Slam</a></li>
 <li class="toctree-l2"><a class="reference internal" href="telemetry.html">Telemetry</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.html">Utils</a></li>
 <li class="toctree-l2"><a class="reference internal" href="vision.html">Vision</a></li>
@@ -175,7 +176,7 @@ the left, it has a positive angular velocity along the z axis.</p>
 2.5 A while the drive is idle, 5 A to 10 A while it is commanded,
 rising with speed.</p>
 <p>— In the Physical RACECAR —
-The value comes from the /battery/current topic.</p>
+The mean over the last second, from the /battery/state topic.</p>
 </div>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># current stores the battery draw in amps</span>
@@ -198,7 +199,7 @@ The value comes from the /battery/current topic.</p>
 A 2S 5000 mAh pack, full (8.4 V) when the level loads, empty at 7.0 V;
 the voltage sags slightly while the car drives.</p>
 <p>— In the Physical RACECAR —
-The value comes from the /battery/voltage topic.</p>
+The mean over the last second, from the /battery/state topic.</p>
 </div>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># voltage stores the battery voltage in volts</span>
@@ -356,6 +357,6 @@ firmware pulse widths.</p>
 <script src="../_static/documentation_options.js?v=5929fcd5"></script>
 <script src="../_static/doctools.js?v=fd6eb6e6"></script>
 <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
-<script defer="defer" src="../_static/theme.js?v=5db23cf8"></script>
+<script defer="defer" src="../_static/theme.js?v=49cc6205"></script>
 </body>
 </html>

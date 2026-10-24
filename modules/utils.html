@@ -26,7 +26,7 @@
 <meta content="Utils | racecar-neo-library  documentation" name="twitter:title"/>
 <link href="../_static/pygments.css?v=0a3749eb" rel="stylesheet" type="text/css"/>
 <link href="../_static/pygments_dark.css" id="pygments_dark_css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css"/>
-<link href="../_static/theme.css?v=d6d7c91b" rel="stylesheet" type="text/css"/>
+<link href="../_static/theme.css?v=009055c6" rel="stylesheet" type="text/css"/>
 <link href="../search.html" rel="search" title="Search"/>
 <link href="../genindex.html" rel="index" title="Index"/>
 <link href="vision.html" rel="next" title="Vision"/>
@@ -82,6 +82,7 @@
 <li class="toctree-l2"><a class="reference internal" href="led.html">Led</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lidar.html">Lidar</a></li>
 <li class="toctree-l2"><a class="reference internal" href="physics.html">Physics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="slam.html">Slam</a></li>
 <li class="toctree-l2"><a class="reference internal" href="telemetry.html">Telemetry</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Utils</a></li>
 <li class="toctree-l2"><a class="reference internal" href="vision.html">Vision</a></li>
@@ -713,6 +714,35 @@ contour is empty.</p>
 </div>
 </dd></dl>
 <dl class="py function">
+<dt class="sig sig-object py" id="racecar_utils.get_data_dir">
+<span class="sig-prename descclassname"><span class="pre">racecar_utils.</span></span><span class="sig-name descname"><span class="pre">get_data_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subfolder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#racecar_utils.get_data_dir" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#racecar_utils.get_data_dir'"><span>#</span></a></dt>
+<dd><p>Returns the folder where the car keeps its data, such as camera captures.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>subfolder</strong> – A folder inside the data folder, such as “images”. It is
+created when it does not exist.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The path of the data folder, or of the subfolder inside it.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>— In the Simulator —
+~/data on the computer running the program.</p>
+<p>— In the Physical RACECAR —
+The car’s data folder: on its NVMe drive when one is set up, else
+~/data on the SD card. The RACECAR_DATA_DIR environment variable
+names it; <cite>racecar data</cite> prints it in a terminal.</p>
+</div>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># Save the current camera frame into the car's images folder</span>
+</span><span id="line-2"><span class="n">folder</span> <span class="o">=</span> <span class="n">rc_utils</span><span class="o">.</span><span class="n">get_data_dir</span><span class="p">(</span><span class="s2">"images"</span><span class="p">)</span>
+</span><span id="line-3"><span class="n">cv</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="s2">"frame.png"</span><span class="p">),</span> <span class="n">rc</span><span class="o">.</span><span class="n">camera</span><span class="o">.</span><span class="n">get_color_image</span><span class="p">())</span>
+</span></code></pre></div>
+</div>
+</dd></dl>
+<dl class="py function">
 <dt class="sig sig-object py" id="racecar_utils.get_depth_image_center_distance">
 <span class="sig-prename descclassname"><span class="pre">racecar_utils.</span></span><span class="sig-name descname"><span class="pre">get_depth_image_center_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth_image</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#racecar_utils.NDArray" title="racecar_utils.NDArray"><span class="pre">NDArray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#racecar_utils.get_depth_image_center_distance" title="Link to this definition" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#racecar_utils.get_depth_image_center_distance'"><span>#</span></a></dt>
 <dd><p>Finds the distance of the center object in a depth image.</p>
@@ -1126,6 +1156,7 @@ the mapping to flip.  val does not have to be between old_min and old_max.</p>
 <li><a :data-current="activeSection === '#racecar_utils.get_closest_pixel'" class="reference internal" href="#racecar_utils.get_closest_pixel"><code class="docutils literal notranslate"><span class="pre">get_closest_pixel()</span></code></a></li>
 <li><a :data-current="activeSection === '#racecar_utils.get_contour_area'" class="reference internal" href="#racecar_utils.get_contour_area"><code class="docutils literal notranslate"><span class="pre">get_contour_area()</span></code></a></li>
 <li><a :data-current="activeSection === '#racecar_utils.get_contour_center'" class="reference internal" href="#racecar_utils.get_contour_center"><code class="docutils literal notranslate"><span class="pre">get_contour_center()</span></code></a></li>
+<li><a :data-current="activeSection === '#racecar_utils.get_data_dir'" class="reference internal" href="#racecar_utils.get_data_dir"><code class="docutils literal notranslate"><span class="pre">get_data_dir()</span></code></a></li>
 <li><a :data-current="activeSection === '#racecar_utils.get_depth_image_center_distance'" class="reference internal" href="#racecar_utils.get_depth_image_center_distance"><code class="docutils literal notranslate"><span class="pre">get_depth_image_center_distance()</span></code></a></li>
 <li><a :data-current="activeSection === '#racecar_utils.get_largest_contour'" class="reference internal" href="#racecar_utils.get_largest_contour"><code class="docutils literal notranslate"><span class="pre">get_largest_contour()</span></code></a></li>
 <li><a :data-current="activeSection === '#racecar_utils.get_lidar_average_distance'" class="reference internal" href="#racecar_utils.get_lidar_average_distance"><code class="docutils literal notranslate"><span class="pre">get_lidar_average_distance()</span></code></a></li>
@@ -1154,6 +1185,6 @@ the mapping to flip.  val does not have to be between old_min and old_max.</p>
 <script src="../_static/documentation_options.js?v=5929fcd5"></script>
 <script src="../_static/doctools.js?v=fd6eb6e6"></script>
 <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
-<script defer="defer" src="../_static/theme.js?v=5db23cf8"></script>
+<script defer="defer" src="../_static/theme.js?v=49cc6205"></script>
 </body>
 </html>
