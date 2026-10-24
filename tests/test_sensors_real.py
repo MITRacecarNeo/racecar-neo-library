@@ -97,3 +97,13 @@ def test_battery_comes_from_the_state_means(ros):
     assert physics.get_battery_voltage() == pytest.approx(8.1)
     assert physics.get_battery_current() == pytest.approx(2.5)
     assert np.isfinite(physics.get_battery_current())
+
+
+def test_get_data_dir(tmp_path, monkeypatch):
+    import racecar_utils as rc_utils
+
+    monkeypatch.setenv("RACECAR_DATA_DIR", str(tmp_path / "root"))
+    assert rc_utils.get_data_dir() == str(tmp_path / "root")
+    images = rc_utils.get_data_dir("images")
+    assert images == str(tmp_path / "root" / "images")
+    assert (tmp_path / "root" / "images").is_dir()
