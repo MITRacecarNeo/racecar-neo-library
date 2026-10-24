@@ -147,7 +147,7 @@ class Physics(abc.ABC):
             the voltage sags slightly while the car drives.
 
             --- In the Physical RACECAR ---
-            The value comes from the /battery/voltage topic.
+            The mean over the last second, from the /battery/state topic.
 
         Example::
 
@@ -170,7 +170,7 @@ class Physics(abc.ABC):
             rising with speed.
 
             --- In the Physical RACECAR ---
-            The value comes from the /battery/current topic.
+            The mean over the last second, from the /battery/state topic.
 
         Example::
 

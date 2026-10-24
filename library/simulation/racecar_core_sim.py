@@ -21,6 +21,7 @@ import drive_sim
 import led_sim
 import lidar_sim
 import physics_sim
+import slam_sim
 import telemetry_sim
 import vision_sim
 
@@ -167,6 +168,7 @@ class RacecarSim(Racecar):
         self.lidar = lidar_sim.LidarSim(self)
         self.telemetry = telemetry_sim.TelemetrySim()
         self.vision = vision_sim.VisionSim()
+        self.slam = slam_sim.SlamSim()
 
         self.__start: Callable[[], None]
         self.__update: Callable[[], None]

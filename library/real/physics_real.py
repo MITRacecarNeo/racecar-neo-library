@@ -25,7 +25,7 @@ from rclpy.qos import (
     QoSReliabilityPolicy,
     QoSProfile,
 )
-from sensor_msgs.msg import Imu, MagneticField
+from sensor_msgs.msg import BatteryState, Imu, MagneticField
 from std_msgs.msg import Float32, Float32MultiArray
 
 
@@ -38,10 +38,11 @@ class PhysicsReal(Physics):
     __MAG_TOPIC = "/mag"
     # Vehicle speed (m/s) republished by pit_node from the Teensy encoder.
     __ENCODER_TOPIC = "/encoder/speed"
-    # Power telemetry (INA226) and the eight FlySky RC channels, republished by
-    # pit_node: voltage in V, current in A, RC channels normalized to [-1, 1].
-    __VOLTAGE_TOPIC = "/battery/voltage"
-    __CURRENT_TOPIC = "/battery/current"
+    # Power telemetry (INA226): pit_node's one-second means. The raw
+    # /battery/voltage and /battery/current arrive at about 150 Hz each, which
+    # costs a library process a large share of a core to receive.
+    __BATTERY_TOPIC = "/battery/state"
+    # The eight FlySky RC channels, normalized to [-1, 1].
     __RC_TOPIC = "/rc/channels"
 
     # Limit on buffer size to prevent memory overflow
@@ -72,12 +73,9 @@ class PhysicsReal(Physics):
             Float32, self.__ENCODER_TOPIC, self.__encoder_callback, qos_profile
         )
 
-        # subscribe to the power telemetry (V, A) and RC channel topics
-        self.__voltage_sub = self.node.create_subscription(
-            Float32, self.__VOLTAGE_TOPIC, self.__voltage_callback, qos_profile
-        )
-        self.__current_sub = self.node.create_subscription(
-            Float32, self.__CURRENT_TOPIC, self.__current_callback, qos_profile
+        # subscribe to the battery means (V, A) and RC channel topics
+        self.__battery_sub = self.node.create_subscription(
+            BatteryState, self.__BATTERY_TOPIC, self.__battery_callback, 10
         )
         self.__rc_sub = self.node.create_subscription(
             Float32MultiArray, self.__RC_TOPIC, self.__rc_callback, qos_profile
@@ -92,9 +90,7 @@ class PhysicsReal(Physics):
         self.__encoder_speed = 0.0
         self.__encoder_speed_buffer = deque()
         self.__voltage = 0.0
-        self.__voltage_buffer = deque()
         self.__current = 0.0
-        self.__current_buffer = deque()
         self.__rc_channels = np.zeros(8)
 
     def __imu_callback(self, data):
@@ -128,15 +124,10 @@ class PhysicsReal(Physics):
         if len(self.__encoder_speed_buffer) > self.__BUFFER_CAP:
             self.__encoder_speed_buffer.popleft()
 
-    def __voltage_callback(self, data):
-        self.__voltage_buffer.append(data.data)
-        if len(self.__voltage_buffer) > self.__BUFFER_CAP:
-            self.__voltage_buffer.popleft()
-
-    def __current_callback(self, data):
-        self.__current_buffer.append(data.data)
-        if len(self.__current_buffer) > self.__BUFFER_CAP:
-            self.__current_buffer.popleft()
+    def __battery_callback(self, data):
+        # BatteryState counts discharge as negative; the API reports draw as positive.
+        self.__voltage = float(data.voltage)
+        self.__current = -float(data.current)
 
     def __rc_callback(self, data):
         # RC channels are control inputs; keep the most recent frame, not an
@@ -161,14 +152,6 @@ class PhysicsReal(Physics):
         if len(self.__encoder_speed_buffer) > 0:
             self.__encoder_speed = float(np.mean(self.__encoder_speed_buffer))
             self.__encoder_speed_buffer.clear()
-
-        if len(self.__voltage_buffer) > 0:
-            self.__voltage = float(np.mean(self.__voltage_buffer))
-            self.__voltage_buffer.clear()
-
-        if len(self.__current_buffer) > 0:
-            self.__current = float(np.mean(self.__current_buffer))
-            self.__current_buffer.clear()
 
     def get_linear_acceleration(self) -> NDArray[3, np.float32]:
         return np.array(self.__acceleration)
