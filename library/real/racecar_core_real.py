@@ -24,6 +24,7 @@ import display_real
 import drive_real
 import led_real
 import lidar_real
+import nav_real
 import physics_real
 import slam_real
 import telemetry_real
@@ -56,6 +57,8 @@ class RacecarReal(Racecar):
         self.slam = slam_real.SlamReal()
         self.telemetry = telemetry_real.TelemetryReal()
         self.vision = vision_real.VisionReal()
+        # Nothing is created for rc.nav until its first call.
+        self.nav = nav_real.NavReal(self.drive, self.slam)
 
         # Add all nodes to the executor
         rate_added = self.__executor.add_node(self.__rate_node)
@@ -125,7 +128,7 @@ class RacecarReal(Racecar):
             "    START button = run your program\n"
             "    BACK button = enter default drive mode\n"
             "    BACK + START buttons simultaneously = exit the program\n"
-            "    CTRL + Z on keyboard = force quit the program"
+            "    CTRL + C on keyboard = force quit the program"
         )
 
     def go(self) -> None:
@@ -135,6 +138,7 @@ class RacecarReal(Racecar):
                 self.__executor.spin_once()
             except KeyboardInterrupt:
                 break
+        self.nav._stop()
         ros2.shutdown()
 
     def go_async(self) -> None:
@@ -200,6 +204,7 @@ class RacecarReal(Racecar):
         Handles when the BACK button is pressed by entering default drive mode.
         """
         print(">> Entering default drive mode")
+        self.nav._stop()
         self.__default_start()
         self.__cur_update = self.__default_update
         self.__cur_update_slow = None
@@ -209,6 +214,7 @@ class RacecarReal(Racecar):
         Handles when BACK and START are pressed together by exiting the program.
         """
         print(">> Goodbye!")
+        self.nav._stop()
         self.__running = False
 
     def __run(self):

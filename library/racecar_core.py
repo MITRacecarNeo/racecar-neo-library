@@ -19,6 +19,7 @@ import display
 import drive
 import led
 import lidar
+import nav
 import physics
 import slam
 import telemetry
@@ -40,6 +41,7 @@ class Racecar(abc.ABC):
         self.drive: drive.Drive
         self.led: led.Led
         self.lidar: lidar.Lidar
+        self.nav: nav.Nav
         self.physics: physics.Physics
         self.slam: slam.Slam
         self.telemetry: telemetry.Telemetry
