@@ -113,6 +113,7 @@
 <li class="toctree-l2"><a class="reference internal" href="modules/drive.html">Drive</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/led.html">Led</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/lidar.html">Lidar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modules/nav.html">Nav</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/physics.html">Physics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/slam.html">Slam</a></li>
 <li class="toctree-l2"><a class="reference internal" href="modules/telemetry.html">Telemetry</a></li>
@@ -216,6 +217,8 @@
       </ul></li>
       <li><a href="modules/camera.html#camera.Camera">Camera (class in camera)</a>
 </li>
+      <li><a href="modules/nav.html#nav.Nav.cancel">cancel() (nav.Nav method)</a>
+</li>
       <li><a href="modules/utils.html#racecar_utils.clamp">clamp() (in module racecar_utils)</a>
 </li>
       <li><a href="modules/vision.html#vision.Detection.class_id">class_id (vision.Detection attribute)</a>
@@ -226,6 +229,8 @@
 </li>
       <li><a href="modules/utils.html#racecar_utils.colormap_depth_image">colormap_depth_image() (in module racecar_utils)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li>
     controller
 
@@ -233,8 +238,6 @@
         <li><a href="modules/controller.html#module-controller">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="modules/controller.html#controller.Controller">Controller (class in controller)</a>
 </li>
       <li><a href="modules/controller.html#controller.Controller.Button">Controller.Button (class in controller)</a>
@@ -370,6 +373,8 @@
 </li>
       <li><a href="modules/vision.html#vision.Vision.get_detections_async">get_detections_async() (vision.Vision method)</a>
 </li>
+      <li><a href="modules/nav.html#nav.Nav.get_distance_left">get_distance_left() (nav.Nav method)</a>
+</li>
       <li><a href="modules/physics.html#physics.Physics.get_encoder_speed">get_encoder_speed() (physics.Physics method)</a>
 </li>
       <li><a href="modules/camera.html#camera.Camera.get_height">get_height() (camera.Camera method)</a>
@@ -380,12 +385,12 @@
 </li>
       <li><a href="modules/utils.html#racecar_utils.get_largest_contour">get_largest_contour() (in module racecar_utils)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="modules/utils.html#racecar_utils.get_lidar_average_distance">get_lidar_average_distance() (in module racecar_utils)</a>
 </li>
       <li><a href="modules/utils.html#racecar_utils.get_lidar_closest_point">get_lidar_closest_point() (in module racecar_utils)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="modules/physics.html#physics.Physics.get_linear_acceleration">get_linear_acceleration() (physics.Physics method)</a>
 </li>
       <li><a href="modules/physics.html#physics.Physics.get_magnetic_field">get_magnetic_field() (physics.Physics method)</a>
@@ -398,6 +403,8 @@
 </li>
       <li><a href="modules/camera.html#camera.Camera.get_max_range">get_max_range() (camera.Camera method)</a>
 </li>
+      <li><a href="modules/nav.html#nav.Nav.get_missions">get_missions() (nav.Nav method)</a>
+</li>
       <li><a href="modules/slam.html#slam.Slam.get_mode">get_mode() (slam.Slam method)</a>
 </li>
       <li><a href="modules/led.html#led.Led.get_num_pixels">get_num_pixels() (led.Led method)</a>
@@ -405,6 +412,8 @@
       <li><a href="modules/lidar.html#lidar.Lidar.get_num_samples">get_num_samples() (lidar.Lidar method)</a>
 </li>
       <li><a href="modules/utils.html#racecar_utils.ARMarker.get_orientation">get_orientation() (racecar_utils.ARMarker method)</a>
+</li>
+      <li><a href="modules/nav.html#nav.Nav.get_path">get_path() (nav.Nav method)</a>
 </li>
       <li><a href="modules/utils.html#racecar_utils.get_pixel_average_distance">get_pixel_average_distance() (in module racecar_utils)</a>
 </li>
@@ -422,11 +431,15 @@
 </li>
       <li><a href="modules/slam.html#slam.Slam.get_save_status">get_save_status() (slam.Slam method)</a>
 </li>
+      <li><a href="modules/nav.html#nav.Nav.get_status">get_status() (nav.Nav method)</a>
+</li>
       <li><a href="modules/controller.html#controller.Controller.get_trigger">get_trigger() (controller.Controller method)</a>
 </li>
       <li><a href="modules/camera.html#camera.Camera.get_width">get_width() (camera.Camera method)</a>
 </li>
       <li><a href="modules/core.html#racecar_core.Racecar.go">go() (racecar_core.Racecar method)</a>
+</li>
+      <li><a href="modules/nav.html#nav.Nav.go_to">go_to() (nav.Nav method)</a>
 </li>
       <li><a href="modules/utils.html#racecar_utils.ColorBGR.gray">gray (racecar_utils.ColorBGR attribute)</a>
 </li>
@@ -456,10 +469,12 @@
   <h2 id="I">I</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
-      <li><a href="modules/controller.html#controller.Controller.is_down">is_down() (controller.Controller method)</a>
+      <li><a href="modules/nav.html#nav.Nav.is_active">is_active() (nav.Nav method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="modules/controller.html#controller.Controller.is_down">is_down() (controller.Controller method)</a>
+</li>
       <li><a href="modules/slam.html#slam.Slam.is_localized">is_localized() (slam.Slam method)</a>
 </li>
   </ul></td>
@@ -530,6 +545,8 @@
 </li>
         <li><a href="modules/lidar.html#module-lidar">lidar</a>
 </li>
+        <li><a href="modules/nav.html#module-nav">nav</a>
+</li>
         <li><a href="modules/physics.html#module-physics">physics</a>
 </li>
         <li><a href="modules/core.html#module-racecar_core">racecar_core</a>
@@ -544,16 +561,29 @@
 </li>
       </ul></li>
   </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="modules/nav.html#nav.Nav.move">move() (nav.Nav method)</a>
+</li>
+  </ul></td>
   </tr>
       </table>
   
   <h2 id="N">N</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
-      <li><a href="modules/utils.html#racecar_utils.NDArray">NDArray (class in racecar_utils)</a>
+      <li>
+    nav
+
+      <ul style="list-style-type:none">
+        <li><a href="modules/nav.html#module-nav">module</a>
 </li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="modules/nav.html#nav.Nav">Nav (class in nav)</a>
+</li>
+      <li><a href="modules/utils.html#racecar_utils.NDArray">NDArray (class in racecar_utils)</a>
+</li>
       <li><a href="modules/display.html#display.Display.new_matrix">new_matrix() (display.Display method)</a>
 </li>
   </ul></td>
@@ -642,14 +672,14 @@
 </li>
       <li><a href="modules/telemetry.html#telemetry.Telemetry.record">record() (telemetry.Telemetry method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="modules/utils.html#racecar_utils.ColorBGR.red">red (racecar_utils.ColorBGR attribute)</a>
 
       <ul style="list-style-type:none">
         <li><a href="modules/utils.html#racecar_utils.TerminalColor.red">(racecar_utils.TerminalColor attribute)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
       <li><a href="modules/utils.html#racecar_utils.remap_range">remap_range() (in module racecar_utils)</a>
 </li>
       <li><a href="modules/slam.html#slam.OccupancyMap.resolution">resolution (slam.OccupancyMap attribute)</a>
@@ -663,6 +693,8 @@
 </li>
       </ul></li>
       <li><a href="modules/controller.html#controller.Controller.Button.RJOY">RJOY (controller.Controller.Button attribute)</a>
+</li>
+      <li><a href="modules/nav.html#nav.Nav.run_mission">run_mission() (nav.Nav method)</a>
 </li>
   </ul></td>
   </tr>
@@ -780,12 +812,14 @@
   <h2 id="W">W</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
-      <li><a href="modules/controller.html#controller.Controller.was_pressed">was_pressed() (controller.Controller method)</a>
+      <li><a href="modules/nav.html#nav.Nav.wait">wait() (nav.Nav method)</a>
 </li>
-      <li><a href="modules/controller.html#controller.Controller.was_released">was_released() (controller.Controller method)</a>
+      <li><a href="modules/controller.html#controller.Controller.was_pressed">was_pressed() (controller.Controller method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul style="margin-left:0;list-style-type:none">
+      <li><a href="modules/controller.html#controller.Controller.was_released">was_released() (controller.Controller method)</a>
+</li>
       <li><a href="modules/utils.html#racecar_utils.ColorBGR.white">white (racecar_utils.ColorBGR attribute)</a>
 </li>
       <li><a href="modules/slam.html#slam.OccupancyMap.width">width (slam.OccupancyMap attribute)</a>
